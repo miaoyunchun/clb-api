@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FtPayCheckMapper">
+	<update id="updateService" parameterType="Map">
+		update from ft_pmrf set
+		ACCUNT_WAY=#{ACCUNT_WAY},
+		TXN_STATUS=#{TXN_STATUS},
+		CHECK_ID=#{CHECK_ID},
+		CHECK_RESULT=#{CHECK_RESULT},
+		REJECT_REASON=#{REJECT_REASON},
+		CHECK_DATE=#{CHECK_DATE},
+		CHECK_TIME=#{CHECK_TIME}
+		where
+		REC_ACCT=#{REC_ACCT}
+	</update>
+
+	<select id="selectService" parameterType="Map" resultType="Map">
+		select * from ft_pmrf
+		where REC_ACCT=#{REC_ACCT}
+	</select>
+</mapper>

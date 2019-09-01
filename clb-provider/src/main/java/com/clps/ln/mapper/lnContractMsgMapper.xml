@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lnContractMsgMapper">
+	 
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="LnContractMsgMap" type="com.clps.ln.pojo.LnContractPo">
+		<result column="lncntrct_cntrct_no" property="lncntrct_cntrct_no" />
+		<result column="lncntrct_loan_no" property="lncntrct_loan_no" />
+		<result column="lncntrct_cust_no" property="lncntrct_cust_no" />
+		<result column="lncntrct_cust_name" property="lncntrct_cust_name" />
+		<result column="lncntrct_cntrct_status" property="lncntrct_cntrct_status" />
+		<result column="lncntrct_ccy_type" property="lncntrct_ccy_type" />
+		<result column="lncntrct_iou_no" property="lncntrct_iou_no" />
+		<result column="lncntrct_credit_limit" property="lncntrct_credit_limit" />
+		<result column="lncntrct_loan_use" property="lncntrct_loan_use" />
+		<result column="lncntrct_drdw_card_no" property="lncntrct_drdw_card_no" />
+		<result column="lncntrct_intst_settlement" property="lncntrct_intst_settlement" />
+		<result column="lncntrct_intst_settlement_date" property="lncntrct_intst_settlement_date" />
+		<result column="lncntrct_open_date" property="lncntrct_open_date" />
+		<result column="lncntrct_intst_strt_date" property="lncntrct_intst_strt_date" />
+		<result column="lncntrct_expiration_date" property="lncntrct_expiration_date" />
+		<result column="lncntrct_no_of_installment" property="lncntrct_no_of_installment" />
+		<result column="lncntrct_cntrct_amount" property="lncntrct_cntrct_amount" />
+		<result column="lncntrct_cntrct_amount_total" property="lncntrct_cntrct_amount_total" />
+		<result column="lncntrct_remaining_loan_bal" property="lncntrct_remaining_loan_bal" />
+		<result column="lncntrct_relate_card_no" property="lncntrct_relate_card_no" />
+		<result column="lncntrct_strt_payback_date" property="lncntrct_strt_payback_date" />
+		<result column="lncntrct_intst_rate_tye" property="lncntrct_intst_rate_tye" />
+		<result column="lncntrct_intst_rate" property="lncntrct_intst_rate" />
+		<result column="lncntrct_effective_date" property="lncntrct_effective_date" />
+		<result column="lncntrct_loan_app_id" property="lncntrct_loan_app_id" />
+		<result column="lncntrct_loan_officer_id" property="lncntrct_loan_officer_id" />
+		<result column="lncntrct_raten_effe_way" property="lncntrct_raten_effe_way" />
+		<result column="lncntrct_raten_flu_way" property="lncntrct_raten_flu_way" />
+		<result column="lncntrct_raten_flu_mod" property="lncntrct_raten_flu_mod" />
+		<result column="lncntrct_execn_rate" property="lncntrct_execn_rate" />
+		<result column="lncntrct_rateo_flu_way" property="lncntrct_rateo_flu_way" />
+		<result column="lncntrct_rateo_flu_mod" property="lncntrct_rateo_flu_mod" />
+		<result column="lncntrct_execo_rat" property="lncntrct_execo_rat" />
+		<result column="lncntrct_prod_type" property="lncntrct_prod_type" />
+		<result column="lncntrct_prod_sub_type" property="lncntrct_prod_sub_type" />
+		<result column="lncntrct_repay_way" property="lncntrct_repay_way" />
+		<result column="lncntrct_curr_install" property="lncntrct_curr_install" />
+		<result column="lncntrct_cntrct_shape" property="lncntrct_cntrct_shape" />
+		<result column="create_time" property="create_time" />
+		<result column="create_user" property="create_user" />
+		<result column="update_time" property="update_time" />
+		<result column="update_user" property="update_user" />
+	</resultMap>
+
+    <!-- 添加贷款合同信息 -->
+    <insert id="insertLnContract" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_contract` (
+        `lncntrct_cntrct_no`,
+        `lncntrct_loan_no`,
+        `lncntrct_cust_no`,
+        `lncntrct_cust_name`,
+        `lncntrct_cntrct_status`,
+        `lncntrct_ccy_type`,
+        `lncntrct_iou_no`,
+        `lncntrct_credit_limit`,
+        `lncntrct_loan_use`,
+        `lncntrct_drdw_card_no`,
+        `lncntrct_intst_settlement`,
+        `lncntrct_intst_settlement_date`,
+        `lncntrct_open_date`,
+        `lncntrct_intst_strt_date`,
+        `lncntrct_expiration_date`,
+        `lncntrct_no_of_installment`,
+        `lncntrct_cntrct_amount`,
+        `lncntrct_cntrct_amount_total`,
+        `lncntrct_remaining_loan_bal`,
+        `lncntrct_relate_card_no`,
+        `lncntrct_strt_payback_date`,
+        `lncntrct_intst_rate_tye`,
+        `lncntrct_intst_rate`,
+        `lncntrct_effective_date`,
+        `lncntrct_loan_app_id`,
+        `lncntrct_loan_officer_id`,
+        `lncntrct_raten_effe_way`,
+        `lncntrct_raten_flu_way`,
+        `lncntrct_raten_flu_mod`,
+        `lncntrct_execn_rate`,
+        `lncntrct_rateo_flu_way`,
+        `lncntrct_rateo_flu_mod`,
+        `lncntrct_execo_rat`,
+        `lncntrct_prod_type`,
+        `lncntrct_prod_sub_type`,
+        `lncntrct_repay_way`,
+        `lncntrct_curr_install`,
+        `lncntrct_cntrct_shape`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{cntrct_no},
+        #{loan_no},
+        #{cust_no},
+        #{cust_name},
+        #{cntrct_status},
+        #{ccy_type},
+        #{iou_no},
+        #{credit_limit},
+        #{loan_use},
+        #{drdw_card_no},
+        #{intst_settlement},
+        #{intst_settlement_date},
+        #{open_date},
+        #{intst_strt_date},
+        #{expiration_date},
+        #{no_of_installment},
+        #{cntrct_amount},
+        #{cntrct_amount},
+        #{cntrct_amount},
+        #{relate_card_no},
+        #{strt_payback_date},
+        #{intst_rate_tye},
+        #{intst_rate},
+        #{effective_date},
+        #{loan_app_id},
+        #{loan_officer_id},
+        #{raten_effe_way},
+        #{raten_flu_way},
+        #{raten_flu_mod},
+        #{execn_rate},
+        #{rateo_flu_way},
+        #{rateo_flu_mod},
+        #{execo_rat},
+        #{prod_type},
+        #{prod_sub_type},
+        #{repay_way},
+        #{curr_install},   
+        #{cntrct_shape},     
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    <insert id="insertLnContractPo" parameterType="lnContract" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_contract` (
+        `lncntrct_cntrct_no`,
+        `lncntrct_loan_no`,
+        `lncntrct_cust_no`,
+        `lncntrct_cust_name`,
+        `lncntrct_cntrct_status`,
+        `lncntrct_ccy_type`,
+        `lncntrct_iou_no`,
+        `lncntrct_credit_limit`,
+        `lncntrct_loan_use`,
+        `lncntrct_drdw_card_no`,
+        `lncntrct_intst_settlement`,
+        `lncntrct_intst_settlement_date`,
+        `lncntrct_open_date`,
+        `lncntrct_intst_strt_date`,
+        `lncntrct_expiration_date`,
+        `lncntrct_no_of_installment`,
+        `lncntrct_cntrct_amount`,
+        `lncntrct_cntrct_amount_total`,
+        `lncntrct_remaining_loan_bal`,
+        `lncntrct_relate_card_no`,
+        `lncntrct_strt_payback_date`,
+        `lncntrct_intst_rate_tye`,
+        `lncntrct_intst_rate`,
+        `lncntrct_effective_date`,
+        `lncntrct_loan_app_id`,
+        `lncntrct_loan_officer_id`,
+        `lncntrct_raten_effe_way`,
+        `lncntrct_raten_flu_way`,
+        `lncntrct_raten_flu_mod`,
+        `lncntrct_execn_rate`,
+        `lncntrct_rateo_flu_way`,
+        `lncntrct_rateo_flu_mod`,
+        `lncntrct_execo_rat`,
+        `lncntrct_prod_type`,
+        `lncntrct_prod_sub_type`,
+        `lncntrct_repay_way`,
+        `lncntrct_curr_install`,
+        `lncntrct_cntrct_shape`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{lncntrct_cntrct_no},
+        #{lncntrct_loan_no},
+        #{lncntrct_cust_no},
+        #{lncntrct_cust_name},
+        #{lncntrct_cntrct_status},
+        #{lncntrct_ccy_type},
+        #{lncntrct_iou_no},
+        #{lncntrct_credit_limit},
+        #{lncntrct_loan_use},
+        #{lncntrct_drdw_card_no},
+        #{lncntrct_intst_settlement},
+        #{lncntrct_intst_settlement_date},
+        #{lncntrct_open_date},
+        #{lncntrct_intst_strt_date},
+        #{lncntrct_expiration_date},
+        #{lncntrct_no_of_installment},
+        #{lncntrct_cntrct_amount},
+        #{lncntrct_cntrct_amount_total},
+        #{lncntrct_remaining_loan_bal},
+        #{lncntrct_relate_card_no},
+        #{lncntrct_strt_payback_date},
+        #{lncntrct_intst_rate_tye},
+        #{lncntrct_intst_rate},
+        #{lncntrct_effective_date},
+        #{lncntrct_loan_app_id},
+        #{lncntrct_loan_officer_id},
+        #{lncntrct_raten_effe_way},
+        #{lncntrct_raten_flu_way},
+        #{lncntrct_raten_flu_mod},
+        #{lncntrct_execn_rate},
+        #{lncntrct_rateo_flu_way},
+        #{lncntrct_rateo_flu_mod},
+        #{lncntrct_execo_rat},
+        #{lncntrct_prod_type},
+        #{lncntrct_prod_sub_type},
+        #{lncntrct_repay_way},
+        #{lncntrct_curr_install},   
+        #{lncntrct_cntrct_shape},     
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    <!-- 单条查询 -->
+    <select id="selectLnContract" resultType="Map" parameterType="Map">
+        SELECT
+        `lncntrct_cntrct_no` as 'cntrct_no',
+        `lncntrct_loan_no` as 'loan_no',
+        `lncntrct_cust_no` as 'cust_no',
+        `lncntrct_cust_name` as 'cust_name',
+        `lncntrct_cntrct_status` as 'cntrct_status' ,
+        `lncntrct_ccy_type` as 'ccy_type',
+        `lncntrct_iou_no` as 'iou_no',
+        `lncntrct_credit_limit` as 'credit_limit',
+        `lncntrct_loan_use` as 'loan_use',
+        `lncntrct_drdw_card_no` as 'drdw_card_no',
+        `lncntrct_intst_settlement` as 'intst_settlement',
+        `lncntrct_intst_settlement_date` as 'intst_settlement_date',
+        `lncntrct_open_date` as 'open_date',
+        `lncntrct_intst_strt_date` as 'intst_strt_date',
+        `lncntrct_expiration_date` as 'expiration_date',
+        `lncntrct_no_of_installment` as 'no_of_installment',
+        `lncntrct_cntrct_amount` as 'cntrct_amount',
+        `lncntrct_cntrct_amount_total` as 'cntrct_amount_total',
+        `lncntrct_remaining_loan_bal` as 'remaining_loan_bal',
+        `lncntrct_relate_card_no` as 'relate_card_no',
+        `lncntrct_strt_payback_date` as 'strt_payback_date',
+        `lncntrct_intst_rate_tye` as 'intst_rate_tye',
+        `lncntrct_intst_rate` as 'intst_rate',
+        `lncntrct_effective_date` as 'effective_date',
+        `lncntrct_loan_app_id` as 'loan_app_id',
+        `lncntrct_loan_officer_id` as 'loan_officer_id',
+        `lncntrct_raten_effe_way` as 'raten_effe_way',
+        `lncntrct_raten_flu_way` as 'raten_flu_way',
+        `lncntrct_raten_flu_mod` as 'raten_flu_mod',
+        `lncntrct_execn_rate` as 'execn_rate',
+        `lncntrct_rateo_flu_way` as 'rateo_flu_way',
+        `lncntrct_rateo_flu_mod` as 'rateo_flu_mod',
+        `lncntrct_execo_rat` as 'execo_rat',
+        `lncntrct_prod_type` as 'prod_type',
+        `lncntrct_prod_sub_type` as 'prod_sub_type',
+        `lncntrct_repay_way` as 'repay_way',
+        `lncntrct_curr_install` as 'curr_install',
+        `lncntrct_cntrct_shape` as 'cntrct_shape',
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        FROM
+            ln_contract
+        WHERE
+            `del` = 'N'
+            AND `lncntrct_cntrct_no` = #{lncntrct_cntrct_no}
+    </select>
+    <select id="selectLnContractPo" resultMap="LnContractMsgMap" parameterType="lnContract">
+        SELECT
+        `lncntrct_cntrct_no`,
+        `lncntrct_loan_no` ,
+        `lncntrct_cust_no` ,
+        `lncntrct_cust_name`,
+        `lncntrct_cntrct_status` ,
+        `lncntrct_ccy_type`,
+        `lncntrct_iou_no`,
+        `lncntrct_credit_limit`,
+        `lncntrct_loan_use` ,
+        `lncntrct_drdw_card_no`,
+        `lncntrct_intst_settlement`,
+        `lncntrct_intst_settlement_date`,
+        `lncntrct_open_date`,
+        `lncntrct_intst_strt_date`,
+        `lncntrct_expiration_date`,
+        `lncntrct_no_of_installment`,
+        `lncntrct_cntrct_amount`,
+        `lncntrct_cntrct_amount_total`,
+        `lncntrct_remaining_loan_bal`,
+        `lncntrct_relate_card_no`,
+        `lncntrct_strt_payback_date`,
+        `lncntrct_intst_rate_tye`,
+        `lncntrct_intst_rate`,
+        `lncntrct_effective_date`,
+        `lncntrct_loan_app_id`,
+        `lncntrct_loan_officer_id`,
+        `lncntrct_raten_effe_way`,
+        `lncntrct_raten_flu_way`,
+        `lncntrct_raten_flu_mod`,
+        `lncntrct_execn_rate`,
+        `lncntrct_rateo_flu_way`,
+        `lncntrct_rateo_flu_mod`,
+        `lncntrct_execo_rat`,
+        `lncntrct_prod_type`,
+        `lncntrct_prod_sub_type`,
+        `lncntrct_repay_way`,
+        `lncntrct_curr_install`,
+        `lncntrct_cntrct_shape`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        FROM
+            ln_contract
+        WHERE
+            `del` = 'N'
+            AND `lncntrct_cntrct_no` = #{lncntrct_cntrct_no}
+    </select>
+    
+      <!-- 编辑 -->
+    <update id="updateLnContractPo" parameterType="lnContract">
+        UPDATE `ln_contract`
+        SET
+        <if test="lncntrct_loan_no != null and lncntrct_loan_no != '' ">`lncntrct_loan_no` = #{lncntrct_loan_no},</if>
+        <if test="lncntrct_cust_no != null and lncntrct_cust_no != '' ">`lncntrct_cust_no` = #{lncntrct_cust_no},</if>
+        <if test="lncntrct_cust_name != null and lncntrct_cust_name != '' ">`lncntrct_cust_name` = #{lncntrct_cust_name},</if>
+        <if test="lncntrct_cntrct_status != null and lncntrct_cntrct_status != '' ">`lncntrct_cntrct_status` = #{lncntrct_cntrct_status},</if>
+        <if test="lncntrct_ccy_type != null and lncntrct_ccy_type != '' ">`lncntrct_ccy_type` = #{lncntrct_ccy_type},</if>
+        <if test="lncntrct_iou_no != null and lncntrct_iou_no != '' ">`lncntrct_iou_no` = #{lncntrct_iou_no},</if>
+        <if test="lncntrct_credit_limit != null and lncntrct_credit_limit != '' ">`lncntrct_credit_limit` = #{lncntrct_credit_limit},</if>
+        <if test="lncntrct_loan_use != null and lncntrct_loan_use != '' ">`lncntrct_loan_use` = #{lncntrct_loan_use},</if>
+        <if test="lncntrct_drdw_card_no != null and lncntrct_drdw_card_no != '' ">`lncntrct_drdw_card_no` = #{lncntrct_drdw_card_no},</if>
+        <if test="lncntrct_intst_settlement != null and lncntrct_intst_settlement != '' ">`lncntrct_intst_settlement` = #{lncntrct_intst_settlement},</if>
+        <if test="lncntrct_intst_settlement_date != null and lncntrct_intst_settlement_date != '' ">`lncntrct_intst_settlement_date` = #{lncntrct_intst_settlement_date},</if>
+        <if test="lncntrct_open_date != null and lncntrct_open_date != '' ">`lncntrct_open_date` = #{lncntrct_open_date},</if>
+        <if test="lncntrct_intst_strt_date != null and lncntrct_intst_strt_date != '' ">`lncntrct_intst_strt_date` = #{lncntrct_intst_strt_date},</if>
+        <if test="lncntrct_expiration_date != null and lncntrct_expiration_date != '' ">`lncntrct_expiration_date` = #{lncntrct_expiration_date},</if>
+        <if test="lncntrct_no_of_installment != null and lncntrct_no_of_installment != '' ">`lncntrct_no_of_installment` = #{lncntrct_no_of_installment},</if>
+        <if test="lncntrct_cntrct_amount != null and lncntrct_cntrct_amount != '' ">`lncntrct_cntrct_amount` = #{lncntrct_cntrct_amount},</if>
+        <if test="lncntrct_cntrct_amount_total != null and lncntrct_cntrct_amount_total != '' ">`lncntrct_cntrct_amount_total` = #{lncntrct_cntrct_amount_total},</if>
+        <if test="lncntrct_remaining_loan_bal != null and lncntrct_remaining_loan_bal != '' ">`lncntrct_remaining_loan_bal` = #{lncntrct_remaining_loan_bal},</if>
+        <if test="lncntrct_relate_card_no != null and lncntrct_relate_card_no != '' ">`lncntrct_relate_card_no` = #{lncntrct_remaining_loan_bal},</if>
+        <if test="lncntrct_strt_payback_date != null and lncntrct_strt_payback_date != '' ">`lncntrct_strt_payback_date` = #{lncntrct_strt_payback_date},</if>
+        <if test="lncntrct_intst_rate != null and lncntrct_intst_rate != '' ">`lncntrct_intst_rate` = #{lncntrct_intst_rate},</if>
+        <if test="lncntrct_effective_date != null and lncntrct_effective_date != '' ">`lncntrct_effective_date` = #{lncntrct_effective_date},</if>
+        <if test="lncntrct_loan_app_id != null and lncntrct_loan_app_id != '' ">`lncntrct_loan_app_id` = #{lncntrct_loan_app_id},</if>
+        <if test="lncntrct_loan_officer_id != null and lncntrct_loan_officer_id != '' ">`lncntrct_loan_officer_id` = #{lncntrct_loan_officer_id},</if>
+        <if test="lncntrct_raten_effe_way != null and lncntrct_raten_effe_way != '' ">`lncntrct_raten_effe_way` = #{lncntrct_raten_effe_way},</if>
+        <if test="lncntrct_raten_flu_way != null and lncntrct_raten_flu_way != '' ">`lncntrct_raten_flu_way` = #{lncntrct_raten_flu_way},</if>
+        <if test="lncntrct_raten_flu_mod != null and lncntrct_raten_flu_mod != '' ">`lncntrct_raten_flu_mod` = #{lncntrct_raten_flu_mod},</if>
+        <if test="lncntrct_execn_rate != null and lncntrct_execn_rate != '' ">`lncntrct_execn_rate` = #{lncntrct_execn_rate},</if>
+        <if test="lncntrct_rateo_flu_way != null and lncntrct_rateo_flu_way != '' ">`lncntrct_rateo_flu_way` = #{lncntrct_rateo_flu_way},</if>
+        <if test="lncntrct_rateo_flu_mod != null and lncntrct_rateo_flu_mod != '' ">`lncntrct_rateo_flu_mod` = #{lncntrct_rateo_flu_mod},</if>
+        <if test="lncntrct_execo_rat != null and lncntrct_execo_rat != '' ">`lncntrct_execo_rat` = #{lncntrct_execo_rat},</if>
+        <if test="lncntrct_prod_type != null and lncntrct_prod_type != '' ">`lncntrct_prod_type` = #{lncntrct_prod_type},</if>
+        <if test="lncntrct_prod_sub_type != null and lncntrct_prod_sub_type != '' ">`lncntrct_prod_sub_type` = #{lncntrct_prod_sub_type},</if>
+        <if test="lncntrct_repay_way != null and lncntrct_repay_way != '' ">`lncntrct_repay_way` = #{lncntrct_repay_way},</if>
+        <if test="lncntrct_curr_install != null and lncntrct_curr_install != '' ">`lncntrct_curr_install` = #{lncntrct_curr_install},</if>
+        <if test="lncntrct_cntrct_shape != null and lncntrct_cntrct_shape != '' ">`lncntrct_cntrct_shape` = #{lncntrct_cntrct_shape},</if>
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `lncntrct_cntrct_no` = #{lncntrct_cntrct_no}
+    </update>
+    
+    
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryLnContractByCustomerNo_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `ln_contract` a
+        <include refid="queryLnContractByCustomerNo_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryLnContractByCustomerNo" resultType="Map" parameterType="Map">
+        select
+        a.`lncntrct_cntrct_no` as 'loan_nbr',
+        a.`lncntrct_relate_card_no` as 'card_nbr',
+        a.`lncntrct_cust_name` as 'cust_name',
+        a.`lncntrct_cntrct_status` as 'loan_cnt_sts',
+        a.`lncntrct_open_date` as 'cnt_open_date'
+        from `ln_contract` a
+        <include refid="queryLnContractByCustomerNo_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryLnContractByCustomerNo_condition">
+        <where>
+            1=1 and a.`del`='N' and a.`lncntrct_cust_no` = #{cust_number}
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+    
+  <!-- 贷款合同审核信息 -->
+    <insert id="insertLnCheckContract" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_check_contract` (
+        `lnctrsts_id`,
+        `lnctrsts_status`,
+        `lnctrsts_intchk_id`,
+        `lnctrsts_intchk_date`,
+        `lnctrsts_intchk_result`,
+        `lnctrsts_intchk_rej_reason`,
+        `lnctrsts_intchk_comment`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{contract_id},
+        #{contract_status},
+        #{chk_id},
+        #{lnctrsts_intchk_date},
+        #{chk_result},
+        #{chk_refuse_reason},
+        #{chk_comment},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert> 
+    <insert id="insertLnCheckContractPo" parameterType="lnCon_Check" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_check_contract` (
+        `lnctrsts_id`,
+        `lnctrsts_status`,
+        `lnctrsts_intchk_id`,
+        `lnctrsts_intchk_date`,
+        `lnctrsts_intchk_result`,
+        `lnctrsts_intchk_rej_reason`,
+        `lnctrsts_intchk_comment`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{lnctrsts_id},
+        #{lnctrsts_status},
+        #{lnctrsts_intchk_id},
+        #{lnctrsts_intchk_date},
+        #{lnctrsts_intchk_result},
+        #{lnctrsts_intchk_rej_reason},
+        #{lnctrsts_mancre_comment},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert> 
+    
+    	<!-- 更新申请状态 -->
+	<update id="updateApplyStatusService" parameterType="Map">
+		UPDATE `ln_apply`
+		SET 
+		 `lncappf_status` = '004', 
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`lncappf_id`=#{loan_app_id}
+	</update>
+    
+    
+</mapper>

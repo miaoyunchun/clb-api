@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="personalAcct">
+	<resultMap id="perAcctOppResultMap" type="com.clps.fx.pojo.FxPersonalAcctOppPo" >
+		<result column="card_nbr" property="card_nbr"/>
+		<result column="ccy" property="ccy"/>
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="cust_nbr" property="cust_nbr"/>
+		<result column="acct_psw" property="acct_psw"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+		<resultMap id="perAcctResultMap" type="com.clps.fx.pojo.FxPersonalAcctPo" >
+		<result column="card_nbr" property="card_nbr"/>
+		<result column="ccy" property="ccy"/>
+		<result column="acct_org" property="acct_org"/>
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="cust_number" property="cust_number"/>
+		<result column="cust_name" property="cust_name"/>
+		<result column="prod_id" property="prod_id"/>
+		<result column="end_date" property="end_date"/>
+		<result column="open_date" property="open_date"/>
+		<result column="open_time" property="open_time"/>
+		<result column="open_amt" property="open_amt"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+	
+<!--账户对应表数据查询 -->
+<select id="perAcctOppInq" resultMap="perAcctOppResultMap" parameterType="fxperacctopp">
+	SELECT 
+		*
+    FROM
+        	fx_personalacct_opp 
+    WHERE 
+    		`del` = 'N'
+    	AND	`card_nbr` = #{card_nbr} 
+    	 AND `ccy` =#{ccy}  
+</select>
+<!-- 添加账户对应表数据 -->
+	<insert id="perAcctOppAdd" parameterType="fxperacctopp">
+	  INSERT INTO `fx_personalacct_opp` (
+	        `card_nbr`,
+			`ccy`,
+			`acct_nbr`,
+			`cust_nbr`,
+			`acct_psw`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{card_nbr},
+				#{ccy},
+				#{acct_nbr},
+				#{cust_nbr},
+				#{acct_psw},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+	<!-- 账户详细表数据查询 -->
+	<select id="perAcctInq" resultMap="perAcctResultMap" parameterType="fxperacct">
+	SELECT 
+		*
+    FROM
+        	fx_personalacct
+    WHERE 
+    		`del` = 'N'
+    		`card_nbr` = #{card_nbr} 
+    	 AND `ccy` =#{ccy}  
+</select>
+
+<!-- 添加账户详细表数据 -->
+	<insert id="perAcctAdd" parameterType="fxperacct">
+	  INSERT INTO `fx_personalacct` (
+	        `card_nbr`,
+			`ccy`,
+			`acct_org`,
+			`acct_nbr`,
+			`cust_number`,
+			`cust_name`,
+			`prod_id`,
+			`end_date`,
+			`open_date`,
+			`open_time`,
+			`open_amt`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{card_nbr},
+				#{ccy},
+				#{acct_org},
+				#{acct_nbr},
+				#{cust_number},
+				#{cust_name},
+				#{prod_id},
+				#{end_date},
+				#{open_date},
+				#{open_time},
+				#{open_amt},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+</mapper>

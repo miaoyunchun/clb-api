@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpCancelMapper">
+<!-- Result Map   gxlrebkf 大额销户授权登记簿 PO对象字段和表字段的映射-->
+	<resultMap id="gxlrebkf" type="com.clps.dp.pojo.DpGxlrebkfPo" >
+		<result column="card_nbr" property="card_nbr"/>
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="cust_nbr" property="cust_nbr"/>
+		<result column="acct_ccy" property="acct_ccy"/>
+		<result column="writeoff_amt" property="writeoff_amt"/>
+		<result column="operator" property="operator"/>
+		<result column="approver" property="approver"/>
+		<result column="writeoff_date" property="writeoff_date"/>
+		<result column="writeoff_time" property="writeoff_time"/>
+		<result column="apprv_result" property="apprv_result"/>
+		<result column="apprv_reason" property="apprv_reason"/>
+		<result column="remark" property="remark"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+<!-- Result Map   gxregflf 清户标志文件  PO对象字段和表字段的映射-->
+	<resultMap id="gxregflf" type="com.clps.dp.pojo.DpGxregflfPo" >
+		<result column="card_nbr" property="card_nbr"/>
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="acct_ccy" property="acct_ccy"/>
+		<result column="writeoff_date" property="writeoff_date"/>
+		<result column="writeoff_time" property="writeoff_time"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+
+
+
+
+
+
+
+
+
+
+	<!-- 写入大额销户授权销户登记簿-->
+	<insert id="bkfAddMapper"   parameterType="gxlrebkf" >
+		insert into dp_gxlrebkf(`card_nbr`,`acct_nbr`,`cust_nbr`,`acct_ccy`,`writeoff_amt`,`operator`,`approver`,`writeoff_date`,`writeoff_time`,`apprv_result`,`apprv_reason`,`remark`,`del`,`create_time`,`create_user`,`update_time`,`update_user`)
+		values(#{card_nbr},#{acct_nbr},#{cust_nbr},#{acct_ccy},#{writeoff_amt},#{operator},#{approver},#{writeoff_date},#{writeoff_time},#{apprv_result},#{apprv_reason},#{remark},'N',#{create_time},#{create_user},#{update_time},#{update_user})
+	</insert>
+	<!-- 写入清户标志文件-->
+	<insert id="flfAddMapper"  parameterType="gxregflf" >
+		insert into dp_gxregflf(`card_nbr`,`acct_nbr`,`acct_ccy`,`writeoff_date`,`writeoff_time`,`del`,`create_time`,`create_user`,`update_time`,`update_user`)
+		values(#{card_nbr},#{acct_nbr},#{acct_ccy},#{writeoff_date},#{writeoff_time},'N',#{create_time},#{create_user},#{update_time},#{update_user})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="holdMapper">
+    <!--更新 -->
+    <update id="updateHoldingInfo" parameterType="map">
+        UPDATE `sc_scholdf`
+        SET
+        <if test="sc_ccy != null and sc_ccy != ''">`sc_ccy`=#{sc_ccy},</if>
+        <if test="holding_num != null and holding_num != '' ">`holding_num` = #{holding_num},</if>
+        <if test="avail_num != null and avail_num != '' ">`avail_num` = #{avail_num},</if>
+        <if test="avg_amt != null and avg_amt != '' ">`avg_amt` = #{avg_amt},</if>
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `del` = 'N'
+        AND `acct_nbr`=#{acct_nbr}
+        <if test="sc_code != null and sc_code != ''">AND `sc_code` = #{sc_code}</if>
+        <if test="sedol != null and sedol != ''">AND `sedol` = #{sedol}</if>
+    </update>
+</mapper>

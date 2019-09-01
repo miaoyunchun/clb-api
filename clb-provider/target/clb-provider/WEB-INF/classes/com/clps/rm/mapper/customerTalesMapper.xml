@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customerTalesMapper">
+    
+    <resultMap id="customerTaleResultMap" type="com.clps.rm.pojo.RmtalePo">
+        <result column="ctale_cus_num" property="ctale_cus_num"/>
+        <result column="ctale_title" property="ctale_title"/>
+        <result column="ctale_hpn_date" property="ctale_hpn_date"/>
+        <result column="ctale_mark" property="ctale_mark"/>
+        <result column="ctale_main_date" property="ctale_main_date"/>
+        <result column="ctale_maker" property="ctale_maker"/>
+        <result column="del" property="del"/>
+        <result column="create_time" property="create_time"/>
+        <result column="create_user" property="create_user"/>
+        <result column="update_time" property="update_time"/>
+        <result column="update_user" property="update_user"/>
+    </resultMap>
+
+    <!-- 单条查询 -->
+    <select id="selectCustomerTale" resultMap="customerTaleResultMap" parameterType="rmtale">
+        SELECT
+            `ctale_cus_num`,
+            `ctale_title`,
+            `ctale_hpn_date`,
+            `ctale_mark`,
+            `ctale_main_date`,
+            `ctale_maker`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            rm_rmtale
+        WHERE
+            `del` = 'N'
+            AND `ctale_cus_num` = #{ctale_cus_num}
+            AND `ctale_title` = #{ctale_title}
+            AND `ctale_hpn_date` = #{ctale_hpn_date}
+    </select>
+
+    <!-- 删除 -->
+    <update id="deleteCustomerTale" parameterType="rmtale">
+        UPDATE `rm_rmtale`
+        SET
+            `del`         = 'Y',
+            `update_time` = #{update_time},
+            `update_user` = #{update_user}
+        WHERE
+            `ctale_cus_num` = #{ctale_cus_num}
+            AND `ctale_title` = #{ctale_title}
+            AND `ctale_hpn_date` = #{ctale_hpn_date}
+    </update>
+
+    <!-- 编辑 -->
+    <update id="updateCustomerTale" parameterType="rmtale">
+        UPDATE `rm_rmtale`
+        SET
+        `ctale_mark` = #{ctale_mark},
+        `ctale_main_date` = #{ctale_main_date},
+        `ctale_maker` = #{ctale_maker},
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `ctale_cus_num` = #{ctale_cus_num}
+        AND `ctale_title` = #{ctale_title}
+        AND `ctale_hpn_date` = #{ctale_hpn_date}
+    </update>
+
+    <!-- 添加新用户 -->
+    <insert id="insertCustomerTale" parameterType="rmtale">
+        INSERT INTO `rm_rmtale` (
+            `ctale_cus_num`,
+            `ctale_title`,
+            `ctale_hpn_date`,
+            `ctale_mark`,
+            `ctale_main_date`,
+            `ctale_maker`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        )
+        VALUES
+            (
+                #{ctale_cus_num},
+                #{ctale_title},
+                #{ctale_hpn_date},
+                #{ctale_mark},
+                #{ctale_main_date},
+                #{ctale_maker},
+                'N',
+                #{create_time},
+                #{create_user},
+                #{update_time},
+                #{update_user}
+            )
+    </insert>
+
+
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryCustomerTale_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `rm_rmtale` a
+        <include refid="queryCustomerTale_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="queryCustomerTale" resultType="Map" parameterType="Map">
+        select
+        a.`ctale_cus_num` AS `ctaleqo_cus_num`,
+        a.`ctale_title` AS `ctaleqo_title`,
+        a.`ctale_hpn_date` AS `hpn_date`
+        from `rm_rmtale` a
+        <include refid="queryCustomerTale_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryCustomerTale_condition">
+        <where>
+            1=1
+            and a.`del`='N'
+            and a.`ctale_cus_num` = #{cus_num}
+            <if test="title != null and title != '' ">and a.`ctale_title` = #{title}</if>
+            <if test="hpn_date != null and hpn_date != '' ">and a.`ctale_hpn_date` = #{hpn_date}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and
+                a.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and
+                a.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>

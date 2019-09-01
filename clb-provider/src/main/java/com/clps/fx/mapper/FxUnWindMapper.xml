@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FxunwindMapper">
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FxunwindResultMap" type="com.clps.fx.pojo.FxUnWindPo" >
+		<result column="jour_nbr" property="jour_nbr"/>
+		<result column="certifi_nbr" property="certifi_nbr"/>
+		<result column="bank_code" property="bank_code"/>
+		<result column="tran_type" property="tran_type"/>
+		<result column="ccy" property="ccy"/>
+		<result column="trade_amt" property="trade_amt"/>
+		<result column="trade_price" property="trade_price"/>
+		<result column="trade_amt_cny" property="trade_amt_cny"/>
+		<result column="fee" property="fee"/>
+		<result column="trade_date" property="trade_date"/>
+		<result column="trade_time" property="trade_time"/>
+		<result column="org" property="org"/>
+		<result column="bank_acct" property="bank_acct"/>
+		<result column="total_rmb_amt" property="total_rmb_amt"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	  <!-- 写入平盘申请文件-->
+    <insert id="FxunwindApply" parameterType="fxunwind">
+        INSERT INTO `fx_unwindApply` (
+        `certifi_nbr`,
+        `bank_code`,
+        `tran_type`,
+        `ccy`,
+        `trade_amt`,
+        `trade_price`,
+        `trade_amt_cny`,
+        `fee`,
+        `trade_date`,
+        `trade_time`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{certifi_nbr},
+        #{bank_code},
+        #{tran_type},
+        #{ccy},
+        #{trade_amt},
+        #{trade_price},
+        #{trade_amt_cny},
+        #{fee},
+        #{trade_date},
+        #{trade_time},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    	  <!-- 写入平盘交易文件-->
+    <insert id="FxunwindAdd" parameterType="fxunwind">
+        INSERT INTO `fx_unwindAdd` (
+        `jour_nbr`,
+        `certifi_nbr`,
+        `tran_type`,
+        `ccy`,
+        `trade_amt`,
+        `trade_price`,
+        `fee`,
+        `total_rmb_amt`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{jour_nbr},
+        #{certifi_nbr},
+        #{tran_type},
+        #{ccy},
+        #{trade_amt},
+        #{trade_price},
+        #{fee},
+        #{total_rmb_amt},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+
+
+   
+
+
+
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CPSCTDepositMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="sctdepResultMap" type="com.clps.cp.pojo.CpDepositPo" >
+		<result column="sct_id" property="sct_id"/>
+		<result column="sct_name" property="sct_name"/>
+		<result column="associate_org_id" property="associate_org_id"/>
+		<result column="min_amt" property="min_amt"/>
+		<result column="max_amt" property="max_amt"/>
+		<result column="deposite_period" property="deposite_period"/>
+		<result column="withdraw_period" property="withdraw_period"/>
+		<result column="withdraw_times" property="withdraw_times"/>
+		<result column="cmp_ints_time" property="cmp_ints_time"/>
+		<result column="withdraw_amt" property="withdraw_amt"/>
+		<result column="trans_deposite" property="trans_deposite"/>
+		<result column="last_maint_date" property="last_maint_date"/>
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 单条查询 -->
+	<select id="QueryCPSCTDepositService"  resultMap="sctdepResultMap" parameterType="cpDep" >
+		SELECT *
+		FROM
+			cp_sct_deposit
+		WHERE
+			`del` = 'N'
+		AND `sct_id` = #{sct_id}
+	</select>
+	
+	<!-- 编辑 -->
+	<update id="editCPSCTDepositService" parameterType="cpDep">
+		UPDATE `cp_sct_deposit`
+		SET 
+		 <if test="sct_name != null and sct_name != '' ">`sct_name` = #{sct_name}, </if>
+		 <if test="associate_org_id != null and associate_org_id != '' ">`associate_org_id` = #{associate_org_id}, </if>
+		 <if test="min_amt != null and min_amt != '' ">`min_amt` = #{min_amt}, </if>
+		 <if test="max_amt != null and max_amt != '' ">`max_amt` = #{max_amt}, </if>
+		 <if test="deposite_period != null and deposite_period != '' ">`deposite_period` = #{deposite_period}, </if>
+		 <if test="withdraw_period != null and withdraw_period != '' ">`withdraw_period` = #{withdraw_period}, </if>
+		 <if test="withdraw_times != null and withdraw_times != '' ">`withdraw_times` = #{withdraw_times}, </if>
+		 <if test="cmp_ints_time != null and cmp_ints_time != '' ">`cmp_ints_time` = #{cmp_ints_time}, </if>
+		 <if test="withdraw_amt != null and withdraw_amt != '' ">`withdraw_amt` = #{withdraw_amt}, </if>
+		 <if test="trans_deposite != null and trans_deposite != '' ">`trans_deposite` = #{trans_deposite}, </if>
+		 <if test="last_maint_date != null and last_maint_date != '' ">`last_maint_date` = #{last_maint_date}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`sct_id`=#{sct_id}
+	</update>
+	
+	<!-- 添加新用户 -->
+	<insert id="insertCPSCTDepositService" parameterType="cpDep" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `cp_sct_deposit` (
+	        `sct_id`,
+			`sct_name`,
+			`associate_org_id`,
+			`min_amt`,
+			`max_amt`,
+			`deposite_period`,
+			`withdraw_period`,
+			`withdraw_times`,
+			`cmp_ints_time`,
+			`withdraw_amt`,
+			`trans_deposite`,
+			`last_maint_date`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+			    #{sct_id},
+				#{sct_name},
+				#{associate_org_id},
+				#{min_amt},
+				#{max_amt},
+				#{deposite_period},
+				#{withdraw_period},
+				#{withdraw_times},
+				#{cmp_ints_time},
+				#{withdraw_amt},
+				#{trans_deposite},
+				#{last_maint_date},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+</mapper>

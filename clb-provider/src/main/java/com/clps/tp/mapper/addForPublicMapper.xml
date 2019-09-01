@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="addForPublicMapper">
+    <!-- 添加信息 -->
+    <!--  -->
+    <insert id="insertUNITService" parameterType="Map" useGeneratedKeys="true" keyProperty="tpunitf_comp_id">
+        INSERT INTO `tp_unit` (
+        	`tpunitf_comp_id`,
+        	`tpunitf_comp_card_no`,
+        	`tpunitf_log_pwd`,
+        	`tpunitf_comp_type`,
+        	`tpunitf_prod_code`,
+        	`tpunitf_settle_date`,
+        	`tpunitf_settle_cycle`
+        )
+        VALUES
+        (
+        	#{comp_id},
+        	#{comp_card_nbr},
+        	#{log_pwd},
+        	#{comp_type},
+        	#{prod_code},
+        	#{settle_date},
+        	#{settle_cycle}
+        )
+        
+    </insert>
+        
+</mapper>

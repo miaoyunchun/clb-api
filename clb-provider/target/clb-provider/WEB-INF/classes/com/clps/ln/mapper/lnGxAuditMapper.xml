@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lngxauditMapper">
+	   <!-- 展期申请簿查询 -->
+	<select id="QueryOneGxAuditService"  resultType="Map" parameterType="com.clps.ln.pojo.LnGxauditPo" >
+		SELECT
+			`gxcaudit_audit_nbr` as `audit_nbr`,
+			`gxcaudit_loan_nbr` as `loan_nbr`,
+			`gxcaudit_audit_date` as `audit_date`,
+			`gxcaudit_audit_channel` as `audit_channel`,
+			`gxcaudit_audit_id` as `audit_id_by`,
+			`gxcaudit_audit_apply_date` as `audit_apply_date`,
+			`gxcaudit_audit_cust_id` as `audit_cust_id`,
+			`gxcaudit_audit_cust_name` as `audit_cust_name`,
+			`gxcaudit_loan_due_date` as `loan_due_date`,
+			`gxcaudit_loan_prod` as `loan_prod`, 
+            `gxcaudit_loan_amt` as `loan_amt`, 
+            `gxcaudit_loan_ext_date` as `loan_ext_date`,  
+            `gxcaudit_loan_remark` as `loan_remark`, 
+            `gxcaudit_loan_ext_sts` as `loan_ext_sts`,
+            `gxcaudit_audit_remark` as `audit_remark`
+		FROM
+			ln_gxaudit
+		WHERE
+			`del` = 'N'
+		AND `gxcaudit_audit_nbr` = #{gxcaudit_audit_nbr}
+	</select>
+	
+<!-- 展期申请簿更新 -->
+	<update id="editLnGxApplyService" parameterType="com.clps.ln.pojo.LnGxapply">
+		UPDATE `ln_gxapply`
+		SET 
+		 <if test="lncntrct_cntrct_no != null and lncntrct_cntrct_no != '' ">`gxcapply_loan_nbr` = #{lncntrct_cntrct_no}, </if>
+		 <if test="gxcapply_id != null and gxcapply_id != '' ">`gxcapply_id` = #{gxcapply_id}, </if>
+		 <if test="gxcapply_loan_acct != null and gxcapply_loan_acct != '' ">`gxcapply_loan_acct` = #{gxcapply_loan_acct}, </if>
+		 <if test="gxcapply_cust_name != null and gxcapply_cust_name != '' ">`gxcapply_cust_name` = #{gxcapply_cust_name}, </if>
+		 <if test="gxcapply_loan_due_date != null and gxcapply_loan_due_date != '' ">`gxcapply_loan_due_date` = #{gxcapply_loan_due_date}, </if>
+		 <if test="gxcapply_loan_amt != null and gxcapply_loan_amt != '' ">`gxcapply_loan_amt` = #{gxcapply_loan_amt}, </if>
+		 <if test="gxcapply_extend_date != null and gxcapply_extend_date != '' ">`gxcapply_extend_date` = #{gxcapply_extend_date}, </if>
+		 <if test="gxcapply_extend_type != null and gxcapply_extend_type != '' ">`gxcapply_extend_type` = #{gxcapply_extend_type}, </if>
+		 <if test="gxcapply_extend_fee != null and gxcapply_extend_fee != '' ">`gxcapply_extend_fee` = #{gxcapply_extend_fee}, </if>
+		 <if test="gxcapply_extend_rate != null and gxcapply_extend_rate != '' ">`gxcapply_extend_rate` = #{gxcapply_extend_rate}, </if>
+		 <if test="gxcapply_extend_total_days != null and gxcapply_extend_total_days != '' ">"gxcapply_extend_total_days" = #{gxcapply_extend_total_days}, </if>
+		 <if test="gxcapply_loan_ext_sts != null and gxcapply_loan_ext_sts != '' ">`gxcapply_loan_ext_sts` = #{gxcapply_loan_ext_sts}, </if>
+		 <if test="gxcapply_apply_date != null and gxcapply_apply_date != '' ">`gxcapply_apply_date` = #{gxcapply_apply_date}, </if>
+		 <if test="gxcapply_remark != null and gxcapply_remark != '' ">`gxcapply_remark` = #{gxcapply_remark}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`gxcapply_loan_nbr`=#{lncntrct_cntrct_no}
+	</update>
+	
+	<!-- 展期审批历史列表查询 -->
+    <!-- 总数查询 -->
+    <select id="queryLnListofByCustomerNo_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `ln_gxaudit` a
+        <include refid="queryLnListofByCustomerNo_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryLnListofByCustomerNo" resultType="Map" parameterType="Map">
+        select
+        a.`gxcaudit_loan_nbr`,
+        a.`gxcaudit_audit_nbr`,
+        a.`gxcaudit_audit_date`,
+        a.`gxcaudit_audit_channel`,
+        a.`gxcaudit_audit_apply_date`,
+        a.`gxcaudit_loan_ext_sts`
+        from `ln_gxaudit` a
+        <include refid="queryLnListofByCustomerNo_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryLnListofByCustomerNo_condition">
+        <where>
+            1=1 and a.`del`='N'
+            <if test="gxcaudit_loan_nbr != null and gxcaudit_loan_nbr != '' ">and  a.`gxcaudit_loan_nbr` = #{gxcaudit_loan_nbr}</if>
+            <if test="gxcaudit_audit_nbr != null and gxcaudit_audit_nbr != '' ">and  a.`gxcaudit_audit_nbr` = #{gxcaudit_audit_nbr}</if>
+            <if test="gxcaudit_loan_ext_sts != null and gxcaudit_loan_ext_sts != '' ">and  a.`gxcaudit_loan_ext_sts` = #{gxcaudit_loan_ext_sts}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+</mapper>

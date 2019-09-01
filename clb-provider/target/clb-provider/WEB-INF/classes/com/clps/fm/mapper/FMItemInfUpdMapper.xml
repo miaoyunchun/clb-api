@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FMItemInfUpdMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="fmItemResultMap" type="com.clps.fm.pojo.FmInfoPo" >
+		<result column="item_key" property="item_key"/>
+		<result column="item_level" property="item_level"/>
+		<result column="item_name" property="item_name"/>
+		<result column="op_time_stamp" property="op_time_stamp"/>
+		<result column="bal_dire_flg" property="bal_dire_flg"/>
+		<result column="gl_account" property="gl_account"/>
+		<result column="cal_gl_account" property="cal_gl_account"/>
+		<result column="class_item" property="class_item"/>
+		<result column="fx_item_flag" property="fx_item_flag"/>
+		<result column="in_out_flag" property="in_out_flag"/>
+		<result column="buss_type" property="buss_type"/>
+		<result column="tran_amt_dir" property="tran_amt_dir"/>
+		<result column="item_start_date" property="item_start_date"/>
+		<result column="item_end_date" property="item_end_date"/>
+		
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+	<!-- 编辑 -->
+	<update id="editFmItemInfService" parameterType="Map">
+		UPDATE `fm_item`
+		SET 
+		 <if test="item_name != null and item_name != '' ">`item_name` = #{item_name}, </if>
+		 <if test="bal_dire_flg != null and bal_dire_flg != '' ">`bal_dire_flg` = #{bal_dire_flg}, </if>
+		 <if test="gl_account != null and gl_account != '' ">`gl_account` = #{gl_account}, </if>
+		 <if test="cal_gl_account != null and cal_gl_account != '' ">`cal_gl_account` = #{cal_gl_account}, </if>
+		 <if test="class_item != null and class_item != '' ">`class_item` = #{class_item}, </if>
+		 <if test="fx_item_flag != null and fx_item_flag != '' ">`fx_item_flag` = #{fx_item_flag}, </if>
+		 <if test="in_out_flag != null and in_out_flag != '' ">`in_out_flag` = #{in_out_flag}, </if>
+		 <if test="buss_type != null and buss_type != '' ">`buss_type` = #{buss_type}, </if>
+		 <if test="tran_amt_dir != null and tran_amt_dir != '' ">`tran_amt_dir` = #{tran_amt_dir}, </if>
+		 <if test="item_start_date != null and item_start_date != '' ">`item_start_date` = #{item_start_date}, </if>
+		 <if test="item_end_date != null and item_end_date != '' ">`item_end_date` = #{item_end_date}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`item_key`=#{item_key}
+			AND `item_level` = #{item_level}
+	</update>
+	
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priceMaintMapper">
+
+    <!-- 编辑 -->
+    <update id="priceUpdService" parameterType="Map">
+        UPDATE `sc_scpricef`
+        SET
+        <if test="sc_ccy != null and sc_ccy != ''">`sc_ccy` = #{sc_ccy},</if>
+        <if test="sc_name != null and sc_name != ''">`sc_name` = #{sc_name},</if>
+        <if test="price_effect_date != null and price_effect_date != ''">
+            `price_effect_date` = #{price_effect_date},
+        </if>
+        <if test="hihg_price != null and hihg_price != ''">`high_price` = #{hihg_price},</if>
+        <if test="low_price != null and low_price != ''">`low_price` = #{low_price},</if>
+        <if test="price != null and price != ''">`price` = #{price},</if>
+        <if test="open_price != null and open_price != ''">`open_price` = #{open_price},</if>
+        <if test="close_price != null and close_price != ''">`close_price` = #{close_price},</if>
+        <if test="last_price_efct_date != null and last_price_efct_date != ''">
+            `last_price_effect_date` = #{last_price_efct_date},
+        </if>
+        <if test="last_hihg_price != null and last_hihg_price != ''">`last_high_price` = #{last_hihg_price},</if>
+        <if test="last_low_price != null and last_low_price != ''">`last_low_price` = #{last_low_price},</if>
+        <if test="last_open_price != null and last_open_price != ''">`last_open_price` = #{last_open_price},</if>
+        <if test="last_close_price != null and last_close_price != ''">`last_close_price` = #{last_close_price},</if>
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        1 = 1
+        AND `sc_code` = #{sc_code}
+        AND `sedol` = #{sedol}
+        <!-- 如果这两个字段传了空值，则此段sql会修改全表数据，有很大风险，所以update的筛选条件不建议使用if标签 -->
+<!--         <if test="sc_code != null and sc_code != ''">AND `sc_code` = #{sc_code}</if> -->
+<!--         <if test="sedol != null and sedol != '' ">AND `sedol` = #{sedol},</if> -->
+    </update>
+
+</mapper>

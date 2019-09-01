@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="logPrefix" value="com.clps.core.common.data.dao.impl.DaoImpl"/>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="logImpl" value="LOG4J" />
+		<!-- 这个配置使全局的映射器启用或禁用缓存 -->
+		<setting name="cacheEnabled" value="false" />
+		<!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 -->
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新 -->
+		<setting name="defaultExecutorType" value="REUSE" />
+		<!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="aggressiveLazyLoading" value="true" />
+		<!-- <setting name="enhancementEnabled" value="true"/> -->
+		<!-- 设置超时时间，它决定驱动等待一个数据库响应的时间。 -->
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="demo" type="com.clps.demo.pojo.DemoPo"/>
+		<!-- POJOs belong to CP -->
+		<typeAlias alias="cpOrg" type="com.clps.cp.pojo.CpOrgparm"/>
+		<typeAlias alias="cpFee" type="com.clps.cp.pojo.CpSctfee"/>
+		<typeAlias alias="cpvo" type="com.clps.cp.pojo.CpSctacctPo"/>
+		<typeAlias alias="cpProd" type="com.clps.cp.pojo.CpProdparm"/>
+		<typeAlias alias="cpInst" type="com.clps.cp.pojo.CpSctintPo"/>
+		<typeAlias alias="cpCard" type="com.clps.cp.pojo.CpSctcardPo"/>
+		<typeAlias alias="cpDep" type="com.clps.cp.pojo.CpDepositPo"/>
+		<!-- End of POJOs belong to CP -->
+		
+		<!-- POJOs belong to FX -->
+		<typeAlias alias="fxperex" type="com.clps.fx.pojo.FxPersonalExPo"/>
+		<typeAlias alias="fxperacctopp" type="com.clps.fx.pojo.FxPersonalAcctOppPo"/>
+		<typeAlias alias="fxperacct" type="com.clps.fx.pojo.FxPersonalAcctPo"/>
+		<typeAlias alias="fxperlimit" type="com.clps.fx.pojo.FxPersonalLimitPo"/>
+		<typeAlias alias="fxunwind" type="com.clps.fx.pojo.FxUnWindPo"/>
+		<typeAlias alias="internacacct" type="com.clps.fx.pojo.InternacAcct"/>
+		<typeAlias alias="internaccode" type="com.clps.fx.pojo.InternacCodePo"/>
+		<typeAlias alias="fxtradlimit" type="com.clps.fx.pojo.FxTradlimitPo"/>
+		<typeAlias alias="fxbalanceex" type="com.clps.fx.pojo.FxBalanceExPo"/>
+		<typeAlias alias="fxacct" type="com.clps.fx.pojo.FxAcctPo"/>
+		<typeAlias alias="fxacctex" type="com.clps.fx.pojo.FxAcctExPo"/>
+		<typeAlias alias="fxcashex" type="com.clps.fx.pojo.FxCashExPo"/>
+		<typeAlias alias="fxrate" type="com.clps.fx.pojo.FxRatePo"/>
+		<typeAlias alias="fxverify" type="com.clps.fx.pojo.FxVerifyPo"/>
+		
+		<!-- End of POJOs belong to FX -->
+		
+		<!-- POJOs belong to DP -->
+		<typeAlias alias="dpacct" type="com.clps.dp.pojo.DpAcctPo"/>
+		<typeAlias alias="cardpo" type="com.clps.dp.pojo.DpCardPo"/>
+		<typeAlias alias="dptranslog" type="com.clps.dp.pojo.DpTransLogPo"/>
+		<typeAlias alias="gxregflf" type="com.clps.dp.pojo.DpGxregflfPo"/>
+		<typeAlias alias="gxlrebkf" type="com.clps.dp.pojo.DpGxlrebkfPo"/>
+		<typeAlias alias="gxwrioff" type="com.clps.dp.pojo.DpGxwrioffPo"/>
+		<!-- End of POJOs belong to DP -->
+		
+		<!-- POJOs belong to RM -->
+		<typeAlias alias="rmbcus" type="com.clps.rm.pojo.RmbcusPo"/>
+		<typeAlias alias="rmcust" type="com.clps.rm.pojo.RmcustPo"/>
+		<typeAlias alias="rmhist" type="com.clps.rm.pojo.RmhistPo"/>
+		<typeAlias alias="rmitem" type="com.clps.rm.pojo.RmitemPo"/>
+		<typeAlias alias="rmparm" type="com.clps.rm.pojo.RmparmPo"/>
+		<typeAlias alias="rmrdmn" type="com.clps.rm.pojo.RmrdmnPo"/>
+		<typeAlias alias="rmreal" type="com.clps.rm.pojo.RmrealPo"/>
+		<typeAlias alias="rmtale" type="com.clps.rm.pojo.RmtalePo"/>
+		<!-- End of POJOs belong to RM -->
+		
+		<!-- POJOs belong to FM -->
+		<typeAlias alias="fminfo" type="com.clps.fm.pojo.FmInfoPo"/>
+		<typeAlias alias="fmactetr2" type="com.clps.fm.pojo.FmActEtr2Po"/>
+		<typeAlias alias="fmactetr" type="com.clps.fm.pojo.FmActEtrPo"/>
+		<typeAlias alias="fmactdtl" type="com.clps.fm.pojo.FmAcctDtlPo"/>
+		<typeAlias alias="fmitemdtl" type="com.clps.fm.pojo.FmItemDtlPo"/>
+		<typeAlias alias="fmlgitm" type="com.clps.fm.pojo.FmLgdProcPo"/>
+		<typeAlias alias="fmtxnact" type="com.clps.fm.pojo.FmTxnAcctPo"/>
+		<typeAlias alias="fmtxndtl" type="com.clps.fm.pojo.FmTxnDtlPo"/>
+		<typeAlias alias="fmtradtl" type="com.clps.fm.pojo.FmTradPo"/>
+		<!-- End of POJOs belong to FM -->
+		
+		<!-- POJOs belong to LN -->
+		<typeAlias alias="lnContract" type="com.clps.ln.pojo.LnContractPo"/>
+		<typeAlias alias="lnCon_Check" type="com.clps.ln.pojo.LnCheckContractPo"/>
+		<typeAlias alias="lnRepayPlan" type="com.clps.ln.pojo.LnRepaymentPlanPo"/>
+		<!-- End of POJOs belong to LN -->
+	</typeAliases>
+
+	<typeHandlers>
+
+	</typeHandlers>
+
+	<mappers>
+
+	</mappers>
+
+</configuration>	
+
+

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scFeeCodeMapper">
+
+    <!-- 新增客户 -->
+    <insert id="insertFeeCodeService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sc_scfeecdf` (
+            `fee_code`,
+            `national_code`,
+            `fee_status`,
+            `charge_type`,
+            `fee_type`,
+            `fee_descript`,
+            `fee_ccy`,
+            `effective_date`,
+            `rate`,
+            `min_fee`,
+            `max_fee`,
+            `maker_id`,
+            `make_date`,
+            `auth_id`,
+            `auth_date`,
+            `last_maintain`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        )
+        VALUES
+            (
+                #{fee_code},
+                #{national_code},
+                #{status},
+                #{type},
+                #{fee_type},
+                #{fee_descirpt},
+                #{fee_ccy},
+                #{effective_date},
+                #{rate},
+                #{min_fee},
+                #{max_fee},
+                #{maker_id},
+                #{make_date},
+                #{auth_id},
+                #{auth_date},
+                #{last_maintain},
+                'N',
+                #{create_time},
+                #{create_user},
+                #{update_time},
+                #{update_user}
+            )
+    </insert>
+
+    <!-- 单条查询 -->
+    <select id="selectFeeCodeService" resultType="Map" parameterType="Map">
+        SELECT
+            `fee_code`,
+            `national_code`,
+            `fee_status`,
+            `charge_type`,
+            `fee_type`,
+            `fee_descript`,
+            `fee_ccy`,
+            `effective_date`,
+            `rate`,
+            `min_fee`,
+            `max_fee`,
+            `maker_id`,
+            `make_date`,
+            `auth_id`,
+            `auth_date`,
+            `last_maintain`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            sc_scfeecdf
+        WHERE
+            `del` = 'N'
+            AND `fee_code` = #{fee_code}
+    </select>
+
+    <!-- 编辑 -->
+    <update id="updateFeeCodeService" parameterType="Map">
+        UPDATE `sc_scfeecdf`
+        SET
+        <if test="national_code != null and national_code != ''">`national_code` = #{national_code},</if>
+        <if test="fee_status != null and fee_status != ''">`fee_status` = #{status},</if>
+        <if test="charge_type != null and charge_type != ''">`charge_type` = #{type},</if>
+        <if test="fee_type != null and fee_type != ''">`fee_type` = #{fee_type},</if>
+        <if test="fee_descript != null and fee_descript != ''">`fee_descript` = #{fee_descript},</if>
+        <if test="fee_ccy != null and fee_ccy != ''">`fee_ccy` = #{fee_ccy},</if>
+        <if test="effective_date != null and effective_date != ''">`effective_date` = #{effective_date},</if>
+        <if test="rate != null and rate != ''">`rate` = #{rate},</if>
+        <if test="min_fee != null and min_fee != ''">`min_fee` = #{min_fee},</if>
+        <if test="max_fee != null and max_fee != ''">`max_fee` = #{max_fee},</if>
+        `last_maintain` = #{last_maintain},
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `fee_code` = #{fee_code}
+    </update>
+
+</mapper>

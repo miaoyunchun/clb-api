@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"  
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/task 
+			http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+			default-lazy-init="false">
+
+	<!--annotation configuration -->
+	<context:component-scan base-package="com.clps" >
+	<context:include-filter type="regex" expression="com.clps.*.pojo.*"/>
+	</context:component-scan>	
+	<!--static resource-->
+    <mvc:resources mapping="/resources/**" location="/resources/**"/>
+	
+	<!-- 引入dubbox属性配置文件 -->
+	<import resource="classpath:context/dubbo-provider.xml" />
+	
+	<!-- property configuration -->
+	<bean
+		class="com.clps.core.sys.config.encryption.EncryptablePropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/dev/jdbc.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<!--系统使用的dataSource -->
+	<bean id="systemMySqlDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.system.mysql.driver}" />
+		<property name="url" value="${jdbc.system.mysql.url}" />
+		<property name="username" value="${jdbc.system.mysql.username}" />
+		<property name="password" value="${jdbc.system.mysql.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<property name="maxIdle" value="${jdbc.maxIdle}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}" />
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+	</bean>
+	<!--个人使用的dataSource 
+	<bean id="personMySqlDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.person.mysql.driver}" />
+		<property name="url" value="${jdbc.person.mysql.url}" />
+		<property name="username" value="${jdbc.person.mysql.username}" />
+		<property name="password" value="${jdbc.person.mysql.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<property name="maxIdle" value="${jdbc.maxIdle}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}" />
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+	</bean>
+	-->
+	<bean id="multipleDataSource" class="com.clps.core.common.data.source.MultipleDataSource">
+		<property name="defaultTargetDataSource" ref="systemMySqlDataSource" />
+		<property name="targetDataSources">
+			<map>
+				<entry key="systemMySqlDataSource" value-ref="systemMySqlDataSource" />
+				<!-- 
+				<entry key="personMySqlDataSource" value-ref="personMySqlDataSource" /> -->
+			</map>
+		</property>
+	</bean>
+
+	<!-- 配置mybitasSqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="multipleDataSource" />
+		<property name="configLocation" value="classpath:context/mybatis-context.xml" />
+		<property name="mapperLocations" value="classpath:com/clps/**/mapper/*.xml" />
+	</bean>
+
+	<!-- 配置SqlSessionTemplate -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype" >
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="multipleDataSource" />
+		<property name="nestedTransactionAllowed" value="true"></property>
+	</bean>
+    
+    <!-- 完成了@AspectJ的支持，从而可以实现通过注解方式将通知编织到非公共方法中。 -->
+    <aop:aspectj-autoproxy  expose-proxy="true"/> 
+    
+    <!-- 日志切面类 -->
+    <bean id="logAspect" class="com.clps.core.sys.annotation.aspect.LogAspect">    
+  	</bean>
+
+	<!-- 注解方式配置事物 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 引入redis属性配置文件 -->
+	<import resource="classpath:context/redis-context.xml" />
+
+	<!-- 获取bean的工具类 -->
+	<bean id="applicationUtil" class="com.clps.core.sys.util.ApplicationUtils"></bean>
+
+	<!-- 统一异常处理 -->
+	<bean id="exceptionHandler" class="com.clps.core.sys.exception.ExceptionHandler" />
+	
+</beans>

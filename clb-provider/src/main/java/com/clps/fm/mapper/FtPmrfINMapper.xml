@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FtPmrfINMapper">		
+	<!-- 添加新用户 -->
+	<insert id="insertServicePmrfIN" parameterType="Map" useGeneratedKeys="true" keyProperty="REC_ACCT">
+	  INSERT INTO `ft_pmrf` (
+			`BUSINESS_TYPE`,
+			`DEDUC_CARD_NO`,
+			`DEDUC_NAME`,
+			`DEDUC_BANK_CODE`,
+			`DEDUC_BANK_NAME`,
+			`DEDUC_BANK_NUMBER`,
+			`RECV_BANK_CODE`,
+			`RECV_BANK_NAME`,
+			`RECV_BANK_NUMBER`,
+			`RECV_CARD_NO`,
+			`RECV_NAME`,
+			`GIRO_WAY`,
+			`TRANS_TYPE`,
+			`SERVICE_CHARGE_FUNC`,
+			`SERVICE_CHARGE_AMT`,
+			`RECORD_ID`,
+			`REC_ACCT`
+		)
+		VALUES
+			(
+            #{BUSINESS_TYPE},
+            #{DEDUC_CARD_NO},
+            #{DEDUC_NAME},
+            #{DEDUC_BANK_CODE},
+            #{DEDUC_BANK_NAME},
+            #{DEDUC_BANK_NUMBER},
+            #{RECV_BANK_CODE},
+            #{RECV_BANK_NAME},
+            #{RECV_BANK_NUMBER},
+            #{RECV_CARD_NO},
+            #{RECV_NAME},
+            #{GIRO_WAY},
+            #{TRANS_TYPE},
+            #{SERVICE_CHARGE_FUNC},
+            #{SERVICE_CHARGE_AMT},
+            #{RECORD_ID},
+            #{REC_ACCT}
+			)
+	</insert>
+
+		
+</mapper>

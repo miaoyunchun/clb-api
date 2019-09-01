@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpBalanceInqMapper">
+	
+    <!-- 账户余额查询-->
+	<select id="dpBalance2InqMapper"  resultType="Map" parameterType="Map" >
+		SELECT acct_nbr,acct_curr_bal			
+		FROM
+			dp_dpacct
+		WHERE
+			`acct_nbr` = #{acct_nbr}
+		AND	`del` = 'N'
+	</select>
+	
+	 <!-- 账户余额查询2-->
+	<select id="dpBalance3InqMapper"  resultType="Map" parameterType="Map" >
+		SELECT *
+		FROM
+			dp_dpacct
+		WHERE
+			`acct_nbr` = #{associate_acct_id}
+		AND	`del` = 'N'
+	</select>
+	
+   <!-- 卡号对应账户号查询-->
+	<select id="dpBalanceInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT *
+		FROM
+			dp_dpcard
+		WHERE
+			`card_number` = #{card_number}
+		AND	`del` = 'N'
+	</select>
+
+	<!-- 卡号对应账户号查询-->
+	<select id="prodInfoInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT *
+		FROM
+		cp_product_parameter
+		WHERE
+		`product_id` = #{prod_id}
+		AND	`del` = 'N'
+	</select>
+		
+</mapper>

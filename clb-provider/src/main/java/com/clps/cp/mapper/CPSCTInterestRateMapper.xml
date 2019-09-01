@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CPSCTInterestRateMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="sctinstResultMap" type="com.clps.cp.pojo.CpSctintPo" >
+		<result column="sct_id" property="sct_id"/>
+		<result column="sct_name" property="sct_name"/>
+		<result column="associate_org_id" property="associate_org_id"/>
+		<result column="sct_type" property="sct_type"/>
+		<result column="interest_type" property="interest_type"/>
+		<result column="interest_rate" property="interest_rate"/>
+		<result column="floating_percent" property="floating_percent"/>
+		<result column="last_maint_date" property="last_maint_date"/>
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+
+    <!-- 单条查询 -->
+	<select id="QueryCPSCTInterestRateService"  resultMap="sctinstResultMap" parameterType="cpInst" >
+		SELECT *
+		FROM
+			cp_sct_interest
+		WHERE
+			`del` = 'N'
+		AND `sct_id` = #{sct_id}
+	</select>
+	
+	<!-- 编辑 -->
+	<update id="editCPSCTInterestRateService" parameterType="cpInst">
+		UPDATE `cp_sct_interest`
+		SET 
+		 <if test="sct_name != null and sct_name != '' ">`sct_name` = #{sct_name}, </if>
+		 <if test="associate_org_id != null and associate_org_id != '' ">`associate_org_id` = #{associate_org_id}, </if>
+		 <if test="sct_type != null and sct_type != '' ">`sct_type` = #{sct_type}, </if>
+		 <if test="interest_type != null and interest_type != '' ">`interest_type` = #{interest_type}, </if>
+		 <if test="interest_rate != null and interest_rate != '' ">`interest_rate` = #{interest_rate}, </if>
+		 <if test="floating_percent != null and floating_percent != '' ">`floating_percent` = #{floating_percent}, </if>
+		 <if test="last_maint_date != null and last_maint_date != '' ">`last_maint_date` = #{last_maint_date}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`sct_id`=#{sct_id}
+	</update>
+	
+	<!-- 添加新用户 -->
+	<insert id="insertCPSCTInterestRateService" parameterType="cpInst" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `cp_sct_interest` (
+	        `sct_id`,
+			`sct_name`,
+			`associate_org_id`,
+			`sct_type`,
+			`interest_type`,
+			`interest_rate`,
+			`floating_percent`,
+			`last_maint_date`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+			    #{sct_id},
+				#{sct_name},
+				#{associate_org_id},
+				#{sct_type},
+				#{interest_type},
+				#{interest_rate},
+				#{floating_percent},
+				#{last_maint_date},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+</mapper>

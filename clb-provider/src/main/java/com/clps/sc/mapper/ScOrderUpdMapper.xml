@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ScOrderUpdMapper">
+    <!-- 更新编辑 -->
+    <update id="updateOrder" parameterType="Map">
+        UPDATE `sc_scordlgf`
+        SET
+        <if test="order_status != null and order_status  !='' ">`order_status` = #{order_status},</if>
+        <if test="acct_nbr != null and acct_nbr !='' ">`acct_nbr` = #{acct_nbr},</if>
+        <if test="cust_nbr != null and cust_nbr !='' ">`cust_nbr` = #{cust_nbr},</if>
+        <if test="sc_tran_type != null and sc_tran_type !='' ">`sc_tran_type` = #{sc_tran_type},</if>
+        <if test="sc_code != null and sc_code !='' ">`sc_code` = #{sc_code},</if>
+        <if test="sc_type != null and sc_type !='' ">`sc_type` = #{sc_type},</if>
+        <if test="sc_curr_price != null and sc_curr_price !='' ">`sc_curr_price` = #{sc_curr_price},</if>
+        <if test="sc_ccy != null and sc_ccy !='' ">`sc_ccy` = #{sc_ccy},</if>
+        <if test="sc_tran_num != null and sc_tran_num !='' ">`sc_tran_num` = #{sc_tran_num},</if>
+        <if test="fee_code1 != null and fee_code1 !='' ">`fee_code1` = #{fee_code1},</if>
+        <if test="fee_rate1 != null and fee_rate1 !='' ">`fee_rate1` = #{fee_rate1},</if>
+        <if test="fee_amt1 != null and fee_amt1 !='' ">`fee_amt1` = #{fee_amt1},</if>
+        <if test="fee_code2 != null and fee_code2 !='' ">`fee_code2` = #{fee_code2},</if>
+        <if test="fee_rate2 != null and fee_rate2 !='' ">`fee_rate2` = #{fee_rate2},</if>
+        <if test="fee_amt2 != null and fee_amt2 !='' ">`fee_amt2` = #{fee_amt2},</if>
+        <if test="fee_code3 != null and fee_code3 !='' ">`fee_code3` = #{fee_code3},</if>
+        <if test="fee_rate3 != null and fee_rate3 !='' ">`fee_rate3` = #{fee_rate3},</if>
+        <if test="fee_amt3 != null and fee_amt3 !='' ">`fee_amt3` = #{fee_amt3},</if>
+        <if test="fee_code4 != null and fee_code4 !='' ">`fee_code4` = #{fee_code4},</if>
+        <if test="fee_rate4 != null and fee_rate4 !='' ">`fee_rate4` = #{fee_rate4},</if>
+        <if test="fee_amt4 != null and fee_amt4 !='' ">`fee_amt4` = #{fee_amt4},</if>
+        <if test="order_date != null and order_date !='' ">`order_date` = #{order_date},</if>
+        <if test="order_time != null and order_time !='' ">`order_time` = #{order_time},</if>
+        <if test="settle_date != null and settle_date !='' ">`settle_date` = #{settle_date},</if>
+        <if test="trade_amt != null and trade_amt !='' ">`trade_amt` = #{trade_amt},</if>
+        <if test="trader != null and trader !='' ">`trader` = #{trader},</if>
+        <if test="tran_des != null and tran_des !='' ">`tran_des` = #{tran_des},</if>
+        `update_user` = #{update_user},
+        `update_time` = #{update_time}
+        WHERE
+        `jour_nbr` = #{jour_nbr}
+    </update>
+
+</mapper>

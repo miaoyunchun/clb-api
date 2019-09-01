@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="openAccountMapper">
+	
+	
+	<!-- 贷款开户-->
+	<insert id="LnOpenAccountService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `ln_acct` (
+	        `loan_acct_id`,
+			`customer_number`,
+			`loan_name`,
+			`org_id`,
+			`prod_id`,
+			`ccy_name`,
+			`acct_status`,
+			`loan_principal`,
+			`loan_amt_toltal`,
+			`loan_remain_amt`,
+			`loan_open_date`,
+			`loan_last_date`,
+			`rate_type`,
+			`rate`,
+			`payback_card_no`,
+			`drawdown_card_no`,
+			`add_by`,
+			`last_by`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+			    #{loan_acct_id},
+				#{customer_number},
+				#{loan_name},
+				#{org_id},
+				#{prod_id},
+				#{ccy_name},
+				#{acct_status},
+				#{loan_principal},
+				#{loan_amt_toltal},
+				#{loan_remain_amt},
+				#{loan_open_date},
+				#{loan_last_date},
+				#{rate_type},
+				#{rate},
+				#{payback_card_no},
+				#{drawdown_card_no},
+				#{add_by},
+				#{last_by},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+<!-- 申请状态更新 -->
+<update id="lnApplyStatusUpdate" parameterType="Map">
+		UPDATE `ln_apply` 
+		SET `lncappf_status` = '003'
+		WHERE `lncappf_id` = #{apply_id}
+	</update>
+
+
+</mapper>

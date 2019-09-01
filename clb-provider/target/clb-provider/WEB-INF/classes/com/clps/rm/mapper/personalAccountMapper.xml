@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="personalAccountMapper">
+
+    <resultMap id="PcustResultMap" type="com.clps.rm.pojo.RmcustPo">
+        <result column="cust_number" property="cust_number"/>
+        <result column="cust_type" property="cust_type"/>
+        <result column="cust_org_id" property="cust_org_id"/>
+        <result column="cust_status" property="cust_status"/>
+        <result column="cust_open_date" property="cust_open_date"/>
+        <result column="cust_id_type" property="cust_id_type"/>
+        <result column="cust_id_no" property="cust_id_no"/>
+        <result column="cust_gender" property="cust_gender"/>
+        <result column="cust_nationality" property="cust_nationality"/>
+        <result column="cust_name" property="cust_name"/>
+        <result column="cust_city" property="cust_city"/>
+        <result column="cust_address" property="cust_address"/>
+        <result column="cust_address2" property="cust_address2"/>
+        <result column="cust_address3" property="cust_address3"/>
+        <result column="cust_post_code" property="cust_post_code"/>
+        <result column="cust_phone_number" property="cust_phone_number"/>
+        <result column="cust_hand_phone" property="cust_hand_phone"/>
+        <result column="cust_last_main_date" property="cust_last_main_date"/>
+        <result column="cust_email" property="cust_email"/>
+        <result column="cust_cred_assess" property="cust_cred_assess"/>
+        <result column="cust_maker" property="cust_maker"/>
+        <result column="del" property="del"/>
+        <result column="create_user" property="create_user"/>
+        <result column="create_time" property="create_time"/>
+        <result column="update_user" property="update_user"/>
+        <result column="update_time" property="update_time"/>
+    </resultMap>
+
+    <!-- 单条查询 -->
+    <select id="selectPersonalCustomer" resultMap="PcustResultMap" parameterType="rmcust">
+        SELECT
+            `cust_number`,
+            `cust_type`,
+            `cust_org_id`,
+            `cust_status`,
+            `cust_open_date`,
+            `cust_id_type`,
+            `cust_id_no`,
+            `cust_gender`,
+            `cust_nationality`,
+            `cust_name`,
+            `cust_city`,
+            `cust_address`,
+            `cust_address2`,
+            `cust_address3`,
+            `cust_post_code`,
+            `cust_phone_number`,
+            `cust_hand_phone`,
+            `cust_last_main_date`,
+            `cust_email`,
+            `cust_cred_assess`,
+            `cust_maker`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            rm_rmcust
+        WHERE
+            `del` = 'N'
+            AND `cust_number` = #{cust_number}
+    </select>
+
+    <!-- 删除 -->
+    <update id="deletePersonalCustomer" parameterType="rmcust">
+        UPDATE `rm_rmcust`
+        SET
+            `del`         = 'Y',
+            `update_time` = #{update_time},
+            `update_user` = #{update_user}
+        WHERE
+            `cust_number` = #{custNumber}
+    </update>
+
+    <!-- 编辑 -->
+    <update id="updatePersonalCustomer" parameterType="rmcust">
+        UPDATE `rm_rmcust`
+        SET
+        <if test="cust_org_id != null and cust_org_id != '' ">`cust_org_id` = #{cust_org_id},</if>
+        <if test="cust_gender != null and cust_gender != '' ">`cust_gender` = #{cust_gender},</if>
+        <if test="cust_nationality != null and cust_nationality != '' ">`cust_nationality` = #{cust_nationality},</if>
+        <if test="cust_name != null and cust_name != '' ">`cust_name` = #{cust_name},</if>
+        <if test="cust_city != null and cust_city != '' ">`cust_city` = #{cust_city},</if>
+        <if test="cust_address != null and cust_address != '' ">`cust_address` = #{cust_address},</if>
+        <if test="cust_address2 != null and cust_address2 != '' ">`cust_address2` = #{cust_address2},</if>
+        <if test="cust_address2 == null or cust_address2 == '' ">`cust_address2` = '',</if>
+        <if test="cust_address3 != null and cust_address3 != '' ">`cust_address3` = #{cust_address3},</if>
+        <if test="cust_address3 == null or cust_address3 == '' ">`cust_address3` = '',</if>
+        <if test="cust_post_code != null and cust_post_code != '' ">`cust_post_code` = #{cust_post_code},</if>
+        <if test="cust_phone_number != null and cust_phone_number != '' ">`cust_phone_number` = #{cust_phone_number},
+        </if>
+        <if test="cust_hand_phone != null and cust_hand_phone != '' ">`cust_hand_phone` = #{cust_hand_phone},</if>
+        `cust_last_main_date` = #{cust_last_main_date},
+        <if test="cust_email != null and cust_email != '' ">`cust_email` = #{cust_email},</if>
+        <if test="cust_cred_assess != null and cust_cred_assess != '' ">`cust_cred_assess` = #{cust_cred_assess},</if>
+        `cust_maker` = #{cust_maker},
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `cust_number` = #{cust_number}
+    </update>
+
+    <!-- 添加新用户 -->
+    <insert id="insertPersonalCustomer" parameterType="rmcust" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `rm_rmcust` (
+        `cust_number`,
+        `cust_type`,
+        `cust_org_id`,
+        `cust_status`,
+        `cust_open_date`,
+        `cust_id_type`,
+        `cust_id_no`,
+        `cust_gender`,
+        `cust_nationality`,
+        `cust_name`,
+        `cust_city`,
+        `cust_address`,
+        `cust_address2`,
+        `cust_address3`,
+        `cust_post_code`,
+        `cust_phone_number`,
+        `cust_hand_phone`,
+        `cust_last_main_date`,
+        `cust_email`,
+        `cust_cred_assess`,
+        `cust_maker`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{cust_number},
+        '0', <!-- 0 = Individual customer -->
+        #{cust_org_id},
+        '0',
+        #{cust_open_date},
+        #{cust_id_type},
+        #{cust_id_no},
+        #{cust_gender},
+        #{cust_nationality},
+        #{cust_name},
+        #{cust_city},
+        #{cust_address},
+        #{cust_address2},
+        #{cust_address3},
+        #{cust_post_code},
+        #{cust_phone_number},
+        #{cust_hand_phone},
+        #{cust_last_main_date},
+        #{cust_email},
+        #{cust_cred_assess},
+        #{cust_maker},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+
+
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryCustomerByName_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `rm_rmcust` a
+        <include refid="queryCustomerByName_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="queryCustomerByName" resultType="Map" parameterType="Map">
+        select
+        a.`cust_number` AS `number`,
+        a.`cust_name` AS `name`,
+        a.`cust_org_id` AS `org_id`
+        from `rm_rmcust` a
+        <include refid="queryCustomerByName_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryCustomerByName_condition">
+        <where>
+            1=1 and a.`del`='N' and a.`cust_name` like concat('%', #{name}, '%')
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and
+                a.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and
+                a.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>

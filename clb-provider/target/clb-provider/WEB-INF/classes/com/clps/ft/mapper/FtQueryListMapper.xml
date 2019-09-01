@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FtQueryListMapper">
+	<!-- 多条查询 -->
+	<select id="queryService" resultType="Map" parameterType="Map">
+		select
+		MSG_NUM,
+		DEDUC_BANK_NUMBER,
+		RECV_BANK_NUMBER,
+		TXN_AMT
+		from ft_vrptt
+		where
+		TXN_DATE=#{TXN_DATE}
+	</select>
+	<!-- 查询数量 -->
+	<select id="queryService_count" resultType="Long" parameterType="Map">
+		select count(*)
+		from ft_vrptt
+	</select>
+
+</mapper>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scCustomerMapper">
+
+    <!-- 新增客户 -->
+    <insert id="insertCustomerService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sc_sccustf` (
+            `acct_nbr`,
+            `sc_acct_type`,
+            `cust_nbr`,
+            `cust_name`,
+            `sex`,
+            `id_type`,
+            `id_nbr`,
+            `pass_code`,
+            `saving_acct_flag`,
+            `saving_acct`,
+            `saving_acct_type`,
+            `nation_code`,
+            `accept_city`,
+            `accept_branch`,
+            `open_date`,
+            `end_date`,
+            `birth_date`,
+            `home_tel`,
+            `company_tel`,
+            `mobile_phone`,
+            `otr_cnt_name`,
+            `otr_cnt_tel`,
+            `bill_address`,
+            `post_code`,
+            `e_mail`,
+            `manager_code`,
+            `manager_name`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        )
+        VALUES
+            (
+                #{acct_nbr},
+                #{sc_acct_type},
+                #{cust_nbr},
+                #{cust_name},
+                #{sex},
+                #{id_type},
+                #{id_nbr},
+                #{pass_code},
+                #{saving_acct_flag},
+                #{saving_acct},
+                #{saving_acct_type},
+                #{nation_code},
+                #{accept_city},
+                #{accept_branch},
+                #{open_date},
+                #{end_date},
+                #{brith_date},
+                #{home_tel},
+                #{company_tel},
+                #{mobile_phone},
+                #{otr_cnt_name},
+                #{otr_cnt_tel},
+                #{bill_address},
+                #{post_code},
+                #{e_mail},
+                #{manager_code},
+                #{manager_name},
+                'N',
+                #{create_time},
+                #{create_user},
+                #{update_time},
+                #{update_user}
+            )
+    </insert>
+
+    <!-- 账户信息查询 -->
+    <!-- 总数查询 -->
+    <select id="customerListService_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `sc_sccustf` a
+        <include refid="customerListService_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="customerListService" resultType="Map" parameterType="Map">
+        select
+        a.`acct_nbr`,
+        a.`cust_nbr`,
+        a.`accept_city`,
+        a.`sc_acct_type`,
+        a.`del`,
+        a.`create_time`,
+        a.`create_user`,
+        a.`update_time`,
+        a.`update_user`
+        from `sc_sccustf` a
+        <include refid="customerListService_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="customerListService_condition">
+        <where>
+            1=1 and a.`del`='N'
+            <!-- 自定义搜索 -->
+            <if test="id_type != null and id_type != '' and id_nbr != null and id_nbr != '' ">
+                AND a.`id_type` = #{id_type}
+                AND a.`id_nbr` = #{id_nbr}
+            </if>
+            <if test="acct_nbr != null and acct_nbr != ''">AND a.`acct_nbr` = #{acct_nbr}</if>
+            <if test="cust_nbr != null and cust_nbr != ''">AND a.`cust_nbr` = #{cust_nbr}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start} and
+                a.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start} and
+                a.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 单条查询 -->
+    <select id="selectCustomerService" resultType="Map" parameterType="Map">
+        SELECT
+            `acct_nbr`,
+            `sc_acct_type`,
+            `cust_nbr`,
+            `cust_name`,
+            `sex`,
+            `id_type`,
+            `id_nbr`,
+            `pass_code`,
+            `saving_acct_flag`,
+            `saving_acct`,
+            `saving_acct_type`,
+            `nation_code`,
+            `accept_city`,
+            `accept_branch`,
+            `open_date`,
+            `end_date`,
+            `birth_date`,
+            `home_tel`,
+            `company_tel`,
+            `mobile_phone`,
+            `otr_cnt_name`,
+            `otr_cnt_tel`,
+            `bill_address`,
+            `post_code`,
+            `e_mail`,
+            `manager_code`,
+            `manager_name`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            sc_sccustf
+        WHERE
+            `del` = 'N'
+            AND `acct_nbr` = #{acct_nbr}
+    </select>
+
+    <!-- 编辑 -->
+    <update id="updateCustomerService" parameterType="Map">
+        UPDATE `sc_sccustf`
+        SET
+        <if test="cust_name != null and cust_name != ''">`cust_name` = #{cust_name},</if>
+        <if test="sex != null and sex != ''">`sex` = #{sex},</if>
+        <if test="pass_code != null and pass_code != ''">`pass_code` = #{pass_code},</if>
+        <if test="saving_acct_flag != null and saving_acct_flag != ''">`saving_acct_flag` = #{saving_acct_flag},</if>
+        <if test="saving_acct != null and saving_acct != ''">`saving_acct` = #{saving_acct},</if>
+        <if test="saving_acct_type != null and saving_acct_type != ''">`saving_acct_type` = #{saving_acct_type},</if>
+        <if test="nation_code != null and nation_code != ''">`nation_code` = #{nation_code},</if>
+        <if test="accept_city != null and accept_city != ''">`accept_city` = #{accept_city},</if>
+        <if test="accept_branch != null">`accept_branch` = #{accept_branch},</if>
+        <if test="end_date != null and end_date != ''">`end_date` = #{end_date},</if>
+        <if test="birth_date != null and birth_date != ''">`birth_date` = #{birth_date},</if>
+        <if test="home_tel != null and home_tel != ''">`home_tel` = #{home_tel},</if>
+        <if test="company_tel != null and company_tel != ''">`company_tel` = #{company_tel},</if>
+        <if test="mobile_phone != null and mobile_phone != ''">`mobile_phone` = #{mobile_phone},</if>
+        <if test="otr_cnt_name != null and otr_cnt_name != ''">`otr_cnt_name` = #{otr_cnt_name},</if>
+        <if test="otr_cnt_tel != null and otr_cnt_tel != ''">`otr_cnt_tel` = #{otr_cnt_tel},</if>
+        <if test="bill_address != null and bill_address != ''">`bill_address` = #{bill_address},</if>
+        <if test="post_code != null and post_code != ''">`post_code` = #{post_code},</if>
+        <if test="e_mail != null and e_mail != ''">`e_mail` = #{e_mail},</if>
+        <if test="manager_code != null and manager_code != ''">`manager_code` = #{manager_code},</if>
+        <if test="manager_name != null and manager_name != ''">`manager_name` = #{manager_name},</if>
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `del` = 'N'
+        AND `acct_nbr` = #{acct_nbr}
+    </update>
+
+</mapper>

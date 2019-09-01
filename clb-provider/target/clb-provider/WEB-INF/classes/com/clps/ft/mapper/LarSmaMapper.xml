@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="larsmaMapper">
+<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="larsmaQueryListService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `ft_pmrf` 
+		<include refid="larsmaQueryListService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="larsmaQueryListService" resultType="Map" parameterType="Map">  
+		select 
+			`txn_jour`,
+			`deduc_bank_number`,
+			`recv_bank_number`,
+			`trans_amt`
+		from `ft_pmrf` 
+		<include refid="larsmaQueryListService_condition" /> 
+		<!-- 默认 -->
+		<if test="sortRec_acct !=null and sortRec_acct !='' ">ORDER BY `${sortRec_acct}` ${sortOrder}   </if>
+		LIMIT ${offset},${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="larsmaQueryListService_condition">
+		<where>
+		    1=1 and `del`='N' 
+		    <!-- 自定义搜索 -->
+		    <if test="txn_code !=null and txn_code !='' ">and `txn_code`=#{txn_code}  </if>
+		     <if test="txn_date !=null and txn_date !='' ">and `txn_date`=#{txn_date}  </if>
+		    <!-- 默认搜索 -->
+		    <if test="create_time !=null and create_time !='' ">and (create_time>#{create_time_start}  and create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (update_time>#{update_time_start}  and update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+	
+	
+		
+
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmAcctDetailListMapper">
+
+<resultMap id="AcctDetailResultMap" type="com.clps.fm.pojo.FmAcctDtlPo">
+    <result column="tran_jour" property="tran_jour"/>
+    <result column="tran_seq" property="tran_seq"/>
+    <result column="tran_id" property="tran_id"/>
+    <result column="cond_seq" property="cond_seq"/>
+    <result column="tran_date" property="tran_date"/>
+    <result column="tran_time" property="tran_time"/>
+    <result column="dc_flag" property="dc_flag"/>
+    <result column="acct_item" property="acct_item"/>
+    <result column="acct_org" property="acct_org"/>
+    <result column="tran_amt" property="tran_amt"/>
+    <result column="item_seq" property="item_seq"/>
+    <result column="del" property="del"/>
+    <result column="create_time" property="create_time"/>
+    <result column="create_user" property="create_user"/>
+    <result column="update_time" property="update_time"/>
+    <result column="update_user" property="update_user"/>
+
+</resultMap>
+<!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryFmAcctDetail_count" resultType="Long" parameterType="fmactdtl">
+        select count(*) as `count`
+        from `fm_acct_detail` a
+        <include refid="queryFmAcctdetail_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryFmAcctDetail" resultMap="AcctDetailResultMap" parameterType="fmactdtl">
+        select
+        @num:=@num+1 as seq,
+        concat(a.`tran_jour`,a.`tran_seq`) as `tran_j`,
+        a.`tran_jour`,
+        a.tran_seq,
+        a.tran_id,
+        a.cond_seq,
+        a.`tran_date`,
+        a.tran_time,
+        a.`dc_flag`,
+        a.`acct_item`,
+        a.acct_org,
+        a.`tran_amt`,
+        a.item_seq
+        from (SELECT @num:=0) r,`fm_acct_detail` a
+        <include refid="queryFmAcctdetail_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryFmAcctdetail_condition">
+        <where>
+            1=1 and a.`del`='N' 
+            <if test="tran_jour != null and tran_jour != '' ">and a.`tran_jour` = #{tran_jour}</if>
+            <if test="tran_id != null and tran_id != '' ">and a.`tran_id` = #{tran_id}</if>
+            <if test="tran_date != null and tran_date != '' ">and a.`tran_date` = #{tran_date}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+</mapper>

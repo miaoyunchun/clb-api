@@ -1,0 +1,147 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="acctOpenMapper">
+		<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="DpResultMap" type="com.clps.dp.pojo.DpAcctPo" >
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="prod_id" property="prod_id"/>
+		<result column="associate_org_id" property="associate_org_id"/>
+		<result column="cust_nbr" property="cust_nbr"/>
+		<result column="relation_no" property="relation_no"/>
+		<result column="last_press_date" property="last_press_date"/>
+		<result column="acct_status" property="acct_status"/>
+		<result column="last_status" property="last_status"/>
+		<result column="last_status_date" property="last_status_date"/>
+		<result column="acct_curr_bal" property="acct_curr_bal"/>
+		<result column="acct_last_bal" property="acct_last_bal"/>
+		<result column="prod_spec_date" property="prod_spec_date"/>
+		<result column="acct_last_main_date" property="acct_last_main_date"/>
+		<result column="ccy" property="ccy"/>
+		<result column="add_by" property="add_by"/>
+		<result column="last_by" property="last_by"/>
+		<result column="subject_no" property="subject_no"/>
+		<result column="aggr_bal" property="aggr_bal"/>
+		<result column="interest" property="interest"/>
+		<result column="prod_end_date" property="prod_end_date"/>
+		<result column="tenor" property="tenor"/>
+		<result column="per_tenor_amt" property="per_tenor_amt"/>
+		<result column="rate" property="rate"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+ <!-- 添加新卡 -->
+	<insert id="insertDpAcct" parameterType="dpacct">
+	  INSERT INTO `dp_dpacct` (
+			`acct_nbr`,
+			`prod_id`,
+			`associate_org_id`,
+			`cust_nbr`,
+			`relation_no`,
+			`last_press_date`,
+			`acct_status`,
+			`last_status`,
+			`last_status_date`,
+			`acct_curr_bal`, 
+			`acct_last_bal`,
+			`prod_spec_date`,
+			`acct_last_main_date`, 
+			`ccy`,
+			`add_by`, 	
+			`last_by`,
+			`subject_no`,
+			`aggr_bal`,
+			`interest`,
+			`prod_end_date`,
+			`tenor`,
+			`per_tenor_amt`,
+			`rate`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{acct_nbr},
+				#{prod_id},
+				#{associate_org_id},
+				#{cust_nbr},
+				#{relation_no},
+				#{last_press_date},
+				#{acct_status},
+				#{last_status},
+				#{last_status_date},
+				#{acct_curr_bal},
+				#{acct_last_bal},
+				#{prod_spec_date},
+				#{acct_last_main_date},
+				#{ccy},
+				#{add_by},
+				#{last_by},
+				#{subject_no},
+				#{aggr_bal},
+				#{interest},
+				#{prod_end_date},
+				#{tenor},
+				#{per_tenor_amt},
+				#{rate},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+			  <!-- 更新dp_dpacct表余额 -->
+
+	<update id="dpBalanceUpdMapper"  parameterType="dpacct" >
+		UPDATE 	`dp_dpacct`
+		SET
+			 `acct_curr_bal` = #{acct_curr_bal},
+			 `acct_last_bal` = #{acct_last_bal},
+			 `update_time` = #{update_time},
+			 `update_user` = #{update_user}
+		WHERE
+			`acct_nbr` = #{acct_nbr}
+		AND	`del` = 'N'
+	</update>
+
+	<!-- 查询dp_dpacct表 -->
+	<select id="acctInfoInq"  resultMap="DpResultMap" parameterType="dpacct" >
+		select *
+	    FROM dp_dpacct
+		WHERE
+		`acct_nbr` = #{acct_nbr}
+		AND	`del` = 'N'
+	</select>
+		<!-- 个人账户利率更新-->
+	<update id="RateUpdateMapper" parameterType="dpacct">
+		UPDATE dp_dpacct
+		SET `rate`=#{rate}
+		WHERE `acct_nbr`=#{acct_nbr}
+		AND `del`='N'
+	</update>
+	<!-- 返回查询 -->
+	<select id="ResultMapper" resultMap="DpResultMap" parameterType="dpacct" >
+		SELECT acct_nbr,rate
+		FROM dp_dpacct
+		WHERE `acct_nbr`=#{acct_nbr}
+		AND `del`='N'
+	<!-- 人民币账户余额汇总 -->	
+	</select>
+		<select id="BalanceCalService"  resultType="Map" parameterType="dpacct" >
+		SELECT
+			`cust_nbr`,sum(`acct_curr_bal`) as sum
+		FROM
+			`dp_dpacct`
+		WHERE
+	   `cust_nbr` = #{cust_nbr}
+	    and `ccy` = #{ccy}
+	    and `del`='N'
+	</select>	
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lnAcctApplyListMapper">
+
+
+<!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryLnAcctByCustomerNo_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `ln_apply` a
+        <include refid="queryLnAcctByCustomerNo_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryLnAcctByCustomerNo" resultType="Map" parameterType="Map">
+        select
+        a.`lncappf_id`,
+        a.`lncappf_prod_code`,
+        a.`lncappf_cust_no` as 'custmoer_number',
+        substring(a.`lncappf_cust_no`,1,1) as 'lncappf_cust_type',
+        substring(a.`lncappf_cust_no`,2,18) as 'lncappf_cust_no',
+        a.`lncappf_status`,
+        a.`lncappf_amt`,
+        a.`lncappf_in_date`,
+        a.`lncappf_in_time`
+        from `ln_apply` a
+        <include refid="queryLnAcctByCustomerNo_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryLnAcctByCustomerNo_condition">
+        <where>
+            1=1 and a.`del`='N'
+            <if test="lncappf_status != null and lncappf_status != '' ">and  a.`lncappf_status`=#{lncappf_status}</if>
+            <if test="cust_number != null and cust_number != '' ">and  a.`lncappf_cust_no`=#{cust_number}</if>
+            <!-- 默认搜索 -->
+        </where>
+    </sql>
+</mapper>

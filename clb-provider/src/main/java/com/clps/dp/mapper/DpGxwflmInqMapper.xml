@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpGxwflmInqMapper">
+<!-- Result Map   gxlrebkf 大额销户授权登记簿 PO对象字段和表字段的映射-->
+	<resultMap id="gxlrebkf" type="com.clps.dp.pojo.DpGxlrebkfPo" >
+		<result column="card_nbr" property="card_nbr"/>
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="cust_nbr" property="cust_nbr"/>
+		<result column="acct_ccy" property="acct_ccy"/>
+		<result column="writeoff_amt" property="writeoff_amt"/>
+		<result column="operator" property="operator"/>
+		<result column="approver" property="approver"/>
+		<result column="writeoff_date" property="writeoff_date"/>
+		<result column="writeoff_time" property="writeoff_time"/>
+		<result column="apprv_result" property="apprv_result"/>
+		<result column="apprv_reason" property="apprv_reason"/>
+		<result column="remark" property="remark"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+<!-- Result Map   gxregflf 清户标志文件  PO对象字段和表字段的映射-->
+	<resultMap id="gxregflf" type="com.clps.dp.pojo.DpGxregflfPo" >
+		<result column="card_nbr" property="card_nbr"/>
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="acct_ccy" property="acct_ccy"/>
+		<result column="writeoff_date" property="writeoff_date"/>
+		<result column="writeoff_time" property="writeoff_time"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+ <!-- 大额流失客户详细查询-->
+	<select id="dpGxwflmInq"  resultType="Map" parameterType="gxlrebkf" >
+		SELECT *			
+		FROM
+			dp_gxlrebkf
+		WHERE
+			`card_nbr` = #{card_nbr}
+		AND	`del` = 'N'
+	</select>
+	
+	<!-- 大额流失客户列表查询-->
+	<!-- 总数查询 -->
+	<select id="dpGxwflmCount" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `dp_gxlrebkf` a
+		<include refid="dpGxwflmListService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="dpGxwflmListInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT 
+			   a.`card_nbr`,
+			   a.`acct_nbr`,
+			   a.`acct_ccy`,
+			   a.`operator`,
+			   a.`approver`		
+		FROM
+			`dp_gxlrebkf` a
+		<include refid="dpGxwflmListService_condition" /> 
+	</select>
+	<!-- 条件 -->
+	<sql id="dpGxwflmListService_condition">
+		<where>
+		    1=1 and a.`del`='N' 
+		    <!-- 自定义搜索 -->
+		    <if test="card_nbr !=null and card_nbr !='' ">and a.`card_nbr`=#{card_nbr}  </if>
+		    <if test=" operator!=null and operator !='' ">and a.`operator`=#{operator}  </if>
+		    <if test=" approver!=null and approver !='' ">and a.`approver`=#{approver}  </if>
+		    <!-- 默认搜索 -->
+		    <if test="create_time !=null and create_time !='' ">and (a.`create_time`>#{create_time_start}  and a.`create_time` &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.`create_user` like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.`update_time`>#{update_time_start}  and a.`update_time` &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.`update_user` like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+	
+</mapper>

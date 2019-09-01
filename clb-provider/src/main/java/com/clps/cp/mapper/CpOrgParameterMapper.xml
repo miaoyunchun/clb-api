@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cpOrgParameterMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="cporgResultMap" type="com.clps.cp.pojo.CpOrgparm" >
+		<result column="org_id" property="org_id"/>
+		<result column="org_name" property="org_name"/>
+		<result column="process_status" property="process_status"/>
+		<result column="process_with_system" property="process_with_system"/>
+		<result column="curr_proc_date" property="curr_proc_date"/>
+		<result column="last_proc_date" property="last_proc_date"/>
+		<result column="next_proc_date" property="next_proc_date"/>
+		<result column="accr_thru_date" property="accr_thru_date"/>
+		<result column="last_accr_date" property="last_accr_date"/>
+		<result column="next_accr_date" property="next_accr_date"/>
+		<result column="work_of_week" property="work_of_week"/>
+		<result column="eom_eoy_flag" property="eom_eoy_flag"/>
+		<result column="last_maint_date" property="last_maint_date"/>
+		<result column="public_holiday1" property="public_holiday1"/>
+		<result column="public_holiday2" property="public_holiday2"/>
+		<result column="public_holiday3" property="public_holiday3"/>
+		<result column="public_holiday4" property="public_holiday4"/>
+		<result column="public_holiday5" property="public_holiday5"/>
+		<result column="public_holiday6" property="public_holiday6"/>
+		<result column="public_holiday7" property="public_holiday7"/>
+		<result column="public_holiday8" property="public_holiday8"/>
+		<result column="public_holiday9" property="public_holiday9"/>
+		<result column="public_holiday10" property="public_holiday10"/>
+		<result column="public_holiday11" property="public_holiday11"/>
+		<result column="public_holiday12" property="public_holiday12"/>
+		<result column="public_holiday13" property="public_holiday13"/>
+		<result column="public_holiday14" property="public_holiday14"/>
+		<result column="public_holiday15" property="public_holiday15"/>
+		<result column="public_holiday16" property="public_holiday16"/>
+		<result column="public_holiday17" property="public_holiday17"/>
+		<result column="public_holiday18" property="public_holiday18"/>
+		<result column="public_holiday19" property="public_holiday19"/>
+		<result column="public_holiday20" property="public_holiday20"/>
+		<result column="public_holiday21" property="public_holiday21"/>
+		<result column="public_holiday22" property="public_holiday22"/>
+		<result column="public_holiday23" property="public_holiday23"/>
+		<result column="public_holiday24" property="public_holiday24"/>
+		<result column="public_holiday25" property="public_holiday25"/>
+		<result column="public_holiday26" property="public_holiday26"/>
+		<result column="public_holiday27" property="public_holiday27"/>
+		<result column="public_holiday28" property="public_holiday28"/>
+		<result column="public_holiday29" property="public_holiday29"/>
+		<result column="public_holiday30" property="public_holiday30"/>
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 单条查询机构参数表-->
+	<select id="queryCpOrgParameterMapper"  resultMap="cporgResultMap" parameterType="cpOrg" >
+		SELECT *			
+		FROM
+			cp_organization_parameter
+		WHERE
+			`org_id` = #{org_id}
+		AND	`del` = 'N'
+	</select>
+	
+	<!-- 删除 机构参数表-->
+	<update id="deleteCpOrgParameterMapper" parameterType="cpOrg">
+		UPDATE `cp_organization_parameter` SET 
+			`del`='Y',
+			`update_time` = #{update_time},
+		 	`update_user` = #{update_user}
+		 		where `org_id` = #{org_id}
+	</update>
+	
+	<!-- 编辑机构参数表 -->
+	<update id="editCpOrgParameterMapper" parameterType="cpOrg">
+		UPDATE `cp_organization_parameter`
+		SET
+		<if test="org_id != null and org_id != '' ">`org_id` = #{org_id}, </if>
+		<if test="org_name != null and org_name != '' ">`org_name` = #{org_name}, </if>
+		<if test="process_status != null and process_status != '' ">`process_status` = #{process_status}, </if>
+		<if test="process_with_system != null and process_with_system != '' ">`process_with_system` = #{process_with_system}, </if>
+		<if test="curr_proc_date != null and curr_proc_date != '' ">`curr_proc_date` = #{curr_proc_date}, </if>
+		<if test="last_proc_date != null and last_proc_date != '' ">`last_proc_date` = #{last_proc_date}, </if>
+		<if test="next_proc_date != null and next_proc_date != '' ">`next_proc_date` = #{next_proc_date}, </if>
+		<if test="accr_thru_date != null and accr_thru_date != '' ">`accr_thru_date` = #{accr_thru_date}, </if>
+		<if test="last_accr_date != null and last_accr_date != '' ">`last_accr_date` = #{last_accr_date}, </if>
+		<if test="next_accr_date != null and next_accr_date != '' ">`next_accr_date` = #{next_accr_date}, </if>
+		<if test="last_maint_date != null and last_maint_date != '' ">`last_maint_date` = #{last_maint_date}, </if>
+		<if test="work_of_week != null and work_of_week != '' ">`work_of_week` = #{work_of_week}, </if>
+		<if test="eom_eoy_flag != null and eom_eoy_flag != '' ">`eom_eoy_flag` = #{eom_eoy_flag}, </if>
+		<if test="public_holiday1 != null and public_holiday1 != '' ">`public_holiday1` = #{public_holiday1}, </if>
+		<if test="public_holiday2 != null and public_holiday2 != '' ">`public_holiday2` = #{public_holiday2}, </if>
+		<if test="public_holiday3 != null and public_holiday3 != '' ">`public_holiday3` = #{public_holiday3}, </if>
+		<if test="public_holiday4 != null and public_holiday4 != '' ">`public_holiday4` = #{public_holiday4}, </if>
+		<if test="public_holiday5 != null and public_holiday5 != '' ">`public_holiday5` = #{public_holiday5}, </if>
+		<if test="public_holiday6 != null and public_holiday6 != '' ">`public_holiday6` = #{public_holiday6}, </if>
+		<if test="public_holiday7 != null and public_holiday7 != '' ">`public_holiday7` = #{public_holiday7}, </if>
+		<if test="public_holiday8 != null and public_holiday8 != '' ">`public_holiday8` = #{public_holiday8}, </if>
+		<if test="public_holiday9 != null and public_holiday9 != '' ">`public_holiday9` = #{public_holiday9}, </if>
+		<if test="public_holiday10 != null and public_holiday10 != '' ">`public_holiday10` = #{public_holiday10}, </if>
+		<if test="public_holiday11 != null and public_holiday11 != '' ">`public_holiday11` = #{public_holiday11}, </if>
+		<if test="public_holiday12 != null and public_holiday12 != '' ">`public_holiday12` = #{public_holiday12}, </if>
+		<if test="public_holiday13 != null and public_holiday13 != '' ">`public_holiday13` = #{public_holiday13}, </if>
+		<if test="public_holiday14 != null and public_holiday14 != '' ">`public_holiday14` = #{public_holiday14}, </if>
+		<if test="public_holiday15 != null and public_holiday15 != '' ">`public_holiday15` = #{public_holiday15}, </if>
+		<if test="public_holiday16 != null and public_holiday16 != '' ">`public_holiday16` = #{public_holiday16}, </if>
+		<if test="public_holiday17 != null and public_holiday17 != '' ">`public_holiday17` = #{public_holiday17}, </if>
+		<if test="public_holiday18 != null and public_holiday18 != '' ">`public_holiday18` = #{public_holiday18}, </if>
+		<if test="public_holiday19 != null and public_holiday19 != '' ">`public_holiday19` = #{public_holiday19}, </if>
+		<if test="public_holiday20 != null and public_holiday20 != '' ">`public_holiday20` = #{public_holiday20}, </if>
+		<if test="public_holiday21 != null and public_holiday21 != '' ">`public_holiday21` = #{public_holiday21}, </if>
+		<if test="public_holiday22 != null and public_holiday22 != '' ">`public_holiday22` = #{public_holiday22}, </if>
+		<if test="public_holiday23 != null and public_holiday23 != '' ">`public_holiday23` = #{public_holiday23}, </if>
+		<if test="public_holiday24 != null and public_holiday24 != '' ">`public_holiday24` = #{public_holiday24}, </if>
+		<if test="public_holiday25 != null and public_holiday25 != '' ">`public_holiday25` = #{public_holiday25}, </if>
+		<if test="public_holiday26 != null and public_holiday26 != '' ">`public_holiday26` = #{public_holiday26}, </if>
+		<if test="public_holiday27 != null and public_holiday27 != '' ">`public_holiday27` = #{public_holiday27}, </if>
+		<if test="public_holiday28 != null and public_holiday28 != '' ">`public_holiday28` = #{public_holiday28}, </if>
+		<if test="public_holiday29 != null and public_holiday29 != '' ">`public_holiday29` = #{public_holiday29}, </if>
+		<if test="public_holiday30 != null and public_holiday30 != '' ">`public_holiday30` = #{public_holiday30}, </if>
+		`update_time` = #{update_time},
+		`update_user` = #{update_user}
+
+		WHERE
+			`org_id` = #{org_id}
+	</update>
+	
+	<!-- 机构参数表添加新数据  -->
+	<insert id="insertCpOrgParameterMapper" parameterType="cpOrg" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `cp_organization_parameter` (
+			`org_id`,
+			`org_name`,
+			`process_status`,
+			`process_with_system`,
+			`curr_proc_date`,
+			`last_proc_date`,
+			`next_proc_date`,
+			`accr_thru_date`,
+			`last_accr_date`,
+			`next_accr_date`,
+			`last_maint_date`,
+			`work_of_week`,
+			`eom_eoy_flag`,
+			`public_holiday1`,
+			`public_holiday2`,
+			`public_holiday3`,
+			`public_holiday4`,
+			`public_holiday5`,
+			`public_holiday6`,
+			`public_holiday7`,
+			`public_holiday8`,
+			`public_holiday9`,
+			`public_holiday10`,
+			`public_holiday11`,
+			`public_holiday12`,
+			`public_holiday13`,
+			`public_holiday14`,
+			`public_holiday15`,
+			`public_holiday16`,
+			`public_holiday17`,
+			`public_holiday18`,
+			`public_holiday19`,
+			`public_holiday20`,
+			`public_holiday21`,
+			`public_holiday22`,
+			`public_holiday23`,
+			`public_holiday24`,
+			`public_holiday25`,
+			`public_holiday26`,
+			`public_holiday27`,
+			`public_holiday28`,
+			`public_holiday29`,
+			`public_holiday30`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{org_id},
+				#{org_name},
+				#{process_status},
+				#{process_with_system},
+				#{curr_proc_date},
+				#{last_proc_date},
+				#{next_proc_date},
+				#{accr_thru_date},
+				#{last_accr_date},
+				'9999-01-01',
+				#{last_maint_date},
+				#{work_of_week},
+				#{eom_eoy_flag},
+				#{public_holiday1},
+				#{public_holiday2},
+				#{public_holiday3},
+				#{public_holiday4},
+				#{public_holiday5},
+				#{public_holiday6},
+				#{public_holiday7},
+				#{public_holiday8},
+				#{public_holiday9},
+				#{public_holiday10},
+				#{public_holiday11},
+				#{public_holiday12},
+				#{public_holiday13},
+				#{public_holiday14},
+				#{public_holiday15},
+				#{public_holiday16},
+				#{public_holiday17},
+				#{public_holiday18},
+				#{public_holiday19},
+				#{public_holiday20},
+				#{public_holiday21},
+				#{public_holiday22},
+				#{public_holiday23},
+				#{public_holiday24},
+				#{public_holiday25},
+				#{public_holiday26},
+				#{public_holiday27},
+				#{public_holiday28},
+				#{public_holiday29},
+				#{public_holiday30},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+		
+		
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="orgQueryListService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count`
+		from `cp_organization_parameter` a
+		<include refid="orgQueryListService_condition1" />
+	</select>
+	<!--信息查询-->
+	<select id="orgQueryListService" resultMap="cporgResultMap" parameterType="cpOrg">
+		select
+			@num:=@num+1 as seq,
+		    a.`org_id`,
+			a.`org_name`,
+			b.`process_status`,
+			d.`process_with_system`,
+			a.`work_of_week`,
+			e.`eom_eoy_flag`
+		from (SELECT @num:=0) r,`cp_organization_parameter` a,cp_org_process_status_select b,cp_org_process_with_system_select d,cp_org_eom_eoy_flag_select e
+		<include refid="orgQueryListService_condition" />
+		<!--默认-->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}
+
+		</if>
+
+		LIMIT ${offset},${limit}
+	</select>
+	<!--条件-->
+	<sql id="orgQueryListService_condition">
+		<where>
+		    1=1 and a.`del`='N'
+			and a.process_status = b.process_status_flag
+			and a.process_with_system = CONVERT (d.process_with_system_flag USING utf8) COLLATE utf8_unicode_ci
+			and a.eom_eoy_flag = CONVERT (e.eom_eoy_flag1 USING utf8) COLLATE utf8_unicode_ci
+		    <!--自定义搜索-->
+		    <if test="org_id !=null and org_id !='' ">and a.`org_id`=#{org_id}  </if>
+		    <!--默认搜索-->
+		    <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+
+	<sql id="orgQueryListService_condition1">
+		<where>
+			1=1 and a.`del`='N'
+			<!--自定义搜索-->
+			<if test="org_id !=null and org_id !='' ">and a.`org_id`=#{org_id}  </if>
+			<!--默认搜索-->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+	
+	
+		
+</mapper>

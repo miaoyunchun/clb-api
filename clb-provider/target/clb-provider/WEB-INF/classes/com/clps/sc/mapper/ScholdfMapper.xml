@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scholdfMapper">
+
+    <!-- 单条查询 -->
+    <select id="queryHoldingInfo" resultType="Map" parameterType="Map">
+        SELECT
+            `acct_nbr`,
+            `sc_code`,
+            `sedol`,
+            `sc_ccy`,
+            `holding_num`,
+            `avail_num`,
+            `avg_amt`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            sc_scholdf
+        WHERE
+            `del` = 'N'
+            AND `acct_nbr` = #{acct_nbr}
+            AND `sc_code` = #{sc_code}
+    </select>
+
+</mapper>

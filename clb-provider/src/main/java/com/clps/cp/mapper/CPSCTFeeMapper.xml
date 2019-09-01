@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CPSCTFeeMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="sctfeeResultMap" type="com.clps.cp.pojo.CpSctfee" >
+		<result column="sct_id" property="sct_id"/>
+		<result column="sct_name" property="sct_name"/>
+		<result column="associate_org_id" property="associate_org_id"/>
+		<result column="sct_type" property="sct_type"/>
+		<result column="fee_tag" property="fee_tag"/>
+		<result column="fee_type" property="fee_type"/>
+		<result column="fee_amt" property="fee_amt"/>
+		<result column="fee_precent" property="fee_precent"/>
+		<result column="fee_discount" property="fee_discount"/>
+		<result column="fee_txn_amt" property="fee_txn_amt"/>
+		<result column="card_end_nbr" property="card_end_nbr"/>
+		<result column="fee_txn_timed" property="fee_txn_timed"/>
+		<result column="fee_txn_timem" property="fee_txn_timem"/>
+		<result column="last_maint_date" property="last_maint_date"/>
+		<result column="fee_check_account" property="fee_check_account"/>
+		<result column="def_fee_tag" property="def_fee_tag"/>
+		<result column="def_fee_type" property="def_fee_type"/>
+		<result column="def_fee_amt" property="def_fee_amt"/>
+		<result column="def_fee_percent" property="def_fee_percent"/>
+		<result column="def_fee_check_account" property="def_fee_check_account"/>
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+
+
+    <!-- 单条查询 -->
+	<select id="QueryCPSCTFeeService"  resultMap="sctfeeResultMap" parameterType="cpFee" >
+		SELECT *
+		FROM
+			cp_sct_fee
+		WHERE
+			`del` = 'N'
+		AND `sct_id` = #{sct_id}
+	</select>
+	
+	<!-- 编辑 -->
+	<update id="editCPSCTFeeService" parameterType="cpFee">
+		UPDATE `cp_sct_fee`
+		SET 
+		 <if test="sct_name != null and sct_name != '' ">`sct_name` = #{sct_name}, </if>
+		 <if test="associate_org_id != null and associate_org_id != '' ">`associate_org_id` = #{associate_org_id}, </if>
+		 <if test="sct_type != null and sct_type != '' ">`sct_type` = #{sct_type}, </if>
+		 <if test="fee_tag != null and fee_tag != '' ">`fee_tag` = #{fee_tag}, </if>
+		 <if test="fee_type != null and fee_type != '' ">`fee_type` = #{fee_type}, </if>
+		 <if test="fee_amt != null and fee_amt != '' ">`fee_amt` = #{fee_amt}, </if>
+		 <if test="fee_precent != null and fee_precent != '' ">`fee_precent` = #{fee_precent}, </if>
+		 <if test="fee_discount != null and fee_discount != '' ">`fee_discount` = #{fee_discount}, </if>
+		 <if test="fee_txn_amt != null and fee_txn_amt != '' ">`fee_txn_amt` = #{fee_txn_amt}, </if>
+		 <if test="fee_txn_timed != null and fee_txn_timed != '' ">`fee_txn_timed` = #{fee_txn_timed}, </if>
+		 <if test="fee_txn_timem != null and fee_txn_timem != '' ">`fee_txn_timem` = #{fee_txn_timem}, </if>
+		 <if test="last_maint_date != null and last_maint_date != '' ">`last_maint_date` = #{last_maint_date}, </if>
+		 <if test="fee_check_account != null and fee_check_account != '' ">`fee_check_account` = #{fee_check_account}, </if>
+		 <if test="def_fee_tag != null and def_fee_tag != '' ">`def_fee_tag` = #{def_fee_tag}, </if>
+		 <if test="def_fee_type != null and def_fee_type != '' ">`def_fee_type` = #{def_fee_type}, </if>
+		 <if test="def_fee_amt != null and def_fee_amt != '' ">`def_fee_amt` = #{def_fee_amt}, </if>
+		 <if test="def_fee_percent != null and def_fee_percent != '' ">`def_fee_percent` = #{def_fee_percent}, </if>
+		 <if test="def_fee_check_account != null and def_fee_check_account != '' ">`def_fee_check_account` = #{def_fee_check_account}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`sct_id`=#{sct_id}
+	</update>
+	
+	<!-- 添加新用户 -->
+	<insert id="insertCPSCTFeeService" parameterType="cpFee" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `cp_sct_fee` (
+	        `sct_id`,
+			`sct_name`,
+			`associate_org_id`,
+			`sct_type`,
+			`fee_tag`,
+			`fee_type`,
+			`fee_amt`,
+			`fee_precent`,
+			`fee_discount`,
+			`fee_txn_amt`,
+			`fee_txn_timed`,
+			`fee_txn_timem`,
+			`last_maint_date`,
+			`fee_check_account`,
+			`def_fee_tag`,
+			`def_fee_type`,
+			`def_fee_amt`,
+			`def_fee_percent`,
+			`def_fee_check_account`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+			    #{sct_id},
+				#{sct_name},
+				#{associate_org_id},
+				#{sct_type},
+				#{fee_tag},
+				#{fee_type},
+				#{fee_amt},
+				#{fee_percent},
+				#{fee_discount},
+				#{fee_txn_amt},
+				#{fee_txn_timed},
+				#{fee_txn_timem},
+				#{last_maint_date},
+				#{fee_check_account},
+				#{def_fee_tag},
+				#{def_fee_type},
+				#{def_fee_amt},
+				#{def_fee_percent},
+				#{def_fee_check_account},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+</mapper>

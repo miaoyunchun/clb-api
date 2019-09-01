@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderTradeMapper">
+    
+	<!-- 编辑 -->
+	<!-- 更新账户金额 -->
+	<update id="editAccountService" parameterType="Map">
+		UPDATE `sc_scacctf`
+		SET 
+		 `acct_bal` = #{acct_bal}
+		WHERE
+			`acct_nbr`=#{acct_nbr}
+	</update>
+	
+	
+	<!-- 编辑 -->
+	<!-- 更新对应证券信息 -->
+	<update id="editTradService" parameterType="Map">
+		UPDATE `sc_scprodf`
+		SET 
+		 `acct_bal` = #{acct_bal}
+		WHERE
+		`acct_nbr`=#{acct_nbr}
+	</update>
+	
+	
+</mapper>

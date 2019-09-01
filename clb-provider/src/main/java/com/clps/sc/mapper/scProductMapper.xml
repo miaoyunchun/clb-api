@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scProductMapper">
+
+    <!-- 新增证券产品信息 -->
+    <!-- Merged with Logan's code -->
+    <insert id="insertProductService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sc_scprodf` (
+            `sc_code`,
+            `sedol`,
+            `sc_exchange`,
+            `sc_type`,
+            `sc_ccy`,
+            `sc_name`,
+            `sc_status`,
+            `sc_issuer`,
+            `sc_issuer_name`,
+            `price_source`,
+            `sc_price`,
+            `issue_size`,
+            `issue_size_bal`,
+            `sc_curr_price`,
+            `avg_price`,
+            `risk_class`,
+            `start_date`,
+            `end_date`,
+            `settle_mode`,
+            `maker_id`,
+            `make_date`,
+            `auth_id`,
+            `auth_date`,
+            `last_maintain`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        )
+        VALUES
+            (
+                #{sc_code},
+                #{sedol},
+                #{sc_exchage},
+                #{sc_type},
+                #{sc_ccy},
+                #{sc_name},
+                #{sc_status},
+                #{sc_issuer},
+                #{sc_issuer_name},
+                #{price_source},
+                #{sc_price},
+                #{issue_size},
+                #{issue_size_bal},
+                #{sc_curr_price},
+                #{avg_price},
+                #{risk_class},
+                #{start_date},
+                #{end_date},
+                #{settle_mode},
+                #{maker_id},
+                #{make_date},
+                #{auth_id},
+                #{auth_date},
+                #{last_maintain},
+                'N',
+                #{create_time},
+                #{create_user},
+                #{update_time},
+                #{update_user}
+            )
+    </insert>
+
+    <!-- 单条查询证券产品信息 -->
+    <select id="selectProductService" resultType="Map" parameterType="Map">
+        SELECT
+        `sc_code`,
+        `sedol`,
+        `sc_exchange`,
+        `sc_type`,
+        `sc_ccy`,
+        `sc_name`,
+        `sc_status`,
+        `sc_issuer`,
+        `sc_issuer_name`,
+        `price_source`,
+        `sc_price`,
+        `issue_size`,
+        `issue_size_bal`,
+        `sc_curr_price`,
+        `avg_price`,
+        `risk_class`,
+        `start_date`,
+        `end_date`,
+        `settle_mode`,
+        `maker_id`,
+        `make_date`,
+        `auth_id`,
+        `auth_date`,
+        `last_maintain`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        FROM
+        `sc_scprodf`
+        WHERE
+        `del` = 'N'
+        <if test="sc_code != null and sc_code != ''">AND `sc_code` = #{sc_code}</if>
+        <if test="sedol != null and sedol != ''">AND `sedol` = #{sedol}</if>
+    </select>
+
+    <!-- 单条查询证券产品价格信息 -->
+    <select id="selectProductPriceService" resultType="Map" parameterType="Map">
+        SELECT
+        `sc_code`,
+        `sedol`,
+        `sc_ccy`,
+        `sc_name`,
+        `price_effect_date`,
+        `high_price`,
+        `low_price`,
+        `price`,
+        `open_price`,
+        `close_price`,
+        `last_price_effect_date`,
+        `last_high_price`,
+        `last_low_price`,
+        `last_open_price`,
+        `last_close_price`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        FROM
+        `sc_scpricef`
+        WHERE
+        `del` = 'N'
+        <if test="sc_code != null and sc_code != ''">AND `sc_code` = #{sc_code}</if>
+        <if test="sedol != null and sedol != ''">AND `sedol` = #{sedol}</if>
+    </select>
+
+    <!-- 编辑证券产品信息 -->
+    <update id="updateProductService" parameterType="Map">
+        UPDATE `sc_scprodf`
+        SET
+        <if test="sc_exchange != null and sc_exchange != ''">`sc_exchange` = #{sc_exchange},</if>
+        <if test="sc_type != null and sc_type != ''">`sc_type` = #{sc_type},</if>
+        <if test="sc_ccy != null and sc_ccy != ''">`sc_ccy` = #{sc_ccy},</if>
+        <if test="sc_name != null and sc_name != ''">`sc_name` = #{sc_name},</if>
+        <if test="sc_status != null and sc_status != ''">`sc_status` = #{sc_status},</if>
+        <if test="sc_issuer != null and sc_issuer != ''">`sc_issuer` = #{sc_issuer},</if>
+        <if test="sc_issuer_name != null and sc_issuer_name != ''">`sc_issuer_name` = #{sc_issuer_name},</if>
+        <if test="price_source != null and price_source != ''">`price_source` = #{price_source},</if>
+        <if test="issue_size != null and issue_size != ''">`issue_size` = #{issue_size},</if>
+        <if test="issue_size_bal != null and issue_size_bal != ''">`issue_size_bal` = #{issue_size_bal},</if>
+        <if test="risk_class != null and risk_class != ''">`risk_class` = #{risk_class},</if>
+        <if test="start_date != null and start_date != ''">`start_date` = #{start_date},</if>
+        <if test="end_date != null and end_date != ''">`end_date` = #{end_date},</if>
+        <if test="settle_mode != null and settle_mode != ''">`settle_mode` = #{settle_mode},</if>
+        <if test="maker_id != null and maker_id != ''">`maker_id` = #{maker_id},</if>
+        <if test="make_date != null and make_date != ''">`make_date` = #{make_date},</if>
+        <if test="auth_id != null and auth_id != ''">`auth_id` = #{auth_date},</if>
+        <if test="auth_date != null and auth_date != ''">`auth_date` = #{auth_date},</if>
+        `last_maintain` = #{last_maintain},
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        1 = 1
+        <if test="sc_code != null and sc_code != ''">AND `sc_code` = #{sc_code}</if>
+        <if test="sedol != null and sedol != ''">AND `sedol` = #{sedol}</if>
+    </update>
+
+    <!-- 编辑证券产品价格信息 -->
+    <update id="updateProductPriceService" parameterType="Map">
+        UPDATE `sc_scpricef`
+        SET
+        <if test="sc_ccy != null and sc_ccy != ''">`sc_ccy` = #{sc_ccy},</if>
+        <if test="sc_name != null and sc_name != ''">`sc_name` = #{sc_name},</if>
+        <if test="price_effect_date != null and price_effect_date != ''">`price_effect_date` = #{price_effect_date},</if>
+        <if test="high_price != null and high_price != ''">`high_price` = #{high_price},</if>
+        <if test="low_price != null and low_price != ''">`low_price` = #{low_price},</if>
+        <if test="price != null and price != ''">`price` = #{price},</if>
+        <if test="open_price != null and open_price != ''">`open_price` = #{open_price},</if>
+        <if test="close_price != null and close_price != ''">`close_price` = #{close_price},</if>
+        <if test="last_price_effect_date != null and last_price_effect_date != ''">`last_price_effect_date` = #{last_price_effect_date},</if>
+        <if test="last_high_price != null and last_high_price != ''">`last_high_price` = #{last_high_price},</if>
+        <if test="last_low_price != null and last_low_price != ''">`last_low_price` = #{last_low_price},</if>
+        <if test="last_open_price != null and last_open_price != ''">`last_open_price` = #{last_open_price},</if>
+        <if test="last_close_price != null and last_close_price != ''">`last_close_price` = #{last_close_price},</if>
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        1 = 1
+        <if test="sc_code != null and sc_code != ''">AND `sc_code` = #{sc_code}</if>
+        <if test="sedol != null and sedol != ''">AND `sedol` = #{sedol}</if>
+    </update>
+
+    <!-- 证券信息列表查询 -->
+    <!-- 总数查询 -->
+    <select id="productListService_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `sc_scprodf` a
+        <include refid="productListService_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="productListService" resultType="Map" parameterType="Map">
+        select
+        a.`sc_code`,
+        a.`sedol`,
+        a.`sc_name`,
+        a.`sc_issuer_name`,
+        a.`sc_curr_price`,
+        a.`issue_size_bal`,
+        a.`del`,
+        a.`create_time`,
+        a.`create_user`,
+        a.`update_time`,
+        a.`update_user`
+        from `sc_scprodf` a
+        <include refid="productListService_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="productListService_condition">
+        <where>
+            1=1 and a.`del`='N'
+            <!-- 自定义搜索 -->
+            <if test="sc_exchange != null and sc_exchange != ''">AND a.`sc_exchange` = #{sc_exchange}</if>
+            <if test="sc_type != null and sc_type != ''">AND a.`sc_type` = #{sc_type}</if>
+            <if test="sc_ccy != null and sc_ccy != ''">AND a.`sc_ccy` = #{sc_ccy}</if>
+            <if test="sc_status != null and sc_status != ''">AND a.`sc_status` = #{sc_status}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start} and
+                a.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start} and
+                a.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>

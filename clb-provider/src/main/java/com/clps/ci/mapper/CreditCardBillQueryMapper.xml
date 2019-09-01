@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CreditCardBillQueryMapper">
+
+	<!-- 单条查询 -->
+	<select id="billStmtInq1Service" resultType="Map" parameterType="Map">
+		SELECT
+		*
+		FROM
+		`ci_stmtda`
+		WHERE
+		`stmt_org` = #{stmt_org}
+		And `stmt_acct_num` = #{stmt_acct_num}
+		And `stmt_date` = #{stmt_date}
+		And `stmt_data_type` = #{stmt_data_type}
+		And `stmt_seq` = #{stmt_seq}
+		
+	</select>
+	<!-- 单条查询 -->
+	<select id="billStmtInq2Service" resultType="Map" parameterType="Map">
+		SELECT
+		*
+		FROM
+		`ci_stmtdp`
+		WHERE
+		`stmt_org` = #{stmt_org}
+		And `stmt_acct_num` = #{stmt_acct_num}
+		And `stmt_date` = #{stmt_date}
+		And `stmt_data_type` = #{stmt_data_type}
+		And `stmt_seq` = #{stmt_seq}	
+	</select>
+	
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="postTranInqService_count" resultType="Long"
+		parameterType="Map">
+		select count(*) as `count`
+		from `ci_otran` a
+		<include refid="postTranInqService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="postTranInqService" resultType="Map" parameterType="Map">
+		select
+		a.`otran_seq`,
+		a.`otran_eff_date`,
+		a.`otran_post_date`,
+		a.`otran_amount`,
+		a.`otran_tc`,
+		a.`otran_desc`
+		from `ci_otran` a
+		<include refid="postTranInqService_condition" />
+	
+		
+	</select>
+	<!-- 条件 -->
+	<sql id="postTranInqService_condition">
+		<where>
+			1=1 
+			<!-- 自定义搜索 -->
+			<if test="otran_org !=null and otran_org !='' ">and a.`otran_org`=#{otran_org}  </if>
+			<if test="otran_acct_num !=null and otran_acct_num !='' ">and a.`otran_acct_num`=#{otran_acct_num}  </if>
+			<if test="otran_seq !=null and otran_seq !='' ">and a.`otran_seq`=#{otran_seq}  </if>
+			
+		</where>
+	</sql>
+
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="billTranInqService_count" resultType="Long"
+		parameterType="Map">
+		select count(*) as `Count`
+		from `ci_stmtdt` a
+		<include refid="billTranInqService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="billTranInqService" resultType="Map" parameterType="Map">
+		select
+		a.`stmt_dt_eff_date`,
+		a.`stmt_dt_post_date`,
+		a.`stmt_dt_amount`,
+		a.`stmt_dt_tc`,
+		a.`stmt_dt_desc`,
+		a.`stmt_seq`
+		from `ci_stmtdt` a
+		<include refid="billTranInqService_condition" />
+		
+	</select>
+	<!-- 条件 -->
+	<sql id="billTranInqService_condition">
+		<where>
+			 1=1
+			<!-- 自定义搜索 -->
+			<if test="stmt_org !=null and stmt_org !='' ">and a.`stmt_org`=#{stmt_org}  </if>
+			<if test="stmt_acct_num !=null and stmt_acct_num !='' ">and a.`stmt_acct_num`=#{stmt_acct_num}  </if>
+			<if test="stmt_date !=null and stmt_date !='' ">and a.`stmt_date`=#{stmt_date}  </if>
+			<if test="stmt_data_type !=null and stmt_data_type !='' ">and a.`stmt_data_type`=#{stmt_data_type}  </if>
+			<if test="stmt_seq !=null and stmt_seq !='' ">and a.`stmt_seq`=#{stmt_seq}  </if>
+		</where>
+	</sql>
+
+
+
+</mapper>

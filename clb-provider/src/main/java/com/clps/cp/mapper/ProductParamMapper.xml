@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productParamMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="productResultMap" type="com.clps.cp.pojo.CpProdparm" >
+		<result column="product_id" property="product_id"/>
+		<result column="product_name" property="product_name"/>
+		<result column="associate_org_id" property="associate_org_id"/>
+		<result column="subject_number" property="subject_number"/>
+		<result column="product_type" property="product_type"/>
+		<result column="product_code" property="product_code"/>
+		<result column="product_ccy" property="product_ccy"/>
+		<result column="currency_support" property="currency_support"/>
+		<result column="multi_nstance" property="multi_nstance"/>
+		<result column="card_issurance" property="card_issurance"/>
+		<result column="account_control" property="account_control"/>
+		<result column="card_control" property="card_control"/>
+		<result column="fee_control" property="fee_control"/>
+		<result column="interest_control" property="interest_control"/>
+		<result column="dp_control" property="dp_control"/>
+		<result column="last_maint_date" property="last_maint_date"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 单条查询 -->
+	<select id="queryProductParam"  resultMap="productResultMap" parameterType="cpProd" >
+		SELECT *		
+		FROM    
+			cp_product_parameter
+		WHERE
+			`del` = 'N'
+		AND `product_id` = #{product_id}
+	</select>
+	
+	<!-- 编辑 -->
+	<update id="editProductParam" parameterType="cpProd">
+		UPDATE `cp_product_parameter`
+		SET 
+		 <if test="product_name != null and product_name != '' ">`product_name` = #{product_name}, </if>
+		 <if test="associate_org_id != null and associate_org_id != '' ">`associate_org_id` = #{associate_org_id}, </if>
+		 <if test="product_type != null and product_type != '' ">`product_type` = #{product_type}, </if>
+		 <if test="product_code != null and product_code != '' ">`product_code` = #{product_code}, </if>
+		 <if test="subject_number != null and subject_number != '' ">`subject_number` = #{subject_number}, </if>
+		 <if test="product_ccy != null and product_ccy != '' ">`product_ccy` = #{product_ccy}, </if>
+		 <if test="currency_support != null and currency_support != '' ">`currency_support` = #{currency_support}, </if>
+		 <if test="card_issurance != null and card_issurance != '' ">`card_issurance` = #{card_issurance}, </if>
+		 <if test="account_control != null and account_control != '' ">`account_control` = #{account_control}, </if>
+		 <if test="card_control != null and card_control != '' ">`card_control` = #{card_control}, </if>
+		 <if test="dp_control != null and dp_control != '' ">`dp_control` = #{dp_control}, </if>
+		 <if test="fee_control != null and fee_control != '' ">`fee_control` = #{fee_control}, </if>
+		 <if test="interest_control != null and interest_control != '' ">`interest_control` = #{interest_control}, </if>
+		 <if test="multi_nstance != null and multi_nstance != '' ">`multi_nstance` = #{multi_nstance}, </if>
+		 <if test="last_maint_date != null and last_maint_date != '' ">`last_maint_date` = #{last_maint_date}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`product_id`=#{product_id}
+	</update>
+	
+	<!-- 添加新用户 -->
+	<insert id="insertProductParam" parameterType="cpProd" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `cp_product_parameter` (
+	  		`product_id`,
+			`product_name`,
+			`associate_org_id`,
+			`product_type`,
+			`product_code`,
+			`subject_number`,
+			`product_ccy`,
+			`currency_support`,
+			`card_issurance`,
+			`account_control`, 
+			`card_control`,
+			`dp_control`,
+			`fee_control`, 
+			`interest_control`,
+			`multi_nstance`, 	
+			`last_maint_date`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{product_id},
+				#{product_name},
+				#{associate_org_id},
+				#{product_type},
+				#{product_code},
+				#{subject_number},
+				#{product_ccy},
+				#{currency_support},
+				#{card_issurance},
+				#{account_control},
+				#{card_control},
+				#{dp_control},
+				#{fee_control},
+				#{interest_control},
+				#{multi_nstance},
+				#{last_maint_date},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="proQueryListService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count`
+		from `cp_product_parameter` a
+		<include refid="proQueryListService_condition1" />
+	</select>
+	<!--信息查询-->
+	<select id="proQueryListService" resultMap="productResultMap" parameterType="cpProd">
+		select
+		@num:=@num+1 as seq,
+		a.`product_id`,
+		a.`product_name`,
+		a.`subject_number`,
+		b.`product_ccy`,
+		d.`currency_support`,
+		e.`card_issurance`,
+		f.product_type
+		from (SELECT @num:=0) r,`cp_product_parameter` a,cp_product_product_ccy_select b,cp_product_currency_support_select d,cp_product_card_issurance_select e,cp_product_product_type_select f
+		<include refid="proQueryListService_condition" />
+		<!--默认-->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}   </if>
+		LIMIT ${offset},${limit}
+	</select>
+	<!--条件-->
+	<sql id="proQueryListService_condition">
+		<where>
+			1=1 and a.`del`='N'
+			and a.product_ccy = CONVERT (b.product_ccy_flag USING utf8) COLLATE utf8_unicode_ci
+		  	and a.currency_support = CONVERT (d.currency_support_flag USING utf8) COLLATE utf8_unicode_ci
+			and a.card_issurance = CONVERT (e.card_issurance_flag USING utf8) COLLATE utf8_unicode_ci
+			and a.product_type = CONVERT (f.product_type_flag USING utf8) COLLATE utf8_unicode_ci
+			<!--自定义搜索-->
+			<if test="product_id !=null and product_id !='' ">and a.`product_id`=#{product_id}  </if>
+			<!--默认搜索-->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+
+	<sql id="proQueryListService_condition1">
+		<where>
+			1=1 and a.`del`='N'
+			<!--自定义搜索-->
+			<if test="product_id !=null and product_id !='' ">and a.`product_id`=#{product_id}  </if>
+			<!--默认搜索-->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+	
+	
+		
+</mapper>

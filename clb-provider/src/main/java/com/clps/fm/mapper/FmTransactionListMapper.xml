@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmTransactionListMapper">
+
+
+<!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryFmTransInfo_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `fm_txn_detail` a
+        <include refid="queryFmTransacion_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryFmTransInfo" resultType="Map" parameterType="Map">
+        select
+        a.`txn_jour`,
+        a.`txn_type`,
+        a.`ser_name`,
+        a.`busn_date`,
+        a.`txn_auth_flg`,
+        a.`auth_typ`,
+        a.`txl_ec_flg`,
+        a.`txl_tx_amt1`,
+        a.`txl_24h_ec_flg`    
+        from `fm_txn_detail` a
+        <include refid="queryFmTransacion_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryFmTransacion_condition">
+        <where>
+            1=1 and a.`del`='N' 
+            <if test="txn_jour != null and txn_jour != '' ">and a.`txn_jour` = #{txn_jour}</if>
+            <if test="txn_type != null and txn_type != '' ">and a.`txn_type` = #{txn_type}</if>
+            <if test="busn_date != null and busn_date != '' ">and a.`busn_date` = #{busn_date}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+</mapper>

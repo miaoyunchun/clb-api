@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmItemsDetailListMapper">
+
+
+<!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryFmItemDetail_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `fm_item_detail` a
+        <include refid="queryFmItemDetail_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryFmItemDetail" resultType="Map" parameterType="Map">
+        select
+        
+        concat(a.`txn_jour_t`,a.`txn_seq`) as `txn_jour`,
+        a.`txn_jour_t`,
+        a.`txn_date_t`,
+        a.`txn_time`,
+        a.`dc_cod`,
+        a.`item_bal`,
+        a.`opr_nbr`,
+        a.`txn_type`,
+        a.`item_nbr`     
+        from `fm_item_detail` a
+        <include refid="queryFmItemDetail_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryFmItemDetail_condition">
+        <where>
+            1=1 and a.`del`='N' 
+            <if test="txn_jour_t != null and txn_jour_t != '' ">and a.`txn_jour_t` = #{txn_jour_t}</if>
+            <if test="item_nbr != null and item_nbr != '' ">and a.`item_nbr` = #{item_nbr}</if>
+            <if test="txn_date_t != null and txn_date_t != '' ">and a.`txn_date_t` = #{txn_date_t}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+</mapper>

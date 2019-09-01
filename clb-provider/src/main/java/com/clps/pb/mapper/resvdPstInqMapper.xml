@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ResvdPstInqMapper">
+
+	<!-- 单条查询 -->
+	<select id="resvdPstQueryOneService" resultType="Map"
+		parameterType="Map">
+		SELECT
+		`pbfrdpst_rsv_id` as `rsv_id`,
+		`pbfrdpst_cust_id` as `cust_id`,
+		`pbfrdpst_rsv_date` as `rsv_date`,
+		`pbfrdpst_rsv_amount` as `rsv_amount`,
+		`pbfrdpst_rsv_prod` as `rsv_prod`,
+		`pbfrdpst_rsv_open_mthd` as `rsv_open_mthd`,
+		`pbfrdpst_rsv_trans_out_acc` as `rsv_trans_out_acc`,
+		`pbfrdpst_rsv_comment` as `rsv_comment`,
+		`pbfrdpst_rsv_create_date` as `rsv_create_date`
+		FROM
+		pb_resvdpst
+		WHERE
+		`del` = 'N'
+		AND
+		`pbfrdpst_rsv_id`= #{rsv_id}
+	</select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="itemInfoInqMapper">
+
+<!-- 单条查询 -->
+	<select id="inqQueryOneService"  resultType="Map" parameterType="Map" >
+		SELECT
+			`item_key`,
+			`item_level`,
+			`item_name`,
+			`op_time_stamp`,
+			`bal_dire_flg`,
+			`gl_account`,
+			`cal_gl_account`,
+			`class_item`,
+			`fx_item_flag`,
+			`in_out_flag`,
+			`buss_type`,
+			`tran_amt_dir`,
+			`item_start_date`,
+			`item_end_date`
+		FROM
+			fm_item
+		WHERE
+			`item_level` = #{item_level}
+		AND `item_key` = #{item_key}
+	</select>
+</mapper>

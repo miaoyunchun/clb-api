@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pbMapper">
+
+	
+	<select id="selectQueryOneNowService" resultType="Map" parameterType="Map">
+	SELECT
+		`pbcfdmsf_dp_fd_acct_num` AS `dp_fd_acct_num`,
+		`pbcfdmsf_cust_number` AS `fd_cust_number`,
+		`pbcfdmsf_fd_acct_num` AS `fd_acct_num`,
+		`pbcfdmsf_fd_open_date` AS `fd_open_date`,
+		`pbcfdmsf_fd_acct_class` AS `fd_acct_class`,
+		`pbcfdmsf_acct_loc_aver_wealth` AS `acct_loc_aver_wealth`,
+		`pbcfdmsf_fd_prd_code` AS `fd_prd_code`,
+		`pbcfdmsf_fd_prim_amt` AS `fd_prim_amt`,
+		`pbcfdmsf_fd_term` AS `fd_term`,
+		`pbcfdmsf_fd_mat_date` AS `fd_mat_date`,
+		`pbcfdmsf_fd_int_rate` AS `fd_int_rate`,
+		`pbcfdmsf_fd_trial_int` AS `fd_trial_int`,
+		`pbcfdmsf_fd_int_tran_out_acct` AS `fd_int_tran_out_acct`,
+		`pbcfdmsf_fd_status_flg` AS `fd_status_flg`,
+		`pbcfdmsf_fd_open_opt` AS `fd_open_opt`,
+		`pbcfdmsf_fd_tran_source_acct` AS `fd_tran_source_acct`
+	FROM
+		pb_fdmsf
+	WHERE
+		`pbcfdmsf_dp_fd_acct_num` =#{dp_fd_acct_num}
+	AND 
+		`del` = 'N'
+	</select>
+	
+</mapper>	

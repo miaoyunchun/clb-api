@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ResvdpstAddMapper">
+
+	<!-- 插入 -->
+	<insert id="insertresvdpst" parameterType="Map">
+		insert into pb_resvdpst(
+					pbfrdpst_rsv_id,
+					pbfrdpst_cust_id, 
+					pbfrdpst_rsv_date,
+					pbfrdpst_rsv_amount,
+					pbfrdpst_rsv_prod,
+					pbfrdpst_rsv_open_mthd,
+					pbfrdpst_rsv_trans_out_acc,
+					pbfrdpst_rsv_comment,
+					pbfrdpst_rsv_create_date,
+					del
+					)
+			values(
+					#{rsv_id},
+					#{cust_id},
+					#{rsv_date},
+				    #{rsv_amount},
+					#{rsv_prod},
+					#{rsv_open_mthd},
+					#{rsv_trans_out_acc},
+					#{rsv_comment},
+					#{rsv_create_date},
+					'N'
+			)
+		
+	</insert>
+	
+	<!-- 查询 -->
+	<select id="AccountAdd"  resultType="Map" parameterType="Map">
+		select 
+				acct_nbr 
+		from 
+				dp_dpacct 
+		where 
+			acct_nbr = #{rsv_trans_out_acc}
+	</select>
+	
+</mapper>

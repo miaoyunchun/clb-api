@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderMapper">
+
+    <select id="queryOrderDetails" parameterType="Map" resultType="Map">
+        SELECT
+            `jour_nbr`,
+            `order_status`,
+            `acct_nbr`,
+            `cust_nbr`,
+            `sc_tran_type`,
+            `sc_code`,
+            `sc_type`,
+            `sc_curr_price`,
+            `sc_ccy`,
+            `sc_tran_num`,
+            `fee_code1`,
+            `fee_rate1`,
+            `fee_amt1`,
+            `fee_code2`,
+            `fee_rate2`,
+            `fee_amt2`,
+            `fee_code3`,
+            `fee_rate3`,
+            `fee_amt3`,
+            `fee_code4`,
+            `fee_rate4`,
+            `fee_amt4`,
+            `order_date`,
+            `order_time`,
+            `settle_date`,
+            `trade_amt`,
+            `trader`,
+            `tran_des`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            sc_scordlgf
+        WHERE
+            `del` = 'N'
+            AND `jour_nbr` = #{jour_nbr}
+    </select>
+
+
+</mapper>

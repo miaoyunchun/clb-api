@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PbTranresvChgUpdServiceMapper">
+    <update id="PbTranresvChgUpdate" parameterType="Map">
+		UPDATE `pb_resrv`
+		SET 
+		 <if test="pbfresrv_rsv_date != null and pbfresrv_rsv_date != '' ">`pbfresrv_rsv_date` =#{pbfresrv_rsv_date},</if>
+		 <if test="pbfresrv_out_acct != null and pbfresrv_out_acct != '' ">`pbfresrv_out_acct` =#{pbfresrv_out_acct},</if>
+		 <if test="pbfresrv_out_amt != null and pbfresrv_out_amt != '' ">`pbfresrv_out_amt` =#{pbfresrv_out_amt},</if>
+		 <if test="pbfresrv_in_acct != null and pbfresrv_in_acct != '' ">`pbfresrv_in_acct` =#{pbfresrv_in_acct},</if>
+		 <if test="pbfresrv_trans_comment != null and pbfresrv_trans_comment != '' ">`pbfresrv_trans_comment` = #{pbfresrv_trans_comment},</if>
+		 <if test="pbfresrv_rsv_comment != null and pbfresrv_rsv_comment != '' ">`pbfresrv_rsv_comment` = #{pbfresrv_rsv_comment}</if>
+		 WHERE
+			`pbfresrv_rsv_id`= #{pbfresrv_rsv_id}
+	</update>
+	<select id="PbTranresvChgSelect" resultType="Map" parameterType="Map">
+        SELECT
+        	pbfrdpst_rsv_id
+        FROM
+        	pb_resvdpst
+        WHERE
+        	`pbfrdpst_rsv_id`= #{rsv_id}
+	</select>
+     <select id="lnContInq1" resultType="Map" parameterType="Map">
+        SELECT
+        	ccy
+        FROM
+        	dp_dpacct
+        WHERE
+        	`acct_nbr` = #{acct_number}
+	</select>
+     <select id="lnContInq2" resultType="Map" parameterType="Map">
+        SELECT
+        	ccy
+        FROM
+        	dp_dpacct
+        WHERE
+        	`acct_nbr` = #{acct_number}
+	</select>
+     <select id="lnContInq3" resultType="Map" parameterType="Map">
+        SELECT
+        	pbfresrv_trans_stat
+        FROM
+        	pb_resrv
+        WHERE
+        	`pbfresrv_rsv_id` = #{rsv_id}
+	</select>
+
+
+</mapper>
+    
+    

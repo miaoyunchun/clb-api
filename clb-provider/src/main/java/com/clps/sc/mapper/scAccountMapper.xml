@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scAccountMapper">
+
+    <!-- 新增客户 -->
+    <insert id="insertAccountService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sc_scacctf` (
+            `acct_nbr`,
+            `cust_nbr`,
+            `acct_status`,
+            `acct_ccy`,
+            `open_date`,
+            `end_date`,
+            `textline1`,
+            `textline2`,
+            `textline3`,
+            `textline4`,
+            `textline5`,
+            `fee_code0`,
+            `fee_code1`,
+            `fee_code2`,
+            `fee_code3`,
+            `mobile_phone`,
+            `manager_code`,
+            `hold_mail`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        )
+        VALUES
+            (
+                #{acct_nbr},
+                #{cust_nbr},
+                #{acct_status},
+                #{acct_ccy},
+                #{open_date},
+                #{end_date},
+                #{textline1},
+                #{textline2},
+                #{textline3},
+                #{textline4},
+                #{textline5},
+                #{fee_code0},
+                #{fee_code1},
+                #{fee_code2},
+                #{fee_code3},
+                #{mobile_phone},
+                #{manager_code},
+                #{hold_mail},
+                'N',
+                #{create_time},
+                #{create_user},
+                #{update_time},
+                #{update_user}
+            )
+    </insert>
+
+    <!-- 单条查询 -->
+    <select id="selectAccountService" resultType="Map" parameterType="Map">
+        SELECT
+            `acct_nbr`,
+            `cust_nbr`,
+            `acct_status`,
+            `acct_ccy`,
+            `acct_bal`,
+            `hold_amt`,
+            `circul_amt`,
+            `period`,
+            `open_date`,
+            `end_date`,
+            `rate`,
+            `od_limit`,
+            `textline1`,
+            `textline2`,
+            `textline3`,
+            `textline4`,
+            `textline5`,
+            `fee_code0`,
+            `fee_code1`,
+            `fee_code2`,
+            `fee_code3`,
+            `mobile_phone`,
+            `credit_rank`,
+            `manager_code`,
+            `hold_mail`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            `sc_scacctf`
+        WHERE
+            `del` = 'N'
+            AND `acct_nbr` = #{acct_nbr}
+    </select>
+
+    <!-- 销户 -->
+    <update id="deleteAccountService" parameterType="Map">
+        UPDATE `sc_scacctf`
+        SET
+            `acct_status` = '9',
+            `update_time` = #{update_time},
+            `update_user` = #{update_user}
+        WHERE `acct_nbr` = #{acct_nbr}
+    </update>
+
+    <!-- 编辑 -->
+    <update id="updateAccountService" parameterType="Map">
+        UPDATE `sc_scacctf`
+        SET
+        <if test="acct_bal != null and acct_bal != ''">`acct_bal` = #{acct_bal},</if>
+        <if test="acct_ccy != null and acct_ccy != ''">`acct_ccy` = #{acct_ccy},</if>
+        <if test="acct_status != null and acct_status != ''">`acct_status` = #{acct_status},</if>
+        <if test="hold_amt != null and hold_amt != ''">`hold_amt` = #{hold_amt},</if>
+        <if test="circul_amt != null and circul_amt != ''">`circul_amt` = #{circul_amt},</if>
+        <if test="period != null and period != ''">`period` = #{period},</if>
+        <if test="open_date != null and open_date != ''">`open_date` = #{open_date},</if>
+        <if test="end_date != null and end_date != ''">`end_date` = #{end_date},</if>
+        <if test="rate != null and rate != ''">`rate` = #{rate},</if>
+        <if test="od_limit != null and od_limit != ''">`od_limit` = #{od_limit},</if>
+        <if test="textline1 != null and textline1 != ''">`textline1` = #{textline1},</if>
+        <if test="textline2 != null">`textline2` = #{textline2},</if>
+        <if test="textline3 != null">`textline3` = #{textline3},</if>
+        <if test="textline4 != null">`textline4` = #{textline4},</if>
+        <if test="textline5 != null">`textline5` = #{textline5},</if>
+        <if test="fee_code0 != null and fee_code0 != ''">`fee_code0` = #{fee_code0},</if>
+        <if test="fee_code1 != null">`fee_code1` = #{fee_code1},</if>
+        <if test="fee_code2 != null">`fee_code2` = #{fee_code2},</if>
+        <if test="fee_code3 != null">`fee_code3` = #{fee_code3},</if>
+        <if test="mobile_phone != null and mobile_phone != ''">`mobile_phone` = #{mobile_phone},</if>
+        <if test="credit_rank != null and credit_rank != ''">`credit_rank` = #{credit_rank},</if>
+        <if test="manager_code != null and manager_code != ''">`manager_code` = #{manager_code},</if>
+        <if test="hold_mail != null and hold_mail != ''">`hold_mail` = #{hold_mail},</if>
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `acct_nbr` = #{acct_nbr}
+    </update>
+
+    <!-- 冻结 -->
+    <update id="freezeAccountService" parameterType="Map">
+        UPDATE `sc_scacctf`
+        SET
+            `acct_status` = '7',
+            `update_time` = #{update_time},
+            `update_user` = #{update_user}
+        WHERE
+            `acct_nbr` = #{acct_nbr}
+    </update>
+
+    <!-- 解冻 -->
+    <update id="unfreezeAccountService" parameterType="Map">
+        UPDATE `sc_scacctf`
+        SET
+            `acct_status` = '0',
+            `update_time` = #{update_time},
+            `update_user` = #{update_user}
+        WHERE
+            `acct_nbr` = #{acct_nbr}
+    </update>
+</mapper>

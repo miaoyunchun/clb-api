@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmActDtlMapper">
+	
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FmAcctDtlResultMap" type="com.clps.fm.pojo.FmAcctDtlPo" >
+		<result column="tran_jour" property="tran_jour"/>
+		<result column="tran_seq" property="tran_seq"/>
+		<result column="tran_id" property="tran_id"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="tran_date" property="tran_date"/>
+		<result column="tran_time" property="tran_time"/>
+		<result column="dc_flag" property="dc_flag"/>
+		<result column="acct_item" property="acct_item"/>
+		<result column="acct_org" property="acct_org"/>
+		<result column="tran_amt" property="tran_amt"/>
+		<result column="item_seq" property="item_seq"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+		
+	<!-- 添加新 -->
+	<insert id="insertService" parameterType="fmactdtl" useGeneratedKeys="true" keyProperty="item_key">
+	  INSERT INTO `fm_acct_detail` (
+			`tran_jour`,
+		    `tran_seq`,
+			`tran_id`,
+			`cond_seq`,
+			`tran_date`,
+			`tran_time`,
+			`dc_flag`,
+			`acct_item`, 
+			`acct_org`,
+			`tran_amt`, 
+			`item_seq`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{tran_jour},
+		        #{tran_seq},
+				#{tran_id},
+				#{cond_seq},
+				#{tran_date},
+				#{tran_time},
+				#{dc_flag},
+				#{acct_item},
+				#{acct_org},
+				#{tran_amt},
+				#{item_seq},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+
+</mapper>

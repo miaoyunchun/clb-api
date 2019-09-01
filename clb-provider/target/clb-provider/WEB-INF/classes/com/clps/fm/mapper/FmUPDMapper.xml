@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmUPDMapper">
+	
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FmAcctResultMap" type="com.clps.fm.pojo.FmActEtrPo" >
+		<result column="tran_id" property="tran_id"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="tran_desp" property="tran_desp"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+	<resultMap id="FmAcct2ResultMap" type="com.clps.fm.pojo.FmActEtr2Po" >
+		<result column="acct_item" property="acct_item"/>
+		<result column="tran_id" property="tran_id"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="dc_flag" property="dc_flag"/>
+		<result column="acct_org" property="acct_org"/>
+		<result column="tran_amt_point" property="tran_amt_point"/>
+		<result column="item_seq" property="item_seq"/>
+		<result column="tran_desp" property="tran_desp"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+
+	<!-- 编辑 -->
+	 <update id="editOneService1" parameterType="fmactetr">
+		UPDATE `fm_acct_entries`
+		SET 
+		`tran_desp`=#{tran_desp}
+
+		WHERE
+			`tran_id`=#{tran_id}
+			AND
+			`cond_seq`=#{cond_seq}
+			AND `del`='N'		
+		</update> 
+			
+		<update id="editOneService2" parameterType="fmactetr2">
+		UPDATE `fm_acct_entries2`
+		SET 
+		`dc_flag`=#{dc_flag},
+		`acct_item`=#{acct_item},
+		`acct_org`=#{acct_org},
+		`tran_amt_point` = #{tran_amt_point},
+		`item_seq` = #{item_seq},
+		`tran_desp` = #{tran_desp}
+		
+		WHERE
+			`acct_item`=#{acct_item}
+			AND `tran_id`=#{tran_id}
+			AND `del`='N'
+			
+	</update>	
+</mapper>

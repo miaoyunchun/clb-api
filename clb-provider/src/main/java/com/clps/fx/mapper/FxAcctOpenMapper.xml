@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FxAcctOpen">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FxAcctResultMap" type="com.clps.fx.pojo.FxAcctPo" >
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="cust_nbr" property="cust_nbr"/>
+		<result column="verify_nbr" property="verify_nbr"/>
+		<result column="acct_type" property="acct_type"/>
+		<result column="ccy" property="ccy"/>
+		<result column="industry_type" property="industry_type"/>
+		<result column="balance" property="balance"/>
+		<result column="report_ind" property="report_ind"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+
+    <insert id="FxPublicAcctOpen" parameterType="fxacct">
+        INSERT INTO `fx_acct` (
+        `acct_nbr`,
+        `cust_nbr`,
+        `verify_nbr`,
+        `acct_type`,
+        `ccy`,
+        `industry_type`,
+        `balance`,
+        `report_ind`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{acct_nbr},
+        #{cust_nbr},
+        #{verify_nbr},
+        #{acct_type},
+        #{ccy},
+        #{industry_type},
+        #{balance},
+        #{report_ind},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+
+    <!-- 账户信息查询 -->
+    <select id="fxPublicAcctInq" resultType="map" parameterType="fxacct">
+        SELECT
+        `acct_nbr`,
+        `cust_nbr`,
+        `verify_nbr`,
+        `acct_type`,
+        `ccy`,
+        `industry_type`,
+        `balance`,
+        `report_ind`
+        FROM fx_acct
+        WHERE
+        `acct_nbr` = #{acct_nbr}
+        <!-- <include refid="selectQueryListHistoryService_condition" /> -->
+    </select>
+
+</mapper>

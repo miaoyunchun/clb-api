@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lnBadLoanMapper">
+    
+    <resultMap id="lnBadLoanInqResultMap" type="com.clps.ln.pojo.LnWoroffPo">
+        <result column="lncwroff_contrct_id" property="lncwroff_contrct_id"/>
+        <result column="lncwroff_reman_bal" property="lncwroff_reman_bal"/>
+        <result column="lncwroff_reman_interst" property="lncwroff_reman_interst"/>
+        <result column="lncwroff_write_off_date" property="lncwroff_write_off_date"/>
+        <result column="lncwroff_approver" property="lncwroff_approver"/>
+        <result column="lncwroff_regain_bal" property="lncwroff_regain_bal"/>
+        <result column="lncwroff_regain_interst" property="lncwroff_regain_interst"/>
+        <result column="lncwroff_regain_date" property="lncwroff_regain_date"/>
+        <result column="lncwroff_regainer" property="lncwroff_regainer"/>
+        <result column="lncwroff_regainer_card" property="lncwroff_regainer_card"/>
+        <result column="del" property="del"/>
+        <result column="create_time" property="create_time"/>
+        <result column="create_user" property="create_user"/>
+        <result column="update_time" property="update_time"/>
+        <result column="update_user" property="update_user"/>
+    </resultMap>
+    
+    <!-- 呆账认定  更改合同形态 -->
+    <update id="lnBadLoanIde" parameterType="com.clps.ln.pojo.LnContractPo">
+		UPDATE `ln_contract` 
+		SET `lncntrct_cntrct_shape` = 4
+		WHERE `lncntrct_cntrct_no` = #{lncntrct_cntrct_no}
+	</update>
+    
+    <!-- 呆账核销  更改合同状态 -->
+    <update id="lnBadLoanOff" parameterType="Map">
+		UPDATE `ln_contract` 
+		SET `lncntrct_cntrct_status` = 7
+		WHERE `lncntrct_cntrct_no` = #{lncntrct_cntrct_no}
+	</update>
+    
+    <insert id="lnWorOff" parameterType="com.clps.ln.pojo.LnWoroffPo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `ln_woroff` (
+		`lncwroff_contrct_id`,
+		`lncwroff_reman_bal`,
+		`lncwroff_reman_interst`,
+		`lncwroff_write_off_date`,
+		`lncwroff_approver`
+		)
+		VALUES(
+		#{lncwroff_contrct_id},
+		#{lncwroff_reman_bal},
+		#{lncwroff_reman_interst},
+		#{lncwroff_write_off_date},
+		#{lncwroff_approver}
+		)
+	</insert>
+    
+    <select id="lnBadLoanInq" resultMap="lnBadLoanInqResultMap" parameterType="com.clps.ln.pojo.LnWoroffPo">
+	SELECT 
+	`lncwroff_contrct_id`,
+	`lncwroff_reman_bal`,
+	`lncwroff_reman_interst`,
+	`lncwroff_write_off_date`,
+	`lncwroff_approver`
+	 FROM `ln_woroff`
+	 WHERE `lncwroff_contrct_id` = #{lncwroff_contrct_id}
+	</select>
+    
+    <update id="updLnWorOff" parameterType="com.clps.ln.pojo.LnWoroffPo">
+		UPDATE 
+			`ln_woroff` 
+		SET 
+			`lncwroff_regain_bal` = #{lncwroff_regain_bal},
+			`lncwroff_regain_interst` = #{lncwroff_regain_interest},
+			`lncwroff_regain_date` = #{lncwroff_regain_date},
+			`lncwroff_regainer` = #{lncwroff_regainer},
+			`lncwroff_regainer_card` = #{lncwroff_regainer_card}
+		WHERE `lncwroff_contrct_id` = #{lncwroff_contrct_id}
+	</update>
+    
+    <!-- 呆账回收完成 -->
+    <update id="lnBadLoanClean" parameterType="com.clps.ln.pojo.LnContractPo">
+		UPDATE `ln_contract` 
+		SET `lncntrct_cntrct_status` = 8
+		WHERE `lncntrct_cntrct_no` = #{contrct_id}
+	</update>
+</mapper>

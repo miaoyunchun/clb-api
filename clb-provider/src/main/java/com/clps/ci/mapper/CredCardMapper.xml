@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CredCardMapper">
+
+<!-- 信用卡卡片信息查询（通过卡号）-->
+<select id="cardInqMapper"  resultType="Map" parameterType="Map" >
+       Select * from ci_card
+          Where `card_numb` = #{card_numb} and `del`='N'
+    </select>
+          
+<!-- 信用卡卡片查询（通过客户号）-->
+<select id="custInqMapper"  resultType="Map" parameterType="Map" >
+Select `card_numb`  from ci_card
+   Where `card_cust_numb` = #{card_cust_numb} and `del`='N'
+    </select>
+    
+<!-- 信用卡卡片维护）-->
+<update id="credcardUpdMapper" parameterType="Map">
+   UPDATE 	`ci_card`
+   SET
+      `card_prod_type` = #{card_prod_type},
+      `card_numb` = #{card_numb},
+      `card_status` = #{card_status},
+      `card_acct_numb` = #{card_acct_numb},
+      `card_cust_numb` = #{card_cust_numb},
+      `card_last_date` = #{card_last_date},
+      `card_open_date` = #{card_open_date},
+      `card_disp_ind` = #{card_disp_ind},
+      `card_disp_subdate` = #{card_disp_subdate},
+      `card_disp_date` = #{card_disp_date},
+      `card_type` = #{card_type},
+      `card_prisec_ind` = #{card_prisec_ind},
+      `card_lock_ind` =#{card_lock_ind},
+      `card_lock_date` = #{card_lock_date},
+      `card_curr_expiry_date` = #{card_curr_expiry_date},
+      `card_activate_ind` = #{card_activate_ind},
+      `card_activate_date` = #{card_activate_date},
+      `card_curr_action` = #{card_curr_action},
+      `card_last_action` = #{card_last_action},
+      `card_cvv` = #{card_cvv},
+      `card_cvv2` = #{card_cvv2},
+      `card_cust_name` = #{card_cust_name},
+      `card_trnpwd_ind` = #{card_trnpwd_ind},
+      `card_trnpwd` = #{card_trnpwd},
+      `card_trnpwd_wrgcnt` = #{card_trnpwd_wrgcnt},
+      `card_trnpwd_wrgdate` = #{card_trnpwd_wrgdate},
+      `card_trnpwd_wrgtime` = #{card_trnpwd_wrgtime},
+      `card_trnpwd_last_date` = #{card_trnpwd_last_date},
+      `update_time` = #{update_time},
+      `update_user` = #{update_user}
+      
+   WHERE
+	 `card_numb`=#{card_numb}
+</update>
+
+<!-- 信用卡卡片信息添加 -->
+<insert id="insertService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO `ci_card`(
+    `card_prod_type`,
+    `card_numb`,
+    `card_status`,
+    `card_acct_numb`,
+    `card_cust_numb`,
+    `card_last_date`,
+    `card_open_date`,
+    `card_disp_ind`,
+    `card_disp_subdate`,
+    `card_disp_date`,
+    `card_type`,
+    `card_prisec_ind`,
+    `card_lock_ind`,
+    `card_lock_date`,
+    `card_curr_expiry_date`,
+    `card_activate_ind`,
+    `card_activate_date`,
+    `card_curr_action`,
+    `card_last_action`,
+    `card_cvv`,
+    `card_cvv2`,
+    `card_cust_name`,
+    `card_trnpwd_ind`,
+    `card_trnpwd`,
+    `card_trnpwd_wrgcnt`,
+    `card_trnpwd_wrgdate`,
+    `card_trnpwd_wrgtime`,
+    `card_trnpwd_last_date`,
+    `del`,
+	`create_time`,
+	`create_user`,
+	`update_time`,
+	`update_user`
+   
+)
+   VALUES
+      (
+      #{card_prod_type},
+      #{card_numb},
+      #{card_status},
+      #{card_acct_numb},
+      #{card_cust_numb},
+      #{card_last_date},
+      #{card_open_date},
+      #{card_disp_ind},
+      #{card_disp_subdate},
+      #{card_disp_date},
+      #{card_type},
+      #{card_prisec_ind},
+      #{card_lock_ind},
+      #{card_lock_date},
+      #{card_curr_expiry_date},
+      #{card_activate_ind},
+      #{card_activate_date},
+      #{card_curr_action},
+      #{card_last_action},
+      #{card_cvv},
+      #{card_cvv2},
+      #{card_cust_name},
+      #{card_trnpwd_ind},
+      #{card_trnpwd},
+      #{card_trnpwd_wrgcnt},
+      #{card_trnpwd_wrgdate},
+      #{card_trnpwd_wrgtime},
+      #{card_trnpwd_last_date},
+      'N',
+	  #{create_time},
+	  #{create_user},
+	  #{update_time},
+	  #{update_user}
+				
+			
+      
+      )
+
+</insert>
+
+          
+  </mapper>           

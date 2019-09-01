@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="businessAccountMapper">
+	
+	<resultMap id="BcustResultMap" type="com.clps.rm.pojo.RmbcusPo">
+		<result column="bcust_id" property="bcust_id"/>
+		<result column="bcust_type" property="bcust_type"/>
+		<result column="bcust_org_id" property="bcust_org_id"/>
+		<result column="bcust_name" property="bcust_name"/>
+		<result column="bcust_ename" property="bcust_ename"/>
+		<result column="bcust_org_number" property="bcust_org_number"/>
+		<result column="bcust_address" property="bcust_address"/>
+		<result column="bcust_address2" property="bcust_address2"/>
+		<result column="bcust_address3" property="bcust_address3"/>
+		<result column="bcust_zip_code" property="bcust_zip_code"/>
+		<result column="bcust_tel_nbr" property="bcust_tel_nbr"/>
+		<result column="bcust_fax_nbr" property="bcust_fax_nbr"/>
+		<result column="bcust_email" property="bcust_email"/>
+		<result column="bcust_region_lvl" property="bcust_region_lvl"/>
+		<result column="bcust_indust_type" property="bcust_indust_type"/>
+		<result column="bcust_ownshp_type" property="bcust_ownshp_type"/>
+		<result column="bcust_area" property="bcust_area"/>
+		<result column="bcust_law_repter" property="bcust_law_repter"/>
+		<result column="bcust_auth_repter" property="bcust_auth_repter"/>
+		<result column="bcust_fin_repter" property="bcust_fin_repter"/>
+		<result column="bcust_buss_repter" property="bcust_buss_repter"/>
+		<result column="bcust_license" property="bcust_license"/>
+		<result column="bcust_lcs_expdate" property="bcust_lcs_expdate"/>
+		<result column="bcust_fx_nbr" property="bcust_fx_nbr"/>
+		<result column="bcust_loan_nbr" property="bcust_loan_nbr"/>
+		<result column="bcust_loan_card" property="bcust_loan_card"/>
+		<result column="bcust_bus_scope" property="bcust_bus_scope"/>
+		<result column="bcust_regi_cap" property="bcust_regi_cap"/>
+		<result column="bcust_regi_ccy" property="bcust_regi_ccy"/>
+		<result column="bcust_approve_name" property="bcust_approve_name"/>
+		<result column="bcust_stk_hldr_ind" property="bcust_stk_hldr_ind"/>
+		<result column="bcust_rank" property="bcust_rank"/>
+		<result column="bcust_psw_ind" property="bcust_psw_ind"/>
+		<result column="bcust_cred_assess" property="bcust_cred_assess"/>
+		<result column="bcust_lst_mn_date" property="bcust_lst_mn_date"/>
+		<result column="bcust_maker" property="bcust_maker"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+	<!-- 单条查询 -->
+	<select id="selectAccount" resultMap="BcustResultMap" parameterType="rmbcus">
+		SELECT
+			`bcust_id`,
+			`bcust_type`,
+			`bcust_org_id`,
+			`bcust_name`,
+			`bcust_ename`,
+			`bcust_org_number`,
+			`bcust_address`,
+			`bcust_address2`,
+			`bcust_address3`,
+			`bcust_zip_code`,
+			`bcust_tel_nbr`,
+			`bcust_fax_nbr`,
+			`bcust_email`,
+			`bcust_region_lvl`,
+			`bcust_indust_type`,
+			`bcust_ownshp_type`,
+			`bcust_area`,
+			`bcust_law_repter`,
+			`bcust_auth_repter`,
+			`bcust_fin_repter`,
+			`bcust_buss_repter`,
+			`bcust_license`,
+			`bcust_lcs_expdate`,
+			`bcust_fx_nbr`,
+			`bcust_loan_nbr`,
+			`bcust_loan_card`,
+			`bcust_bus_scope`,
+			`bcust_regi_cap`,
+			`bcust_regi_ccy`,
+			`bcust_approve_name`,
+			`bcust_stk_hldr_ind`,
+			`bcust_rank`,
+			`bcust_psw_ind`,
+			`bcust_cred_assess`,
+			`bcust_lst_mn_date`,
+			`bcust_maker`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		FROM
+			`rm_rmbcus`
+		WHERE
+			`del` = 'N'
+			AND `bcust_license` = #{bcust_license}
+	</select>
+	
+	<!-- 删除 -->
+	<update id="deleteAccount" parameterType="rmbcus">
+		UPDATE `rm_rmbcus`
+		SET
+			`del` = 'Y',
+			`update_time` = #{update_time},
+			`update_user` = #{update_user}
+		WHERE
+			`bcust_id` = #{bcust_id}
+	</update>
+	
+	<!-- 编辑 -->
+	<update id="updateAccount" parameterType="rmbcus">
+		UPDATE `rm_rmbcus`
+		SET
+		<if test="bcust_name != null and bcust_name != ''">`bcust_name` = #{bcust_name},</if>
+		<if test="bcust_ename != null and bcust_ename != ''">`bcust_ename` = #{bcust_ename},</if>
+		<if test="bcust_org_number != null and bcust_org_number != ''">`bcust_org_number` = #{bcust_org_number},</if>
+		<if test="bcust_address != null and bcust_address != ''">`bcust_address` = #{bcust_address},</if>
+		<if test="bcust_address2 != null and bcust_address2 != ''">`bcust_address2` = #{bcust_address2},</if>
+		<if test="bcust_address3 != null and bcust_address3 != ''">`bcust_address3` = #{bcust_address3},</if>
+		<if test="bcust_zip_code != null and bcust_zip_code != ''">`bcust_zip_code` = #{bcust_zip_code},</if>
+		<if test="bcust_tel_nbr != null and bcust_tel_nbr != ''">`bcust_tel_nbr` = #{bcust_tel_nbr},</if>
+		<if test="bcust_fax_nbr != null and bcust_fax_nbr != ''">`bcust_fax_nbr` = #{bcust_fax_nbr},</if>
+		<if test="bcust_email != null and bcust_email != ''">`bcust_email` = #{bcust_email},</if>
+		<if test="bcust_region_lvl != null and bcust_region_lvl != ''">`bcust_region_lvl` = #{bcust_region_lvl},</if>
+		<if test="bcust_indust_type != null and bcust_indust_type != ''">`bcust_indust_type` = #{bcust_indust_type},
+		</if>
+		<if test="bcust_ownshp_type != null and bcust_ownshp_type != ''">`bcust_ownshp_type` = #{bcust_ownshp_type},
+		</if>
+		<if test="bcust_area != null and bcust_area != ''">`bcust_area` = #{bcust_area},</if>
+		<if test="bcust_law_repter != null and bcust_law_repter != ''">`bcust_law_repter` = #{bcust_law_repter},</if>
+		<if test="bcust_auth_repter != null and bcust_auth_repter != ''">`bcust_auth_repter` = #{bcust_auth_repter},
+		</if>
+		<if test="bcust_fin_repter != null and bcust_fin_repter != ''">`bcust_fin_repter` = #{bcust_fin_repter},</if>
+		<if test="bcust_buss_repter != null and bcust_buss_repter != ''">`bcust_buss_repter` = #{bcust_buss_repter},
+		</if>
+		<if test="bcust_lcs_expdate != null and bcust_lcs_expdate != ''">`bcust_lcs_expdate` = #{bcust_lcs_expdate},
+		</if>
+		<if test="bcust_fx_nbr != null and bcust_fx_nbr != ''">`bcust_fx_nbr` = #{bcust_fx_nbr},</if>
+		<if test="bcust_loan_nbr != null and bcust_loan_nbr != ''">`bcust_loan_nbr` = #{bcust_loan_nbr},</if>
+		<if test="bcust_loan_card != null and bcust_loan_card != ''">`bcust_loan_card` = #{bcust_loan_card},</if>
+		<if test="bcust_bus_scope != null and bcust_bus_scope != ''">`bcust_bus_scope` = #{bcust_bus_scope},</if>
+		<if test="bcust_regi_cap != null and bcust_regi_cap != ''">`bcust_regi_cap` = #{bcust_regi_cap},</if>
+		<if test="bcust_regi_ccy != null and bcust_regi_ccy != ''">`bcust_regi_ccy` = #{bcust_regi_ccy},</if>
+		<if test="bcust_approve_name != null and bcust_approve_name != ''">`bcust_approve_name` =
+			#{bcust_approve_name},
+		</if>
+		<if test="bcust_stk_hldr_ind != null and bcust_stk_hldr_ind != ''">`bcust_stk_hldr_ind` =
+			#{bcust_stk_hldr_ind},
+		</if>
+		<if test="bcust_rank != null and bcust_rank != ''">`bcust_rank` = #{bcust_rank},</if>
+		<if test="bcust_psw_ind != null and bcust_psw_ind != ''">`bcust_psw_ind` = #{bcust_psw_ind},</if>
+		<if test="bcust_cred_assess != null and bcust_cred_assess != ''">`bcust_cred_assess` = #{bcust_cred_assess},
+		</if>
+		`bcust_lst_mn_date` = #{bcust_lst_mn_date},
+		`bcust_maker` = #{bcust_maker},
+		`update_time` = #{update_time},
+		`update_user` = #{update_user}
+		WHERE
+		`bcust_id` = #{bcust_id}
+	</update>
+	
+	<!-- 添加新用户 -->
+	<insert id="insertAccount" parameterType="rmbcus"
+			useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `rm_rmbcus` (
+			`bcust_id`,
+			`bcust_type`,
+			`bcust_org_id`,
+			`bcust_name`,
+			`bcust_ename`,
+			`bcust_org_number`,
+			`bcust_address`,
+			`bcust_address2`,
+			`bcust_address3`,
+			`bcust_zip_code`,
+			`bcust_tel_nbr`,
+			`bcust_fax_nbr`,
+			`bcust_email`,
+			`bcust_region_lvl`,
+			`bcust_indust_type`,
+			`bcust_ownshp_type`,
+			`bcust_area`,
+			`bcust_law_repter`,
+			`bcust_auth_repter`,
+			`bcust_fin_repter`,
+			`bcust_buss_repter`,
+			`bcust_license`,
+			`bcust_lcs_expdate`,
+			`bcust_fx_nbr`,
+			`bcust_loan_nbr`,
+			`bcust_loan_card`,
+			`bcust_bus_scope`,
+			`bcust_regi_cap`,
+			`bcust_regi_ccy`,
+			`bcust_approve_name`,
+			`bcust_stk_hldr_ind`,
+			`bcust_rank`,
+			`bcust_psw_ind`,
+			`bcust_cred_assess`,
+			`bcust_lst_mn_date`,
+			`bcust_maker`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{bcust_id},
+				#{bcust_type},
+				#{bcust_org_id},
+				#{bcust_name},
+				#{bcust_ename},
+				#{bcust_org_number},
+				#{bcust_address},
+				#{bcust_address2},
+				#{bcust_address3},
+				#{bcust_zip_code},
+				#{bcust_tel_nbr},
+				#{bcust_fax_nbr},
+				#{bcust_email},
+				#{bcust_region_lvl},
+				#{bcust_indust_type},
+				#{bcust_ownshp_type},
+				#{bcust_area},
+				#{bcust_law_repter},
+				#{bcust_auth_repter},
+				#{bcust_fin_repter},
+				#{bcust_buss_repter},
+				#{bcust_license},
+				#{bcust_lcs_expdate},
+				#{bcust_fx_nbr},
+				#{bcust_loan_nbr},
+				#{bcust_loan_card},
+				#{bcust_bus_scope},
+				#{bcust_regi_cap},
+				#{bcust_regi_ccy},
+				#{bcust_approve_name},
+				#{bcust_stk_hldr_ind},
+				#{bcust_rank},
+				#{bcust_psw_ind},
+				#{bcust_cred_assess},
+				#{bcust_lst_mn_date},
+				#{bcust_maker},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="queryCustomerByName_count" resultType="Long" parameterType="Map">
+		select count(*) as `count`
+		from `rm_rmbcus` a
+		<include refid="queryCustomerByName_condition"/>
+	</select>
+	<!-- 信息查询 -->
+	<select id="queryCustomerByName" resultType="Map" parameterType="Map">
+		select
+		a.`bcust_id` AS 'number',
+		a.`bcust_org_id` AS 'org_id',
+		a.`bcust_name` AS 'name'
+		from `rm_rmbcus` a
+		<include refid="queryCustomerByName_condition"/>
+		<!-- 默认 -->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+		LIMIT ${offset},${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="queryCustomerByName_condition">
+		<where>
+			1=1 and a.`del`='N'
+			<!-- 自定义搜索 -->
+			<if test="name != null and name != ''">and a.`bcust_name` = #{name}</if>
+			<!-- 默认搜索 -->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start} and
+				a.create_time &lt; #{create_time_end} )
+			</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+			</if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start} and
+				a.update_time &lt; #{update_time_end} )
+			</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+			</if>
+		</where>
+	</sql>
+</mapper>

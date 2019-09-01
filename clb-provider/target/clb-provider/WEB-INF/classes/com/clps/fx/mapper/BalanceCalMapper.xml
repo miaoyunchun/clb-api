@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="balanceCalMapper">
+<select id="balanceCalService" resultType="Map" parameterType="Map">
+	SELECT 
+		cust_nbr,sum(a) as balance
+    FROM
+    	(select cust_nbr,basic_rate * acct_curr_bal as a
+    	FROM 
+        	dp_dpacct left join fx_rate 
+    ON 
+    		dp_dpacct.ccy = fx_rate.ccy
+    WHERE 
+    		cust_nbr = #{cust_id} and fx_rate.ccy <![CDATA[<>]]>  'cny') 
+    AS sumtable
+</select>
+</mapper>
+
+
+
+
+
+

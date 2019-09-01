@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lnInstallmMapper">
+    <!--等额本息还款计划表试算表添加-->
+    <insert id="lnInstallmCal" parameterType="List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_installm` (
+            `lncinstf_cal_key`,
+            `lncinstf_periods_totol`,
+            `lncinstf_pay_loan_bal`,
+            `lncinstf_pay_interst`,
+            `lncinstf_pay_totol_bal`,
+            `lncinstf_remain_loan_bal`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        ) VALUES (
+            #{lncinstf_cal_key},
+            #{lncinstf_periods_totol},
+            #{lncinstf_pay_loan_bal},
+            #{lncinstf_pay_interst},
+            #{lncinstf_pay_totol_bal},
+            #{lncinstf_remain_loan_bal},
+            'N',
+            #{create_time},
+            #{create_user},
+            #{update_time},
+            #{update_user}
+        ) ON DUPLICATE KEY UPDATE
+            `lncinstf_periods_totol` = #{lncinstf_periods_totol},
+            `lncinstf_pay_loan_bal` = #{lncinstf_pay_loan_bal},
+            `lncinstf_pay_interst` = #{lncinstf_pay_interst},
+            `lncinstf_pay_totol_bal` = #{lncinstf_pay_totol_bal},
+            `lncinstf_remain_loan_bal` = #{lncinstf_remain_loan_bal},
+            `del` = 'N',
+            `create_time` = #{create_time},
+            `create_user` = #{create_user},
+            `update_time` = #{update_time},
+            `update_user` = #{update_user}
+    </insert>
+    
+    <insert id="lnInstallmCal_bak" parameterType="List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_installm` (
+        `lncinstf_cal_key`,
+        `lncinstf_periods_totol`,
+        `lncinstf_pay_loan_bal`,
+        `lncinstf_pay_interst`,
+        `lncinstf_pay_totol_bal`,
+        `lncinstf_remain_loan_bal`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES(
+        #{cal_key},
+        #{periods},
+        #{loan_bal},
+        #{interst},
+        #{lncinstf_pay_totol_bal},
+        #{lncinstf_remain_loan_bal},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    <!-- 总数查询 -->
+    <select id="queryTableByCalKey_count" resultType="Long" parameterType="Map">
+        SELECT COUNT(*) AS `count`
+        FROM `ln_installm` a
+        <include refid="queryTableByCalKey_condition"/>
+    </select>
+    <select id="queryTableByCalKey" resultType="Map" parameterType="Map">
+        SELECT
+        substring(a.`lncinstf_cal_key`,1,30) as 'ws_cal_key',
+        a.`lncinstf_periods_totol` as 'periods',
+        a.`lncinstf_pay_loan_bal` as 'pay_loan_bal',
+        a.`lncinstf_pay_interst` as 'pay_interst',
+        a.`lncinstf_pay_totol_bal` as 'pay_totol_bal',
+        a.`lncinstf_remain_loan_bal` as 'remain_loan_bal'
+        FROM `ln_installm` a
+        <include refid="queryTableByCalKey_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryTableByCalKey_condition">
+        <where>
+            1=1 and a.`del`='N' and a.`lncinstf_cal_key` LIKE concat(#{ws_cal_key},'%')
+            AND a.`lncinstf_periods_totol` = #{periods_totol}
+            
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and
+                a.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and
+                a.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+
+</mapper>

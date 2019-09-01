@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CashExchMapper">
+		<resultMap id="FxCashExResultMap" type="com.clps.fx.pojo.FxCashExPo" >
+		<result column="tran_no" property="tran_no"/>
+		<result column="tran_type" property="tran_type"/>
+		<result column="prod_code" property="prod_code"/>
+		<result column="org" property="org"/>
+		<result column="cust_name" property="cust_name"/>
+		<result column="id_type" property="id_type"/>
+		<result column="id_no" property="id_no"/>
+		<result column="address" property="address"/>
+		<result column="cust_sell_ccy" property="cust_sell_ccy"/>
+		<result column="cust_sell_amt" property="cust_sell_amt"/>
+		<result column="buy_rate" property="buy_rate"/>
+		<result column="buy_ccy" property="buy_ccy"/>
+		<result column="buy_amt" property="buy_amt"/>
+		<result column="sell_rate" property="sell_rate"/>
+		<result column="selling_rate" property="selling_rate"/>
+		<result column="rate_type" property="rate_type"/>
+		<result column="conment" property="conment"/>
+		<result column="tran_date" property="tran_date"/>
+		<result column="tran_time" property="tran_time"/>
+		<result column="tran_code" property="tran_code"/>
+		<result column="fx_cash_rate" property="fx_cash_rate"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+    <!-- 单条查询 -->
+	<select id="QueryCashExchOneService"  resultType="Map" parameterType="fxcashex" >
+		SELECT *
+		FROM
+			fx_cashex
+		WHERE
+			`del` = 'N'
+		AND `tran_no` = #{tran_no}
+	</select>
+	
+	<!-- 多条查询 -->
+    <!-- 总数查询 -->
+	<select id="QueryCashExchListService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `fx_cashex` a
+		<include refid="QueryCashExchListService_condition" />
+	</select>
+    <!-- 信息查询 -->
+	<select id="QueryCashExchListService" resultType="Map" parameterType="Map">  
+		select 
+			a.`tran_no`,
+			a.`tran_type`,
+			a.`id_type`,
+			a.`id_no`,
+			a.`tran_date`,
+			a.`del`,
+			a.`create_time`,
+			a.`create_user`,
+			a.`update_time`,
+			a.`update_user`
+		from `fx_cashex` a
+		<include refid="QueryCashExchListService_condition" />
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}   </if>
+		LIMIT ${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="QueryCashExchListService_condition">
+		<where>
+		    1=1 and a.`del`='N' 
+		    <!-- 自定义搜索 -->
+		    <if test="tran_type !=null and tran_type !='' ">and a.`tran_type`=#{tran_type}  </if>
+		    <if test="start_date !=null and start_date !='' and end_date !=null and end_date !=''">and (a.tran_date>#{start_date} and a.tran_date &lt; #{end_date} )</if>
+	        <!-- 默认搜索 -->
+		    <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+</mapper>

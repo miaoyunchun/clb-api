@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RateInqMapper">
+
+    <!-- 买入汇率查询 -->
+    <select id="buyRateInq" resultType="Map" parameterType="fxrate">
+        SELECT *
+        FROM fx_rate
+        WHERE
+        `ccy` = #{fx_buy_ccy}
+        order by rate_pub_date desc,rate_pub_time desc  limit 1
+        <!-- <include refid="selectQueryListHistoryService_condition" /> -->
+    </select>
+    <!-- 卖出汇率查询 -->
+    <select id="sellRateInq" resultType="Map" parameterType="fxrate">
+        SELECT *
+        FROM fx_rate
+        WHERE
+        `ccy` = #{fx_sell_ccy}
+        order by rate_pub_date desc,rate_pub_time desc  limit 1
+        <!-- <include refid="selectQueryListHistoryService_condition" /> -->
+    </select>
+
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="RateListCount" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `fx_rate` a
+        <include refid="rateListInq_condition" />
+    </select>
+    <!-- 信息查询 -->
+    <select id="RateListInq" resultType="Map" parameterType="Map">
+        select
+        a.`rate_pub_date`,
+        a.`rate_pub_time`,
+        a.`ccy` AS  fx_ccy,
+        a.`basic_rate`,
+        a.`buying_rate`,
+        a.`selling_rate`,
+        a.`cash_buying_rate`,
+        a.`del`,
+        a.`create_time`,
+        a.`create_user`,
+        a.`update_time`,
+        a.`update_user`
+        from `fx_rate` a
+        <include refid="rateListInq_condition" />
+        <!-- 默认 -->
+        order by rate_pub_date desc,rate_pub_time desc
+       <!-- <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}   </if>-->
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="rateListInq_condition">
+        <where>
+            1=1 and a.`del`='N'
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+            <if test="update_user !=null and update_user !='' ">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+
+
+    <insert id="rateAdd" parameterType="java.util.List">
+        insert into `fx_rate`(
+        `rate_pub_date`,
+        `rate_pub_time`,
+        `ccy`,
+        `basic_rate`,
+        `buying_rate`,
+        `selling_rate`,
+        `cash_buying_rate`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`)
+        values
+        <foreach collection="list" item="item" index="key" separator=",">
+            (#{item.RATE_PUB_DATE},
+            #{item.RATE_PUB_TIME},
+            #{item.FX_CCY},
+            #{item.BASIC_RATE},
+            #{item.BUYING_RATE},
+            #{item.SELLING_RATE},
+            #{item.CASH_BUYING_RATE},
+            'N',
+            #{item.create_time},
+            #{item.create_user},
+            #{item.update_time},
+            #{item.update_user})
+        </foreach>
+    </insert>
+</mapper>

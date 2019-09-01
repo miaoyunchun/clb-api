@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmDetailINMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FmTxnResultMap" type="com.clps.fm.pojo.FmTxnDtlPo" >
+		<result column="txn_jour" property="txn_jour"/>
+		<result column="txn_type" property="txn_type"/>
+		<result column="ser_name" property="ser_name"/>
+		<result column="busn_date" property="busn_date"/>
+		<result column="cpu_date" property="cpu_date"/>
+		<result column="cpu_time" property="cpu_time"/>
+		<result column="txn_terminal" property="txn_terminal"/>
+		<result column="txn_auth_flg" property="txn_auth_flg"/>
+		<result column="auth_typ" property="auth_typ"/>
+		<result column="txl_ec_flg" property="txl_ec_flg"/>
+		<result column="txl_ec_log_no" property="txl_ec_log_no"/>
+		<result column="txl_ar_log_no" property="txl_ar_log_no"/>
+		<result column="txl_account_no" property="txl_account_no"/>
+		<result column="txl_oppo_account_no" property="txl_oppo_account_no"/>
+		<result column="txl_tx_type" property="txl_tx_type"/>
+		<result column="txl_doc_type" property="txl_doc_type"/>
+		<result column="txl_book_code" property="txl_book_code"/>
+		<result column="txl_tx_amt1" property="txl_tx_amt1"/>
+		<result column="txl_tx_amt2" property="txl_tx_amt2"/>
+		<result column="txl_24h_ec_flg" property="txl_24h_ec_flg"/>
+		<result column="txl_inp_area_len" property="txl_inp_area_len"/>
+		<result column="txl_data_area" property="txl_data_area"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+			
+	<!-- 添加新用户 -->
+	<insert id="insertServiceDetailIN" parameterType="fmtxndtl" useGeneratedKeys="true" keyProperty="txn_jour">
+	  INSERT INTO `fm_txn_detail` (
+			`txn_jour`,
+            `txn_type`,
+            `ser_name`,
+            `busn_date`,
+            `cpu_date`,
+            `cpu_time`,
+            `txn_terminal`,
+            `txn_auth_flg`,
+            `auth_typ`,
+            `txl_ec_flg`,
+            `txl_ec_log_no`,
+            `txl_ar_log_no`,
+            `txl_account_no`,
+            `txl_oppo_account_no`,
+            `txl_tx_type`,
+            `txl_doc_type`,
+            `txl_book_code`,
+            `txl_tx_amt1`,
+            `txl_tx_amt2`,
+            `txl_24h_ec_flg`,
+            `txl_inp_area_len`,
+            `txl_data_area`
+
+		)
+		VALUES
+			(
+			#{txn_jour},
+			#{txn_type},
+			#{ser_name},
+			#{busn_date},
+			#{cpu_date},
+			#{cpu_time},
+			#{txn_terminal},
+			#{txn_auth_flg},
+			#{auth_typ},
+			#{txl_ec_flg},
+			#{txl_ec_log_no},
+			#{txl_ar_log_no},
+			#{txl_account_no},
+			#{txl_oppo_account_no},
+			#{txl_tx_type},
+			#{txl_doc_type},
+			#{txl_book_code},
+			#{txl_tx_amt1},
+			#{txl_tx_amt2},
+			#{txl_24h_ec_flg},
+			#{txl_inp_area_len},
+			#{txl_data_area}
+			)
+	</insert>
+
+		
+</mapper>

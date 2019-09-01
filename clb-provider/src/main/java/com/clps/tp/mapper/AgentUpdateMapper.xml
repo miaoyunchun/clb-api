@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AgentUpdateMapper">
+	
+	<!-- 更新 -->
+	<update id="agntUpdService" parameterType="Map">
+		UPDATE `tp_unit`
+		SET 
+		 <if test="tpunitf_comp_card_no != null and tpunitf_comp_card_no != '' ">`tpunitf_comp_card_no` = #{comp_card_no},</if>
+		 <if test="tpunitf_comp_type != null and tpunitf_comp_type != '' ">`tpunitf_comp_type` = #{comp_type},</if>
+		 <if test="tpunitf_prod_code != null and tpunitf_prod_code != '' ">`tpunitf_prod_code` = #{prod_code},</if>
+	  	 <if test="tpunitf_log_pwd != null and tpunitf_log_pwd != '' ">tpunitf_log_pwd = #{log_pwd},</if>
+		 <if test="tpunitf_settle_date != null and tpunitf_settle_date != '' ">`tpunitf_settle_date` = #{settle_date},</if>
+	 	 <if test="tpunitf_settle_cycle != null and tpunitf_settle_cycle != '' ">`tpunitf_settle_cycle` = #{settle_cycle},</if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`tpunitf_comp_id`= #{comp_id}
+	</update>
+		
+</mapper>

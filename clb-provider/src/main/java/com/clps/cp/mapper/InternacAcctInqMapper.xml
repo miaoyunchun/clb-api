@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="internacAcctInqMapper">
+<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="codeReslut" type="com.clps.fx.pojo.InternacCodePo" >
+		<result column="ccy" property="ccy"/>
+		<result column="acct_code" property="acct_code"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+		<resultMap id="InternacAcctReslut" type="com.clps.fx.pojo.InternacAcct" >
+		<result column="acct_code" property="acct_code"/>
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="acct_name" property="acct_name"/>
+		<result column="acct_type" property="acct_type"/>
+		<result column="acct_ccy" property="acct_ccy"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+
+    <!-- 编辑 -->
+    <select id="internacAcctInq" resultMap="InternacAcctReslut" parameterType="internacacct">
+        select * FROM cp_internac_acct
+        WHERE
+        `del` = 'N'
+        AND `acct_code`=#{acct_code}
+    </select>
+
+    <select id="internacCodeInq" resultMap="codeReslut" parameterType="internaccode">
+        select *
+        FROM cp_internac_code
+        WHERE
+        `del` = 'N'
+        AND `ccy`=#{ccy}
+    </select>
+</mapper>

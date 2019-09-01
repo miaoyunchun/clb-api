@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CiCustomerManageMapper">
+	<!-- 信用卡客户信息添加 -->
+	<insert id="customerAddMapper" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `ci_cus` (
+		`cust_name`,
+		`cust_english_name`,
+		`cust_nationality`,
+		`cust_birth_date`,
+		`cust_gender`,
+		`cust_marital_status`,
+		`cust_id_type`,
+		`cust_id_number`,
+		`cust_annual_salary`,
+		`cust_mobile`,
+		`cust_email`,
+		`cust_bill_type`,
+		`cust_bill_addr`,
+		`cust_bill_date`,
+		`cust_app_date`,
+		`cust_live_country`,
+		`cust_live_province`,
+		`cust_live_city`,
+		`cust_live_district`,
+		`cust_live_zip_code`,
+		`cust_live_address`,
+		`cust_live_years`,
+		`cust_company_name`,
+		`cust_company_country`,
+		`cust_company_province`,
+		`cust_company_city`,
+		`cust_company_district`,
+		`cust_company_zip_code`,
+		`cust_company_address`,
+		`cust_company_serve_year`,
+		`cust_qurpwd`,
+		`cust_qurpwd_wrgcnt`,
+		`cust_qurpwd_wrgdate`,
+		`cust_qurpwd_wrgtime`,
+		`cust_qurpwd_last_date`,
+		`del`,
+		`create_time`,
+		`create_user`,
+		`update_time`,
+		`update_user`
+		)
+		VALUES
+		(
+		#{cust_name},
+		#{cust_english_name},
+		#{cust_nationality},
+		#{cust_birth_date},
+		#{cust_gender},
+		#{cust_marital_status},
+		#{cust_id_type},
+		#{cust_id_number},		
+		#{cust_annual_salary},
+		#{cust_mobile},
+		#{cust_email},
+		#{cust_bill_type},
+		#{cust_bill_addr},
+		#{cust_bill_date},
+		#{cust_app_date},
+		#{cust_live_country},
+		#{cust_live_province},
+		#{cust_live_city},
+		#{cust_live_district},
+		#{cust_live_zip_code},
+		#{cust_live_address},
+		#{cust_live_years},
+		#{cust_company_name},
+		#{cust_company_country},
+		#{cust_company_province},
+		#{cust_company_city},
+		#{cust_company_district},
+		#{cust_company_zip_code},
+		#{cust_company_address},
+		#{cust_company_serve_year},
+		#{cust_qurpwd},
+		#{cust_qurpwd_wrgcnt},
+		#{cust_qurpwd_wrgdate},
+		#{cust_qurpwd_wrgtime},
+		#{cust_qurpwd_last_date},
+		'N',
+		#{create_time},
+		#{create_user},
+		#{update_time},
+		#{update_user}
+		)
+	</insert>
+
+	<!-- 信用卡客户信息维护 -->
+	<update id="customerUpdMapper" parameterType="Map">
+		UPDATE `ci_cus`
+		SET
+		`cust_name`=#{cust_name},
+		`cust_english_name`=#{cust_english_name},
+		`cust_nationality`=#{cust_nationality},
+		`cust_birth_date`=#{cust_birth_date},
+		`cust_gender`=#{cust_gender},
+		`cust_marital_status`=#{cust_marital_status},
+		`cust_id_type`=#{cust_id_type},
+		`cust_id_number`=#{cust_id_number},	
+		`cust_annual_salary`=#{cust_annual_salary},
+		`cust_mobile`=#{cust_mobile},
+		`cust_email`=#{cust_email},
+		`cust_bill_type`=#{cust_bill_type},
+		`cust_bill_addr`=#{cust_bill_addr},
+		`cust_bill_date`=#{cust_bill_date},
+		`cust_app_date`=#{cust_app_date},
+		`cust_live_country`=#{cust_live_country},
+		`cust_live_province`=#{cust_live_province},
+		`cust_live_city`=#{cust_live_city},
+		`cust_live_district`=#{cust_live_district},
+		`cust_live_zip_code`=#{cust_live_zip_code},
+		`cust_live_address`=#{cust_live_address},
+		`cust_live_years`=#{cust_live_years},
+		`cust_company_name`=#{cust_company_name},
+		`cust_company_country`=#{cust_company_country},
+		`cust_company_province`=#{cust_company_province},
+		`cust_company_city`=#{cust_company_city},
+		`cust_company_district`=#{cust_company_district},
+		`cust_company_zip_code`=#{cust_company_zip_code},
+		`cust_company_address`=#{cust_company_address},
+		`cust_company_serve_year`=#{cust_company_serve_year},
+		`cust_qurpwd`=#{cust_qurpwd},
+		`cust_qurpwd_wrgcnt`=#{cust_qurpwd_wrgcnt},
+		`cust_qurpwd_wrgdate`=#{cust_qurpwd_wrgdate},
+		`cust_qurpwd_wrgtime`=#{cust_qurpwd_wrgtime},
+		`cust_qurpwd_last_date`=#{cust_qurpwd_last_date},
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+		`cust_id_number`= #{cust_id_number}
+	</update>
+
+	<!-- 信用卡客户信息查询（通过客户ID） -->
+	<select id="customerInqMapper" resultType="Map" parameterType="Map">
+		SELECT
+		`cust_name` as `name`,
+		`cust_english_name` as `english_name`,
+		`cust_nationality` as `nationality`,
+		`cust_birth_date` as `birth_date`,
+		`cust_gender` as `gender`,
+		`cust_marital_status` as `marital_status`,
+		`cust_id_type` as `id_type`,
+		`cust_id_number` as `id_number`,
+		`cust_annual_salary` as `annual_salary` ,
+		`cust_mobile` as `mobile`,
+		`cust_email` as `email`,
+		`cust_bill_type` as `bill_type` ,
+		`cust_bill_addr` as `bill_addr`,
+		`cust_bill_date` as `bill_date`,
+		`cust_app_date` as `app_date`,
+		`cust_live_country` as `live_country`,
+		`cust_live_province` as `live_province`,
+		`cust_live_city` as `live_city`,
+		`cust_live_district` as `live_district`,
+		`cust_live_zip_code` as `live_zip_code`,
+		`cust_live_address` as `live_zip_address`,
+		`cust_live_years` as `live_years`,
+		`cust_company_name` as `company_name`,
+		`cust_company_country` as `company_country`,
+		`cust_company_province` as `company_province`,
+		`cust_company_city` as `company_city`,
+		`cust_company_district` as `company_district`,
+		`cust_company_zip_code` as `company_zip_code`,
+		`cust_company_address` as `company_address`,
+		`cust_company_serve_year` as `company_serve_year`,
+		`cust_qurpwd` as `qurpwd`,
+		`cust_qurpwd_wrgcnt` as `qurpwd_wrgcnt`,
+		`cust_qurpwd_wrgdate` as `qurpwd_wrgdate`,
+		`cust_qurpwd_wrgtime` as `qurpwd_wrgtime`,
+		`cust_qurpwd_last_date` as `qurpwd_last_date`,
+		`del`,
+		`create_time`,
+		`create_user`,
+		`update_time`,
+		`update_user`
+		FROM
+		ci_cus
+		WHERE
+		`del` = 'N' and
+		`cust_id_number`=#{cust_id_number}
+	</select>
+
+	<!--通过客户卡号查询到客户ID -->
+	<select id="customerIn1Mapper" resultType="Map" parameterType="Map">
+		SELECT
+		card_numb,card_cust_numb
+		FROM
+		ci_card
+		WHERE
+	    `card_numb`=#{card_numb} and `del`='N'
+
+	</select>
+	<!-- 信用卡客户信息查询（通过客户卡号） -->
+	<select id="customerInq2Mapper" resultType="Map" parameterType="Map">
+		SELECT
+		`cust_name` as `name`,
+		`cust_english_name` as `english_name`,
+		`cust_nationality` as `nationality`,
+		`cust_birth_date` as `birth_date`,
+		`cust_gender` as `gender`,
+		`cust_marital_status` as `marital_status`,
+		`cust_id_type` as `id_type`,
+		`cust_id_number` as `id_number`,
+		`cust_annual_salary` as `annual_salary` ,
+		`cust_mobile` as `mobile`,
+		`cust_email` as `email`,
+		`cust_bill_type` as `bill_type` ,
+		`cust_bill_addr` as `bill_addr`,
+		`cust_bill_date` as `bill_date`,
+		`cust_app_date` as `app_date`,
+		`cust_live_country` as `live_country`,
+		`cust_live_province` as `live_province`,
+		`cust_live_city` as `live_city`,
+		`cust_live_district` as `live_district`,
+		`cust_live_zip_code` as `live_zip_code`,
+		`cust_live_address` as `live_zip_address`,
+		`cust_live_years` as `live_years`,
+		`cust_company_name` as `company_name`,
+		`cust_company_country` as `company_country`,
+		`cust_company_province` as `company_province`,
+		`cust_company_city` as `company_city`,
+		`cust_company_district` as `company_district`,
+		`cust_company_zip_code` as `company_zip_code`,
+		`cust_company_address` as `company_address`,
+		`cust_company_serve_year` as `company_serve_year`,
+		`cust_qurpwd` as `qurpwd`,
+		`cust_qurpwd_wrgcnt` as `qurpwd_wrgcnt`,
+		`cust_qurpwd_wrgdate` as `qurpwd_wrgdate`,
+		`cust_qurpwd_wrgtime` as `qurpwd_wrgtime`,
+		`cust_qurpwd_last_date` as `qurpwd_last_date`,
+		`del`,
+		`create_time`,
+		`create_user`,
+		`update_time`,
+		`update_user`
+		FROM
+		ci_cus
+		WHERE
+		`del` = 'N' and
+		`cust_id_number`=#{card_cust_numb}
+	</select>
+	
+
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DpCardOpenMapper">
+<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="DpCardResultMap" type="com.clps.dp.pojo.DpCardPo" >
+		<result column="card_number" property="card_number"/>
+		<result column="prod_id" property="prod_id"/>
+		<result column="associate_org_id" property="associate_org_id"/>
+		<result column="cust_nbr" property="cust_nbr"/>
+		<result column="associate_acct_id" property="associate_acct_id"/>
+		<result column="card_pin" property="card_pin"/>
+		<result column="card_pin_required" property="card_pin_required"/>
+		<result column="card_status" property="card_status"/>
+		<result column="last_status" property="last_status"/>
+		<result column="last_status_date" property="last_status_date"/>		
+		<result column="open_date" property="open_date"/>
+		<result column="card_type" property="card_type"/>
+		<result column="card_flag" property="card_flag"/>
+		<result column="embossing_name" property="embossing_name"/>
+		<result column="expiry" property="expiry"/>
+		<result column="card_last_main_date" property="card_last_main_date"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+ <!-- 添加新卡 -->
+	<insert id="DpCardOpen2Mapper" parameterType="cardpo">
+	  INSERT INTO `dp_dpcard` (
+			`card_number`,
+ 			`prod_id`,
+			`associate_org_id`,
+			`cust_nbr`,
+			`associate_acct_id`,
+			`card_pin`,
+			`card_pin_required`,
+			`card_status`,
+			`last_status`,
+			`last_status_date`,
+			`open_date`,
+			`card_type`,
+			`card_flag`,
+			`embossing_name`,
+			`expiry`,
+			`card_last_main_date`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+			#{card_number},
+  			#{prod_id},
+			#{associate_org_id},
+			#{cust_nbr},
+			#{associate_acct_id},
+			#{card_pin},
+			#{card_pin_required},
+			#{card_status},
+			#{last_status},
+			#{last_status_date},
+			#{open_date},
+			#{card_type},
+			#{card_flag},
+			#{embossing_name},
+			#{expiry},
+			#{card_last_main_date},
+			'N',
+			#{create_time},
+			#{create_user},
+			#{update_time},
+			#{update_user}
+			)
+	</insert>
+	
+	
+    <!-- 单条查询 -->
+	<select id="cardInfoInqMappper"  resultMap="DpCardResultMap" parameterType="cardpo" >
+		SELECT *
+		FROM
+			dp_dpcard
+		WHERE
+			`del` = 'N'
+		AND `card_number` = #{card_number}
+	</select>
+		
+</mapper>

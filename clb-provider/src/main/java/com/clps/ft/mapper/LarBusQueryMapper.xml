@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="larbusMapper">
+  <!-- 单条查询 -->
+	<select id="larbusQueryOneService"  resultType="Map" parameterType="Map" >
+		SELECT
+			`msg_num`,
+			`txn_jour`,
+			`txn_date`,
+			`msg_id`,
+			`business_type`,
+			`deduc_card_no`,
+			`deduc_name`,
+			`deduc_bank_code`,
+			`deduc_bank_number`,
+			`recv_bank_code`,
+			`recv_bank_number`,
+			`recv_card_no`,
+			`recv_name`,
+			`txn_amt`,
+			`txn_ccy`,
+			`product_code`,
+			`max_return_time`,
+			`addtion_inf`,
+			`audit_time1`
+		FROM
+			ft_vrptt
+		WHERE
+			 `msg_num` = #{msg_num}
+	</select>
+	</mapper>

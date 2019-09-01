@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="depositDelMapper">
+
+	<!-- 删除 -->
+	<update id="depositdel" parameterType="Map">
+		UPDATE pb_fdmsf SET 
+			pbcfdmsf_fd_status_flg = #{fd_status_flg},
+			update_time = #{update_time},
+			update_user = #{update_user}
+		WHERE 
+			pbcfdmsf_dp_fd_acct_num = #{dp_fd_acct_num}	
+	</update>
+	
+</mapper>

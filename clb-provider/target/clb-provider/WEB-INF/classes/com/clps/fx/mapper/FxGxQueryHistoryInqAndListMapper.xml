@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FxGxQueryHistoryInqAndListMapper">
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FxPerExResultMap" type="com.clps.fx.pojo.FxPersonalExPo" >
+		<result column="report_nbr" property="report_nbr"/>
+		<result column="card_nbr" property="card_nbr"/>
+		<result column="tran_type" property="tran_type"/>
+		<result column="acct_nbr1" property="acct_nbr1"/>
+		<result column="acct_ccy1" property="acct_ccy1"/>
+		<result column="acct_nbr2" property="acct_nbr2"/>
+		<result column="acct_ccy2" property="acct_ccy2"/>
+		<result column="cust_number" property="cust_number"/>
+		<result column="tran_amt" property="tran_amt"/>
+		<result column="tran_limit" property="tran_limit"/>
+		<result column="tran_rate" property="tran_rate"/>
+		<result column="tran_date" property="tran_date"/>
+		<result column="tran_time" property="tran_time"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+		
+		
+		
+<!-- 单条查询 -->
+ <select id="perExInq" resultMap="FxPerExResultMap" parameterType="fxperex">
+        SELECT *
+        FROM fx_personal_ex
+        WHERE
+         	`del` = 'N'
+    	AND	`report_nbr` = #{report_nbr} 
+    </select>	
+    	
+<!-- 单条添加 -->  
+   <insert id="perExAdd" parameterType="fxperex">
+        INSERT INTO `fx_personal_ex` (
+        `report_nbr`,
+        `card_nbr`,
+        `tran_type`,
+        `acct_nbr1`,
+        `acct_ccy1`,
+        `acct_nbr2`,
+        `acct_ccy2`,
+        `cust_number`,
+        `tran_amt`,
+        `tran_limit`,
+        `tran_rate`,
+        `tran_date`,
+        `tran_time`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{report_nbr},
+        #{card_nbr},
+        #{tran_type},
+        #{acct_nbr1},
+        #{acct_ccy1},
+        #{acct_nbr2},
+        #{acct_ccy2},
+        #{cust_number},
+        #{tran_amt},
+        #{tran_limit},
+        #{tran_rate},
+        #{tran_date},
+        #{tran_time},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+		
+		
+<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="acctIndividualInq" resultType="Map" parameterType="Map">
+		SELECT 
+		 `report_nbr`,
+		 `card_nbr`,
+		 `tran_type`,
+		 `acct_ccy1`,
+		 `acct_nbr2`,
+		 `acct_ccy2`,
+		 `cust_number`,
+		 `tran_amt`,
+		 `tran_limit`,
+		 `tran_rate`,
+		 `tran_date`,
+		 `tran_time`
+		FROM fx_personal_ex
+		WHERE
+		`report_nbr` = #{report_nbr}
+		<!-- <include refid="selectQueryListHistoryService_condition" /> -->
+	</select>
+
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="demoQueryListService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `fx_personal_ex` a
+		<include refid="prtExTranListService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="acctIndividualList" resultType="Map" parameterType="Map">  
+		select 
+		    a.`report_nbr`,
+			a.`card_nbr`,
+			a.`tran_type`,
+			a.`acct_ccy1`,
+			a.`acct_ccy2`,
+			a.`tran_date`
+		from `fx_personal_ex` a
+		<include refid="prtExTranListService_condition" /> 
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}   </if>
+	</select>
+	<!-- 条件 -->
+	<sql id="prtExTranListService_condition">
+		<where>
+		    1=1 and a.`del`='N'
+		    <!-- 默认搜索 -->
+		   	<if test="tran_type != null and tran_type != ''">and a.`tran_type`=#{tran_type}</if>
+		    <if test="card_nbr !=null and card_nbr != ''">and a.`card_nbr`=#{card_nbr}</if>
+		    <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !='' ">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+	
+</mapper>

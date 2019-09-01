@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmAcctEntryByKeyMapper">
+    <!-- Result Map   PO对象字段和表字段的映射-->
+    <resultMap id="acctEntryResultMap" type="com.clps.fm.pojo.FmActEtrPo" >
+        <result column="tran_id" property="tran_id"/>
+        <result column="cond_seq" property="cond_seq"/>
+        <result column="tran_desp" property="tran_desp"/>
+
+        <result column="del" property="del"/>
+        <result column="create_time" property="create_time"/>
+        <result column="create_user" property="create_user"/>
+        <result column="update_time" property="update_time"/>
+        <result column="update_user" property="update_user"/>
+    </resultMap>
+
+
+    <!--单条查询-->
+    <select id="QueryAcctEntryByKey" resultMap="acctEntryResultMap" parameterType="fmactetr">
+        SELECT *
+        FROM
+            fm_acct_entries
+        WHERE
+            del = 'N'
+        AND tran_id = #{tran_id}
+    </select>
+
+
+</mapper>

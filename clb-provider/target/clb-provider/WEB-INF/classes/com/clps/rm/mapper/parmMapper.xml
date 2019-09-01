@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="parmMapper">
+    
+    <resultMap id="RmparmResultMap" type="rmparm">
+        <result column="parm_type_code" property="parm_type_code"/>
+        <result column="parm_in_code" property="parm_in_code"/>
+        <result column="parm_control" property="parm_control"/>
+        <result column="parm_mark" property="parm_mark"/>
+        <result column="del" property="del"/>
+        <result column="create_time" property="create_time"/>
+        <result column="create_user" property="create_user"/>
+        <result column="update_time" property="update_time"/>
+        <result column="update_user" property="update_user"/>
+    </resultMap>
+
+    <!-- 单条查询 -->
+    <select id="selectParm" resultMap="RmparmResultMap" parameterType="rmparm">
+        SELECT
+            `parm_type_code`,
+            `parm_in_code`,
+            `parm_control`,
+            `parm_mark`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            rm_rmparm
+        WHERE
+            `del` = 'N'
+            AND `parm_type_code` = #{parm_type_code}
+            AND `parm_in_code` = #{parm_in_code}
+    </select>
+</mapper>

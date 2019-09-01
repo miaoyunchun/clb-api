@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lgItemListMapper">
+
+<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="listQueryOneService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `fm_lgitem_detail` a
+		<include refid="listQueryOneService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="listQueryOneService"  resultType="Map" parameterType="Map" >
+		SELECT
+			a.`item_key`,
+			a.`buss_type`,
+			a.`bal_dire_flg`,
+			a.`crnt_prd_cd`,
+			a.`frz_sts`,
+			a.`acct_sts`,
+			a.`intc_flg`,
+			a.`intc_cycle`,
+			a.`acct_page_fmt`,
+			a.`acct_mode`,
+			a.`open_mode`
+		FROM
+			`fm_lgitem_detail` a
+		<include refid="listQueryOneService_condition" /> 
+		<!-- 默认 -->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}   </if>
+		LIMIT ${offset},${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="listQueryOneService_condition">
+		<where>
+		    1=1 and a.`del`='N' 
+		    <!-- 自定义搜索 -->
+		    <if test="sex !=null and sex !='' ">and a.`sex`=#{sex}  </if>
+		    <!-- 默认搜索 -->
+		    <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+	
+</mapper>

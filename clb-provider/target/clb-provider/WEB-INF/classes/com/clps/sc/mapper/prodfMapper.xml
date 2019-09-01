@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prodfMapper">
+	<insert id="prodfAdd" parameterType="Map" useGeneratedKeys="true" keyProperty="sc_code">
+	INSERT INTO `sc_scprodf`(`sc_code`,`sedol`,`sc_exchange`,`sc_type`,`sc_ccy`,`sc_name`,`sc_status`,
+`sc_issuer`,`sc_issuer_name`,`price_source`,`sc_price`,`issue_size`,`issue_size_bal`,`sc_curr_price`,`avg_price`,
+`risk_class`,`start_date`,`end_date`,`settle_mode`,`maker_id`,`make_date`,`auth_id`,`auth_date`,`last_maintain`,
+`del`,`create_time`,`create_user`,`update_time`,`update_user`)
+VALUES(#{sc_code},#{sedol},#{sc_exchange},#{sc_type},#{sc_ccy},#{sc_name},#{sc_status},#{sc_issuer},#{sc_issuer_name},#{price_source},#{sc_price},
+#{issue_size},#{issue_size_bal},#{sc_curr_price},#{avg_price},#{risk_class},#{start_date},#{end_date},#{settle_mode},#{maker_id},#{make_date},
+#{auth_id},#{auth_date},#{last_maintain},'N',#{create_time},#{create_user},#{update_time},#{update_user})
+	</insert>
+	
+	
+	
+	
+	<insert id="priceAdd" parameterType="Map" useGeneratedKeys="true" keyProperty="sc_code">
+	  INSERT INTO `sc_scpricef`(
+			`sc_code`,
+			`sedol`,
+			`sc_ccy`,
+			`sc_name`,
+			`price_effect_date`,
+			`high_price`,
+			`low_price`,
+			`price`,
+			`open_price`,
+			`close_price`,
+			`last_price_effect_date`,
+			`last_high_price`,
+			`last_low_price`,
+			`last_open_price`,
+			`last_close_price`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(#{sc_code},
+				#{sedol},
+				#{sc_ccy},
+				#{sc_name},
+				#{price_effect_date},
+				#{high_price},
+				#{low_price},
+				#{price},
+				#{open_price},
+				#{close_price},
+				#{last_price_effect_date},
+				#{last_high_price},
+				#{last_low_price},
+				#{last_open_price},
+				#{last_close_price},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+
+</mapper>

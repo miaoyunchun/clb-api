@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="abEqupMentMapper">
+
+
+<!-- 信用卡收单终端信息添加 -->
+	<insert id="EqupMentAddMapper" parameterType="Map" >
+	  INSERT INTO `abequp` (
+	  		`pos_no`,
+			`merch_no`,
+			`mcc_code`,
+			`serial_no`,
+			`equip_tpye`,
+			`firm`,
+			`comm_way`,
+			`belong_org`,
+			`res_date`,
+			`access_net`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{pos_no},
+				#{merch_no},
+				#{mcc_code},
+				#{serial_no},
+				#{equip_tpye},
+				#{firm},
+				#{comm_way},
+				#{belong_org},
+				#{res_date},
+				#{access_net},
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+	<insert id="abPosHistoryAdd" parameterType="Map">
+		INSERT INTO `abposh` (
+			`posh_card_no`,
+			`posh_pos_no`,
+			`posh_cvv2`,
+			`posh_pin_no`,
+			`posh_expiry_date`,
+			`posh_tran_date`,
+			`posh_tran_time`,
+			`posh_tran_code`,
+			`posh_tran_type`,
+			`posh_pay_amount`,
+			`posh_tran_fee`,
+			`posh_merch_no`,
+			`posh_merch_name`,
+			`posh_unpay_no`,
+			`posh_issue_bank`,
+			`posh_issue_bank_no`,
+			`posh_auth_no`,
+			`posh_serial_no`,
+			`posh_btatch_no`,
+			`posh_process_flag`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		 ) VALUE
+		 (
+		    #{posh_card_no},
+			#{posh_pos_no},
+			#{posh_cvv_no},
+			#{posh_pin_no},
+			#{posh_expiry_date},
+			#{posh_tran_date},
+			#{posh_tran_time},
+			#{posh_tran_code},
+			#{posh_tran_type},
+			#{posh_pay_amount},
+			#{posh_tran_fee},
+			#{posh_merch_no},
+			#{posh_merch_name},
+			#{posh_unpay_no},
+			#{posh_issue_bank},
+			#{posh_issue_bank_no},
+			#{posh_auth_no},
+			#{posh_serial_no},
+			#{posh_btatch_no},
+			#{posh_process_flag},
+			#{create_time},
+			#{create_user},
+			#{update_time},
+			#{update_user}
+		 ) 
+	</insert>
+	
+<!-- 信用卡收单终端信息维护 -->
+	<update id="EqupMentUpdMapper" parameterType="Map">
+		UPDATE `abequp` 
+		SET
+			<if test="merch_no !=null and merch_no !='' "> `merch_no`=#{merch_no},  </if>
+			<if test="mcc_code!=null and mcc_code !='' "> `mcc_code`=#{mcc_code},  </if>
+		    <if test=" equip_tpye!=null and equip_tpye !='' "> `equip_tpye`=#{equip_tpye},  </if>
+		    <if test="belong_org!=null and belong_org !='' "> `belong_org`=#{belong_org},  </if>
+		    <if test=" access_net!=null and access_net !='' "> `access_net`=#{access_net},  </if>
+			<if test="serial_no !=null and serial_no !='' "> `serial_no`= #{serial_no},  </if>
+			<if test="firm !=null and firm !='' "> `firm`=#{firm},  </if>
+			<if test="comm_way !=null and comm_way !='' "> `comm_way`=#{comm_way},  </if>
+			<if test="res_date !=null and res_date !='' "> `res_date`=#{res_date},  </if>
+			<if test="update_time !=null and update_time !='' "> `update_time`=#{update_time},  </if>
+			<if test="update_user !=null and update_user !='' "> `update_user`=#{update_user} </if>
+		WHERE
+			`pos_no`=#{pos_no}
+	</update>
+	
+<!-- 信用卡收单终端信息查询 -->
+	<select id="EqupMentInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT *   
+		FROM
+			abequp
+		WHERE
+			`del` = 'N'
+		AND `pos_no` = #{pos_no}
+	</select>
+		
+<!-- 信用卡收单终端信息清单查询 -->  
+    <!-- 总数查询 -->
+	<select id="ListCount" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `abequp` a
+		<include refid="EqupListService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="EqupMentListInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT 
+			   a.`pos_no`,
+			   a.`merch_no`,
+			   a.`serial_no`,
+			   a.`equip_tpye`,
+			   a.`comm_way`,
+			   a.`belong_org`,
+			   a.`res_date`		
+		FROM
+			`abequp` a
+		<include refid="EqupListService_condition" /> 
+	</select>
+	<select id="blackListInqMapper" resultType="Map" parameterType="Map">
+		SELECT
+			*
+		FROM
+			`abblk`
+		  WHERE
+			  1 = 1
+			  <if test="black_card != null and black_card != ''">AND `black_card`=#{black_card}</if>
+			  <if test="black_name != null and black_name != ''">AND `black_name`=#{black_name}</if>
+			  <if test="black_reason != null and black_reason != ''">AND `black_reason`=#{black_reason}</if>
+			  <if test="del != null and del != ''">AND `del`=#{del}</if>
+	</select>
+	<!-- 条件 -->
+	<sql id="EqupListService_condition">
+		<where>
+		    1=1 and a.`del`='N' 
+		    <!-- 自定义搜索 -->
+		    <if test="merch_no !=null and merch_no !='' ">and a.`merch_no`=#{merch_no}  </if>
+		    <if test="mcc_code!=null and mcc_code !='' ">and a.`mcc_code`=#{mcc_code}  </if>
+		    <if test=" equip_tpye!=null and equip_tpye !='' ">and a.`equip_tpye`=#{equip_tpye}  </if>
+		    <if test="belong_org!=null and belong_org !='' ">and a.`belong_org`=#{belong_org}  </if>
+		    <if test=" access_net!=null and access_net !='' ">and a.`access_net`=#{access_net}  </if>
+		    <!-- 默认搜索 -->
+		    <if test="create_time !=null and create_time !='' ">and (a.`create_time`>#{create_time_start}  and a.`create_time` &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.`create_user` like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.`update_time`>#{update_time_start}  and a.`update_time` &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.`update_user` like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+</mapper>

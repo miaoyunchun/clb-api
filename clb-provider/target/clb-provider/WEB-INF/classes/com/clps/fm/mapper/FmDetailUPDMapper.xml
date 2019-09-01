@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmDetailUPDMapper">
+	
+	<!-- 编辑 -->
+	<update id="DetailEditOneService" parameterType="Map">
+		UPDATE `fm_txn_detail`
+		SET 
+		 <if test="txn_jour != null and txn_jour != '' ">`txn_jour` = #{txn_jour}, </if>
+		 <if test="txn_type != null and txn_type != '' ">`txn_type` = #{txn_type}, </if>
+		 <if test="ser_name != null and ser_name != '' ">`ser_name` = #{ser_name}, </if>
+		 <if test="busn_date != null and buss_date != '' ">`busn_date` = #{busn_date}, </if>
+		 <if test="cpu_date != null and cpu_date != '' ">`cpu_date` = #{cpu_date}, </if>
+		 <if test="cpu_time != null and cpu_time != '' ">`cpu_time` = #{cpu_time}, </if>
+		 <if test="txn_terminal != null and txn_terminal != '' ">`txn_terminal` = #{txn_terminal}, </if>
+		 <if test="txn_auth_flg != null and txn_auth_flg != '' ">`txn_auth_flg` = #{txn_auth_flg}, </if>
+		 <if test="auth_typ != null and auth_typ != '' ">`auth_typ` = #{auth_typ}, </if>
+		 <if test="txl_ec_flg != null and txl_ec_flg != '' ">`txl_ec_flg` = #{txl_ec_flg}, </if>
+		 <if test="txl_ec_log_no != null and txl_ec_log_no != '' ">`txl_ec_log_no` = #{txl_ec_log_no}, </if>
+		 <if test="txl_ar_log_no != null and txl_ar_log_no != '' ">`txl_ar_log_no` = #{txl_ar_log_no}, </if>
+		 <if test="txl_account_no != null and txl_account_no != '' ">`txl_account_no` = #{txl_account_no}, </if>
+		 <if test="txl_oppo_account_no != null and txl_oppo_account_no != '' ">`txl_oppo_account_no` = #{txl_oppo_account_no}, </if>
+		 <if test="txl_tx_type != null and txl_tx_type != '' ">`txl_tx_type` = #{txl_tx_type}, </if>
+		 <if test="txl_doc_type != null and txl_doc_type != '' ">`txl_doc_type` = #{txl_doc_type}, </if>
+		 <if test="txl_book_code != null and txl_book_code != '' ">`txl_book_code` = #{txl_book_code}, </if>
+		 <if test="txl_tx_amt1 != null and txl_tx_amt1 != '' ">`txl_tx_amt1` = #{txl_tx_amt1}, </if>
+		 <if test="txl_tx_amt2 != null and txl_tx_amt2 != '' ">`txl_tx_amt2` = #{txl_tx_amt2}, </if>
+		 <if test="txl_24h_ec_flg != null and txl_24h_ec_flg != '' ">`txl_24h_ec_flg` = #{txl_24h_ec_flg}, </if>
+		 <if test="txl_inp_area_len != null and txl_inp_area_len != '' ">`txl_inp_area_len` = #{txl_inp_area_len}, </if>
+		 <if test="txl_data_area != null and txl_data_area != '' ">`txl_data_area` = #{txl_data_area}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`txn_jour`=#{txn_jour}
+	</update>
+		
+		
+</mapper>

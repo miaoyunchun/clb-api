@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpBalanceRedMapper">
+
+ <!-- 卡片查询-->
+	<select id="dpCardInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT 	`associate_acct_id`,`card_status`,`card_pin`	
+		FROM
+			dp_dpcard
+		WHERE
+			`card_number` = #{card_number}
+		AND	`del` = 'N'
+	</select>
+	
+		 <!-- 账户信息查询-->
+	<select id="dpAcctInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT 	`acct_status`,`acct_curr_bal`,`acct_nbr`,`acct_last_bal`	
+		FROM
+			dp_dpacct
+		WHERE
+			`acct_nbr` = #{associate_acct_id}
+		AND	`del` = 'N'
+	</select>
+	
+			  <!-- 更新dp_dpacct表 -->
+	<update id="dpBalanceUpdMapper"  parameterType="Map" >
+		UPDATE 	`dp_dpacct`
+		SET
+			 `acct_curr_bal` = #{acct_curr_bal},
+			 `acct_last_bal` = #{acct_last_bal}
+		WHERE
+			`acct_nbr` = #{acct_nbr}
+		AND	`del` = 'N'
+	</update>
+	
+		<!-- 写入交易历史表 -->
+	<insert id="addTransLogService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `dp_dptranslog` (
+			`trans_id`,
+			`trans_sequence`,
+			`trans_acct`,
+			`trans_card`,
+			`trans_code`,
+			`trans_desc`,
+			`trans_date`,
+			`trans_time`,
+			`amount_berfor_trans`,
+			`amount_in_trans`,
+			`amount_after_trans`,
+			`remark`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{trans_id},
+				#{trans_sequence},
+				#{trans_acct},
+				#{trans_card},
+				#{trans_code},
+				#{trans_desc},
+				#{trans_date},
+		    	#{trans_time},
+				#{amount_before_trans},
+				#{amount_in_trans},
+				#{amount_after_trans},
+				#{remark},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+	  <!-- 更新dp_dpacct表 -->
+	<update id="dpBalance3RedMapper"  parameterType="Map" >
+		UPDATE 	`dp_dpacct`
+		SET
+			<if test="acct_curr_bal != null and acct_curr_bal != '' "> `acct_curr_bal` = #{acct_curr_bal},</if>
+			`acct_last_bal`= #{acct_last_bal}
+		WHERE
+			`acct_nbr` = #{acct_nbr}
+		AND	`del` = 'N'
+	</update>
+	
+   <!-- 个人账户取款（有卡）-->
+	<select id="dpBalanceRedMapper"  resultType="Map" parameterType="Map" >
+		SELECT card_pin,associate_acct_id,card_number		
+		FROM
+			dp_dpcard
+		WHERE
+			`card_number` = #{CARD-NO}
+		AND	`del` = 'N'
+	</select>
+		
+</mapper>

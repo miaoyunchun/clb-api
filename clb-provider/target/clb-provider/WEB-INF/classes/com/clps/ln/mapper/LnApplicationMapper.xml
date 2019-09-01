@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LnApplicationMapper">
+
+    <resultMap id="lnApplyMap" type="com.clps.ln.pojo.LnApplyPo">
+        <result column="lncappf_id" property="lncappf_id"/>
+        <result column="lncappf_in_date" property="lncappf_in_date"/>
+        <result column="lncappf_in_time" property="lncappf_in_time"/>
+        <result column="lncappf_status" property="lncappf_status"/>
+        <result column="lncappf_cust_no" property="lncappf_cust_no"/>
+        <result column="lncappf_name" property="lncappf_name"/>
+        <result column="lncappf_amt" property="lncappf_amt"/>
+        <result column="lncappf_last_date" property="lncappf_last_date"/>
+        <result column="lncappf_last_time" property="lncappf_last_time"/>
+        <result column="lncappf_intchk_id" property="lncappf_intchk_id"/>
+        <result column="lncappf_intchk_date" property="lncappf_intchk_date"/>
+        <result column="lncappf_intchk_result" property="lncappf_intchk_result"/>
+        <result column="lncappf_intchk_rej_reason" property="lncappf_intchk_rej_reason"/>
+        <result column="lncappf_intchk_comment" property="lncappf_intchk_comment"/>
+        <result column="lncappf_final_limit" property="lncappf_final_limit"/>
+        <result column="lncappf_card_no" property="lncappf_card_no"/>
+        <result column="lncappf_prod_code" property="lncappf_prod_code"/>
+        <result column="create_time" property="create_time"/>
+        <result column="create_user" property="create_user"/>
+        <result column="update_time" property="update_time"/>
+        <result column="update_user" property="update_user"/>
+    </resultMap>
+
+<update id="CHKlnApply" parameterType="com.clps.ln.pojo.LnApplyPo">
+		UPDATE `ln_apply`
+		SET 
+		 <if test="lncappf_intchk_id != null and lncappf_intchk_id != '' ">`lncappf_intchk_id` = #{lncappf_intchk_id}, </if>
+		 <if test="lncappf_intchk_date != null and lncappf_intchk_date != '' ">`lncappf_intchk_date` = #{lncappf_intchk_date}, </if>
+		 <if test="lncappf_intchk_result != null and lncappf_intchk_result != '' ">`lncappf_intchk_result` = #{lncappf_intchk_result}, </if>
+		 <if test="lncappf_intchk_rej_reason != null and lncappf_intchk_rej_reason != '' ">`lncappf_intchk_rej_reason` = #{lncappf_intchk_rej_reason}, </if>
+		 <if test="lncappf_intchk_comment != null and lncappf_intchk_comment != '' ">`lncappf_intchk_comment` = #{lncappf_intchk_comment}, </if>
+		 <if test="lncappf_final_limit != null and lncappf_final_limit != '' ">`lncappf_final_limit` = #{lncappf_final_limit}, </if>
+		 <if test="lncappf_status != null and lncappf_status != '' ">`lncappf_status` = #{lncappf_status}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`lncappf_id`=#{lncappf_id}
+     </update>
+     
+		
+    <!-- 贷款客户申请书查询服务 -->
+	<select id="LnApplyINQService"  resultMap="lnApplyMap" parameterType="com.clps.ln.pojo.LnApplyPo" >
+		SELECT  *
+<!-- 		    `lncappf_id`     as 'loan_app_id',  leo update 2017/05/17
+			`lncappf_status` as 'appl_staus',
+			`lncappf_cust_no` as 'cust_number',
+			`lncappf_name`   as 'name',
+			`lncappf_amt`    as 'salary',
+			`lncappf_card_no` as 'card_no',
+			`lncappf_prod_code` as 'prod_code' -->
+		
+		FROM
+			ln_apply
+		WHERE
+			`del` = 'N'
+		AND `lncappf_id` = #{lncappf_id}
+	
+	</select>	
+</mapper>

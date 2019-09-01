@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PosfeeMapper">
+
+
+<!-- 收单费用信息添加 -->
+	<insert id="PosfeeAddMapper" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `abposfee` (
+			`merch_no`,
+			`mcc_code`,
+			`month_trade_amt`,
+			`merch_rate`,
+			`max_fee_flag`,
+			`max_fee`,
+			`back_compute_typ`,
+			`cr_fee1_amt`,
+			`cr_dsc_rate1`,
+			`cr_dsc_amt1`,
+			`cr_fee2_amt`,
+			`cr_dsc_rate2`,
+			`cr_dsc_amt2`,
+			`cr_fee3_amt`,
+			`cr_dsc_rate3`,
+			`cr_dsc_amt3`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{merch_no},
+				#{mcc_code},
+				#{month_trade_amt},
+				#{merch_rate},
+				#{max_fee_flag},
+				#{max_fee},
+				#{back_compute_typ},
+				#{cr_fee1_amt},
+				#{cr_dsc_rate1},
+				#{cr_dsc_amt1},
+				#{cr_fee2_amt},
+				#{cr_dsc_rate2},
+				#{cr_dsc_amt2},
+				#{cr_fee3_amt},
+				#{cr_dsc_rate3},
+				#{cr_dsc_amt3},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+	
+<!-- 收单费用信息修改 -->
+	<update id="PosfeeUpdMapper" parameterType="Map">
+		UPDATE `abposfee`
+		SET
+			`merch_no` = #{merch_no},
+			`mcc_code` = #{mcc_code},
+			`month_trade_amt` = #{month_trade_amt},
+			`merch_rate` = #{merch_rate},
+			`max_fee_flag` = #{max_fee_flag},
+			`max_fee` = #{max_fee},
+			`back_compute_typ` = #{back_compute_typ},
+			`cr_fee1_amt` = #{cr_fee1_amt},
+			`cr_dsc_rate1` = #{cr_dsc_rate1},
+			`cr_dsc_amt1` = #{cr_dsc_amt1},
+			`cr_fee2_amt` = #{cr_fee2_amt},
+			`cr_dsc_rate2` = #{cr_dsc_rate2},
+			`cr_dsc_amt2` = #{cr_dsc_amt2},
+			`cr_fee3_amt` = #{cr_fee3_amt},
+			`cr_dsc_rate3` = #{cr_dsc_rate3},
+			`cr_dsc_amt3` = #{cr_dsc_amt3},
+		    `update_time` = #{update_time},
+		    `update_user` = #{update_user}
+		WHERE
+			`merch_no` = #{merch_no}
+	</update>
+	
+<!-- 收单费用信息查询 -->
+	<select id="PosfeeInqMapper"  resultType="Map" parameterType="Map" >
+		SELECT *
+		    
+		FROM
+			abposfee
+		WHERE
+			`del` = 'N'
+		AND `merch_no` = #{merch_no}
+	</select>	
+               
+</mapper> 

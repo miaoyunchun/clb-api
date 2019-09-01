@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MerchantManagementMapper">
+
+<!-- 信用卡收单商户管理信息添加 -->
+	<insert id="MerchantManagementAddMapper" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO `abmerc` (
+	
+			`merch_no`,
+			`merch_sts`,
+			`merch_level`,
+			`merch_name`,
+			`merch_type`,
+			`merch_person`,
+			`merch_tel`,
+			
+			`province`,
+			`city`,
+			`merch_area`,
+			`merch_address`,
+			`mcc_code`,
+			`setl_acct`,
+			`acct_name`,
+			`bank_no`,
+			`bank_name`,
+			`fee_mod`,
+			`unpay_no`,
+			`back_fee_flag`,
+			`back_compute_typ`,
+			`back_acct_no`,
+			`back_acct_name`,
+			`back_awbk_no`,
+			`back_awbk_name`,
+			`setl_dates`,
+			`nub_of_term`,
+			`buss_license`,
+			`seller_id`,
+			`open_date`,
+			`audit_teller_l1`,
+			`audit_teller_l2`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+			)
+		VALUES
+			(
+				#{merch_no},
+				#{merch_sts},
+				#{merch_level},
+				#{merch_name},
+				#{merch_type},
+				#{contact_name},
+				#{merch_tel},
+				#{province},
+				#{city},
+				#{area},
+				#{merch_address},
+				#{mcc_code},
+				#{setl_acct},
+				#{acct_name},
+				#{bank_no},
+				#{bank_name},
+				#{fee_mod},
+				#{unpay_no},
+				#{back_fee_flag},
+				#{back_compute_typ},
+				#{back_acct_no},
+				#{back_acct_name},
+				#{back_awbk_no},
+				#{back_awbk_name},
+				#{setl_dates},
+				#{nub_of_term},
+				#{buss_license},
+				#{seller_id},
+				#{open_date},
+				#{audit_teller_l1},
+				#{audit_teller_l2},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+			
+	
+	</insert>
+	
+	
+	<!-- 信用卡收单商户管理信息维护 -->
+	<update id="MerchantManagementUpdMapper" parameterType="Map">
+	UPDATE `abmerc`
+	SET
+			`merch_no`= #{merch_no},
+			`merch_sts`= #{merch_sts},
+			`merch_level`= #{merch_level},
+			`merch_name`= #{merch_name},
+			`merch_type`= #{merch_type},
+			`merch_person`= #{contact_name},
+			`merch_tel`= #{merch_tel},
+			`province`= #{province},
+			`city`= #{city},
+			`merch_area`= #{area},
+			`merch_address`= #{merch_address},
+			`mcc_code`= #{mcc_code},
+			`setl_acct`= #{setl_acct},
+			`acct_name`= #{acct_name},
+			`bank_no`= #{bank_no},
+			`bank_name`= #{bank_name},
+			`fee_mod`= #{fee_mod},
+			`unpay_no`= #{unpay_no},
+			`back_fee_flag`= #{back_fee_flag},
+			`back_compute_typ`= #{back_compute_typ},
+			`back_acct_no`= #{back_acct_no},
+			`back_acct_name`= #{back_acct_name},
+			`back_awbk_no`= #{back_awbk_no},
+			`back_awbk_name`= #{back_awbk_name},
+			`setl_dates`= #{setl_dates},
+			`nub_of_term`= #{nub_of_term},
+			`buss_license`= #{buss_license},
+			`seller_id`= #{seller_id},
+			`open_date`= #{open_date},
+			`audit_teller_l1`= #{audit_teller_l1},
+			`audit_teller_l2`= #{audit_teller_l2},
+		    `update_time`= #{update_time},
+		    `update_user`= #{update_user}
+		WHERE
+			`merch_no`=#{merch_no}
+	
+	</update>
+	<!-- 信用卡收单商户管理信息查询 -->
+	<select id="MerchantManagementInqMapper"  resultType="Map" parameterType="Map" >
+	SELECT *
+		    
+		FROM
+			abmerc
+		WHERE
+			`merch_no` = #{merch_no}
+		AND `del` = 'N'
+	
+	</select>	
+	
+	<!-- 信用卡收单商户管理信息清单查询 -->
+	<select id="MerchantManagementLstMapperService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `abmerc` a
+		<include refid="MerchantManagementLstMapperService_condition" />
+	</select>
+	<select id="MerchantManagementLstMapper"  resultType="Map" parameterType="Map" >
+	select
+	 a.`merch_no` AS 'merch_num',
+	 a.`merch_sts` AS 'merch_status',
+	 a.`merch_name` AS 'merch_code',
+	 a.`province` AS 'merch_nm',
+	 a.`city`,
+	 a.`merch_area`,
+	 a.`mcc_code`,
+	 a.`del`,
+	 LEFT (a.`create_time`, 10) AS 'open_dt',
+	 a.`create_user`,
+	 a.`update_time`,
+	 a.`update_user`
+	from `abmerc` a
+	<include refid="MerchantManagementLstMapperService_condition" /> 
+		<!-- 默认 -->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}   </if>
+		LIMIT ${offset},${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="MerchantManagementLstMapperService_condition">
+		<where>
+		    1=1 and a.`del`='N' 
+		    <!-- 自定义搜索 -->
+		    <if test="merch_no !=null and merch_no !='' ">and a.`merch_no`=#{merch_no}</if>
+		    <if test="merch_sts  !=null and merch_sts  !='' ">and a.`merch_sts `=#{merch_sts}</if>
+		    <if test="merch_name !=null and merch_name !='' ">and a.`merch_name` #{merch_name}</if>
+		    <if test="province !=null and province !='' ">and a.`province` #{province}</if>
+		    <if test="city !=null and city !='' ">and a.`city` #{city}</if>
+		    <if test="merch_area !=null and merch_area !='' ">and a.`merch_area` #{area}</if>
+		    <if test="mcc_code !=null and mcc_code !='' ">and a.`mcc_code` #{mcc_code}</if>
+		    <!-- 默认搜索 -->
+		    <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+              
+</mapper> 

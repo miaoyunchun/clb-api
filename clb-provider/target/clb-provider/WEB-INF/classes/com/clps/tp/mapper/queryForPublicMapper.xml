@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="queryForPublicMapper">
+
+    <!-- 查询对公委托协议的签约查询 -->
+    <select id="selectOneService" resultType="Map" parameterType="Map">
+        SELECT
+       	`tpunitf_comp_id`,
+       	`tpunitf_comp_card_no`,
+       	`tpunitf_comp_type`,
+        `tpunitf_prod_code`,
+        `tpunitf_log_pwd`,
+        `tpunitf_settle_date`,
+       	`tpunitf_settle_cycle`
+        FROM
+        `tp_unit`
+        WHERE
+        `tpunitf_comp_id` = #{comp_id}
+    </select>
+
+</mapper>

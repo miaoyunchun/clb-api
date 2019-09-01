@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ApplicanManageMapper">
+
+<!-- 申请书信息添加 -->
+<insert id="ApplicanAddMapper" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO `ci_app`(
+     `appl_id`,
+     `appl_in_date`,
+     `appl_in_time`,
+     `appl_status`,
+     `appl_id_type`,
+     `appl_id_number`,
+     `appl_last_date`,
+     `appl_last_time`,
+     `appl_intchk_id`,
+     `appl_intchk_date`,
+     `appl_intchk_result`,
+     `appl_intchk_refuse_reason`,
+     `appl_intchk_comment`,
+     `appl_review_id`,
+     `appl_review_date`,
+     `appl_review_result`,
+     `appl_review_refuse_reason`,
+     `appl_review_comment`,
+     `appl_creinv_id`,
+     `appl_creinv_date`,
+     `appl_creinv_result`,
+     `appl_creinv_refuse_reason`,
+     `appl_creinv_comment`,
+     `appl_acct_count`,
+     `appl_credit_history`,
+     `appl_credit_hold`,
+     `appl_mancre_id`,
+     `appl_mancre_date`,
+     `appl_mancre_refuse_reason`,
+     `appl_mancre_comment`,
+     `appl_compute_limit`,
+     `appl_compute_result`,
+     `appl_compute_refuse_reason`,
+     `appl_final_limit`,
+     `del`,
+     `create_time`,
+	 `create_user`,
+	 `update_time`,
+	 `update_user`
+
+)
+   VALUES
+      (
+     #{appl_id},
+     #{appl_in_date},
+     #{appl_in_time},
+     #{appl_status},
+     #{appl_id_type},
+     #{appl_id_number},
+     #{appl_last_date},
+     #{appl_last_time},
+     #{appl_intchk_id},
+     #{appl_intchk_date},
+     #{appl_intchk_result},
+     #{appl_intchk_refuse_reason},
+     #{appl_intchk_comment},
+     #{appl_review_id},
+     #{appl_review_date},
+     #{appl_review_result},
+     #{appl_review_refuse_reason},
+     #{appl_review_comment},
+     #{appl_creinv_id},
+     #{appl_creinv_date},
+     #{appl_creinv_result},
+     #{appl_creinv_refuse_reason},
+     #{appl_creinv_comment},
+     #{appl_acct_count},
+     #{appl_credit_history},
+     #{appl_credit_hold},
+     #{appl_mancre_id},
+     #{appl_mancre_date},
+     #{appl_mancre_refuse_reason},
+     #{appl_mancre_comment},
+     #{appl_compute_limit},
+     #{appl_compute_result},
+     #{appl_compute_refuse_reason},
+     #{appl_final_limit},
+     'N',
+	 #{create_time},
+	 #{create_user},
+	 #{update_time},
+	 #{update_user}
+				
+			      
+      )
+
+</insert>
+	   
+	   
+<!-- 申请书信息维护 -->
+<update id="ApplicanUpdMapper" parameterType="Map">	   
+    UPDATE `ci_app`
+	SET  
+       `appl_id` = #{appl_id},
+       `appl_in_date` = #{appl_in_date},
+       `appl_in_time` = #{appl_in_time}, 
+       `appl_status` = #{appl_status},
+       `appl_id_type` = #{appl_id_type},
+       `appl_id_number` = #{appl_id_number},
+       `appl_last_date` = #{appl_last_date},
+       `appl_last_time` = #{appl_last_time},
+       `appl_intchk_id` = #{appl_intchk_id},
+       `appl_intchk_date` = #{appl_intchk_date},
+       `appl_intchk_result` = #{appl_intchk_result},
+       `appl_intchk_refuse_reason` = #{appl_intchk_refuse_reason},
+       `appl_intchk_comment` = #{appl_intchk_comment},
+       `appl_review_id` = #{appl_review_id},
+       `appl_review_date` = #{appl_review_date},
+       `appl_review_result` = #{appl_review_result},
+       `appl_review_refuse_reason` = #{appl_review_refuse_reason},
+       `appl_review_comment` = #{appl_review_comment},
+       `appl_creinv_id` = #{appl_creinv_id},
+       `appl_creinv_date` = #{appl_creinv_date},
+       `appl_creinv_result` = #{appl_creinv_result},
+       `appl_creinv_refuse_reason` = #{appl_creinv_refuse_reason},
+       `appl_creinv_refuse_reason` = #{appl_creinv_comment},
+       `appl_acct_count` = #{appl_acct_count},
+       `appl_credit_history` = #{appl_credit_history},
+       `appl_credit_hold` = #{appl_credit_hold},
+       `appl_mancre_id` = #{appl_mancre_id},
+       `appl_mancre_date` = #{appl_mancre_date},
+       `appl_mancre_refuse_reason` = #{appl_mancre_refuse_reason},
+       `appl_mancre_comment` = #{appl_mancre_comment},
+       `appl_compute_limit` = #{appl_compute_limit},
+       `appl_compute_result` = #{appl_compute_result},
+       `appl_compute_refuse_reason` = #{appl_compute_refuse_reason},
+       `appl_final_limit` = #{appl_final_limit},
+       `update_time` = #{update_time},
+       `update_user` = #{update_user}
+    WHERE
+       `appl_id` = #{appl_id} 
+</update>
+
+<!-- 申请书信息查询（通过申请书号）-->
+<select id="ApplicanInqMapper"  resultType="Map" parameterType="Map" >
+       SELECT * 
+              
+       FROM
+             ci_app
+       WHERE
+             `appl_id` = #{appl_id} 
+       AND   `del`='N'
+
+          
+</select>
+
+
+          
+<!-- 申请书信息查询（通过客户号）-->
+<select id="ApplicanIn1Mapper"  resultType="Map" parameterType="Map" >
+       SELECT 
+            `appl_id`  
+       FROM 
+            ci_app
+       WHERE 
+            `appl_id_number` = #{appl_id_number} 
+       AND  `del`='N'
+</select>
+
+
+
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+	    

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpTransLog">
+
+		<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="DpTransLogResultMap" type="com.clps.dp.pojo.DpTransLogPo" >
+		<result column="trans_id" property="trans_id"/>
+		<result column="trans_sequence" property="trans_sequence"/>
+		<result column="trans_acct" property="trans_acct"/>
+		<result column="trans_card" property="trans_card"/>
+		<result column="trans_code" property="trans_code"/>
+		<result column="trans_desc" property="trans_desc"/>
+		<result column="trans_date" property="trans_date"/>
+		<result column="trans_time" property="trans_time"/>
+		<result column="amount_berfor_trans" property="amount_berfor_trans"/>
+		<result column="amount_in_trans" property="amount_in_trans"/>
+		<result column="amount_after_trans" property="amount_after_trans"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 交易历史详细查询-->
+	<select id="dpTransLogInq"  resultType="Map" parameterType="dptranslog" >
+		SELECT *			
+		FROM
+			dp_dptranslog
+		WHERE
+			`trans_id` = #{trans_id}
+		AND	`del` = 'N'
+	</select>
+	
+	<!-- 交易历史列表查询-->
+	<!-- 总数查询 -->
+	<select id="dpTransLogCount" resultType="Long" parameterType="Map">
+		select count(*) as `count` 
+		from `dp_dptranslog` a
+		<include refid="dpTransLogListService_condition" />
+	</select>
+	<!-- 信息查询 -->
+	<select id="dpTransLogList" resultType="Map" parameterType="Map">  
+		select 
+		    a.`trans_id`,
+			a.`trans_code`,
+			a.`trans_card`,
+			a.`trans_date`,
+			a.`amount_berfor_trans`,
+			a.`amount_in_trans`,
+			a.`amount_after_trans`,
+			a.`del`,
+			a.`create_time`,
+			a.`create_user`,
+			a.`update_time`,
+			a.`update_user`
+		from `dp_dptranslog` a
+		<include refid="dpTransLogListService_condition" /> 
+		<!-- 默认 -->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}   </if>
+		LIMIT ${offset},${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="dpTransLogListService_condition">
+		<where>
+		    1=1 and a.`del`='N' 
+		    <!-- 自定义搜索 -->
+		    <if test="card_number !=null and card_number !='' ">and a.`trans_card`=#{card_number}  </if>
+		    <if test="trans_code !=null and trans_code !='' ">and a.`trans_code`=#{trans_code}  </if>
+		    <if test="trans_date !=null and trans_date !='' ">and (a.trans_date>#{trans_date_start}  and a.trans_date &lt; #{trans_date_end} )</if>
+		    <!-- 默认搜索 -->
+		    <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+	
+
+		
+</mapper>

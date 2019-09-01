@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="journalNumberMapper">
+
+    <!-- 查询流水号 -->
+    <select id="selectJourNbr" resultType="Map" parameterType="Map">
+        SELECT
+        `id`,
+        `length`,
+        `current_number`,
+        `next_number`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        FROM
+        gb_gbtxno
+        WHERE
+        `del` = 'N'
+        <if test="length != null and length != '' ">AND `length` = #{length}</if>
+        AND `current_number` LIKE concat(#{initial},'%')
+        AND `header_length` = #{header_length}
+    </select>
+
+    <!-- 生成新流水号条目 -->
+    <insert id="genNewJourNbrRule" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `gb_gbtxno` (
+            `length`,
+            `header_length`,
+            `current_number`,
+            `next_number`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        )
+        VALUES
+            (
+                #{length},
+                #{header_length},
+                #{current_number},
+                #{next_number},
+                'N',
+                #{create_time},
+                #{create_user},
+                #{update_time},
+                #{update_user}
+            )
+    </insert>
+
+    <!-- 从已有规则中生成新流水号 -->
+    <update id="genNewJourNbr" parameterType="Map">
+        UPDATE `gb_gbtxno`
+        SET
+            `current_number` = #{current_number},
+            `next_number`    = #{next_number},
+            `update_time`    = #{update_time},
+            `update_user`    = #{update_user}
+        WHERE
+            `id` = #{id}
+    </update>
+
+</mapper>

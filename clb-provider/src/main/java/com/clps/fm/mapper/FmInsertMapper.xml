@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmInsertMapper">		
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FmAcctResultMap" type="com.clps.fm.pojo.FmActEtrPo" >
+		<result column="tran_id" property="tran_id"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="tran_desp" property="tran_desp"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+	<resultMap id="FmAcct2ResultMap" type="com.clps.fm.pojo.FmActEtr2Po" >
+		<result column="acct_item" property="acct_item"/>
+		<result column="tran_id" property="tran_id"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="dc_flag" property="dc_flag"/>
+		<result column="acct_org" property="acct_org"/>
+		<result column="tran_amt_point" property="tran_amt_point"/>
+		<result column="item_seq" property="item_seq"/>
+		<result column="tran_desp" property="tran_desp"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+
+	<!-- 添加新用户 -->
+	<insert id="insertServiceOne" parameterType="fmactetr">
+	  INSERT INTO `fm_acct_entries`(
+			`tran_id`,
+			`cond_seq`,
+			`tran_desp`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{tran_id},
+				#{cond_seq},
+				#{tran_desp},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+	
+	<insert id="insertServiceSec" parameterType="fmactetr2">
+		    insert into `fm_acct_entries2`(
+		    `acct_item`,
+		    `tran_id`,
+		    `cond_seq`,
+		    `dc_flag`,
+		    `acct_org`,
+		    `tran_amt_point`,
+		    `item_seq`,
+		    `tran_desp`,
+		    `del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`)
+
+			VALUES
+			(#{acct_item},
+			 #{tran_id},
+			 #{cond_seq},
+			 #{dc_flag},
+			 #{acct_org},
+			 #{tran_amt_point},
+			 #{item_seq},
+			 #{tran_desp},
+			 'N',
+			 #{create_time},
+			 #{create_user},
+			 #{update_time},
+			 #{update_user})
+		
+	</insert>		
+		
+</mapper>

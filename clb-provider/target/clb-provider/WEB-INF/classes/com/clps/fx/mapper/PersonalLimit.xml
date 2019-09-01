@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="personalLimit">
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="personalimitMap" type="com.clps.fx.pojo.FxPersonalLimitPo" >
+		<result column="id_type" property="id_type"/>
+		<result column="id_nbr" property="id_nbr"/>
+		<result column="ccy" property="ccy"/>
+		<result column="debit_limit" property="debit_limit"/>
+		<result column="balance_limt" property="balance_limt"/>
+		<result column="debit_amt" property="debit_amt"/>
+		<result column="interest_amt" property="interest_amt"/>
+		<result column="inter_amt_in" property="inter_amt_in"/>
+		<result column="external_amt_in" property="external_amt_in"/>
+		<result column="inter_amt_out" property="inter_amt_out"/>
+		<result column="external_amt_out" property="external_amt_out"/>
+		<result column="settle_amt" property="settle_amt"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	  <!-- 写入平盘申请文件-->
+    <insert id="limitAdd" parameterType="fxperlimit">
+        INSERT INTO `fx_personallimit` (
+        `id_type`,
+        `id_nbr`,
+        `ccy`,
+        `debit_limit`,
+        `balance_limt`,
+        `debit_amt`,
+        `interest_amt`,
+        `inter_amt_in`,
+        `external_amt_in`,
+        `inter_amt_out`,
+        `external_amt_out`,
+        `settle_amt`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{id_type},
+        #{id_nbr},
+        #{ccy},
+        #{debit_limit},
+        #{balance_limt},
+        #{debit_amt},
+        #{interest_amt},
+        #{inter_amt_in},
+        #{external_amt_in},
+        #{inter_amt_out},
+        #{external_amt_out},
+        #{settle_amt},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    	   <!-- 账户信息查询 -->
+    <select id="limitInq" resultMap="personalimitMap" parameterType="fxperlimit">
+        SELECT *
+        FROM fx_personallimit
+        WHERE
+         	`del` = 'N'
+    	AND	`id_type` = #{id_type} 
+    	 AND `id_nbr` =#{id_nbr}  
+    </select>
+
+	<!-- 编辑 -->
+	<update id="limitUpd" parameterType="fxperlimit">
+		UPDATE `fx_personallimit`
+		SET 
+		 <if test="ccy != null and ccy != '' ">`ccy` = #{ccy}, </if>
+		 <if test="debit_limit != null and debit_limit != '' ">`debit_limit` = #{debit_limit}, </if>
+		 <if test="balance_limt != null and balance_limt != '' ">`balance_limt` = #{balance_limt}, </if>
+		 <if test="debit_amt != null and debit_amt != '' ">`debit_amt` = #{debit_amt}, </if>
+		 <if test="interest_amt != null and interest_amt != '' ">`interest_amt` = #{interest_amt}, </if>
+		 <if test="inter_amt_in != null and inter_amt_in != '' ">`inter_amt_in` = #{inter_amt_in}, </if>
+		 <if test="external_amt_in != null and external_amt_in != '' ">`external_amt_in` = #{external_amt_in}, </if>
+		 <if test="inter_amt_out != null and inter_amt_out != '' ">`inter_amt_out` = #{inter_amt_out}, </if>
+		 <if test="external_amt_out != null and external_amt_out != '' ">`external_amt_out` = #{external_amt_out}, </if>
+		 <if test="settle_amt != null and settle_amt != '' ">`settle_amt` = #{settle_amt}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`id_type`=#{id_type} AND `id_nbr`=#{id_nbr}
+	</update>
+   
+
+
+
+</mapper>

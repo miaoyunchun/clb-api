@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priceMapper">
+    
+    <insert id="insertPrice" parameterType="Map">
+        INSERT INTO `sc_scpricef` (
+            `sc_code`,
+            `sedol`,
+            `sc_ccy`,
+            `sc_name`,
+            `price_effect_date`,
+            `high_price`,
+            `low_price`,
+            `price`,
+            `open_price`,
+            `close_price`,
+            `last_price_effect_date`,
+            `last_high_price`,
+            `last_low_price`,
+            `last_open_price`,
+            `last_close_price`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        ) VALUE (
+            #{sc_code},
+            #{sedol},
+            #{sc_ccy},
+            #{sc_name},
+            #{price_effect_date},
+            #{hihg_price},
+            #{low_price},
+            #{price},
+            #{open_price},
+            #{close_price},
+            #{last_price_efct_date},
+            #{last_hihg_price},
+            #{last_low_price},
+            #{last_open_price},
+            #{last_close_price},
+            'N',
+            #{create_time},
+            #{create_user},
+            #{update_time},
+            #{update_user}
+        )
+    </insert>
+    
+    <!--单条查询  -->
+    <!-- 此处拼写错误是正确的，因原接口就是这样定义的，此处需要保持一致 -->
+    <select id="priceInqOneService" resultType="Map" parameterType="Map">
+        SELECT
+            `sc_code`,
+            `sedol`,
+            `sc_ccy`,
+            `sc_name`,
+            `price_effect_date`,
+            `high_price`             AS `hihg_price`,
+            `low_price`,
+            `price`,
+            `open_price`,
+            `close_price`,
+            `last_price_effect_date` AS `last_price_efct_date`,
+            `last_high_price`        AS `last_hihg_price`,
+            `last_low_price`,
+            `last_open_price`,
+            `last_close_price`
+        FROM
+            `sc_scpricef`
+        WHERE
+            `sc_code` = #{sc_code}
+    </select>
+    
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="priceInqListService_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `sc_scpricef` p
+        <include refid="priceInqListService_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="priceInqListService" resultType="Map" parameterType="Map">
+        select
+        p.`sc_code`,
+        p.`sedol`,
+        p.`sc_ccy`,
+        p.`sc_name`,
+        p.`price_effect_date`,
+        p.`high_price`,
+        p.`low_price`,
+        p.`price`,
+        p.`open_price`,
+        p.`close_price`,
+        p.`last_price_effect_date`,
+        p.`last_high_price`,
+        p.`last_low_price`,
+        p.`last_open_price`,
+        p.`last_close_price`,
+        p.`del`,
+        p.`create_time`,
+        p.`create_user`,
+        p.`update_time`,
+        p.`update_user`
+        FROM
+        `sc_scpricef` p
+        <include refid="priceInqListService_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="priceInqListService_condition">
+        <where>
+            1=1 and p.`del`='N'
+            <!-- 自定义搜索 -->
+            <if test="sc_code!=null and sc_code !='' ">and p.`sc_code`=#{sc_code}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and (p.create_time>#{create_time_start} and
+                p.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and p.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and (p.update_time>#{update_time_start} and
+                p.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and p.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>

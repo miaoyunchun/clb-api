@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="msgRecvMapper">
+	<update id="larBusUpdateService" parameterType="Map">
+		UPDATE `ft_vrptt`
+		SET
+		<if test="MSG_STATUS !=null and MSG_STATUS !='' ">`MSG_STATUS`=#{MSG_STATUS}</if>
+		<if test="BUSINESS_TYPE !=null and BUSINESS_TYPE !='' ">`BUSINESS_TYPE`=#{BUSINESS_TYPE}</if>
+		WHERE `MSG_NUM`=#{MSG_NUM}
+	</update>
+	<update id="smalBusUpdateService" parameterType="Map">
+		UPDATE `ft_grpt`
+		SET
+		<if test="PKG_STATUS !=null and PKG_STATUS !='' ">`PKG_STATUS`=#{PKG_STATUS}</if>
+		WHERE `PKG_NUM`=#{PKG_NUM} AND `MSG_NUM`=#{MSG_NUM}
+	</update>
+
+	<select id="smalQueryListService" resultType="Map"
+		parameterType="Map">
+		select
+		`PKG_NUM`,
+		`MSG_ID`,
+		`RPT_SEND_DATE`,
+		`MAX_RETURN_TIME`,
+		`OPP_BANK_CODE`,
+		`TOTAL_TXN_AMT`,
+		`PKG_STATUS`,
+		`MSG_NUM`,
+		`create_time`,
+		`create_user`,
+		`update_time`,
+		`update_user`
+		from ft_grpt
+		where
+		`PKG_NUM`=#{PKG_NUM}
+	</select>
+	<select id="larbusQueryOneService" resultType="Map"
+		parameterType="Map">
+		SELECT
+		`MSG_NUM`,
+		`TXN_JOUR`,
+		`TXN_DATE`,
+		`MSG_ID`,
+		`BUSINESS_TYPE`,
+		`MSG_STATUS`,
+		`UPDATE_STATUS_TIME`,
+		`DEDUC_CARD_NO`,
+		`DEDUC_NAME`,
+		`DEDUC_BANK_CODE`,
+		`DEDUC_BANK_NUMBER`,
+		`RECV_BANK_CODE`,
+		`RECV_BANK_NUMBER`,
+		`RECV_CARD_NO`,
+		`RECV_NAME`,
+		`TXN_AMT`,
+		`TXN_CCY`,
+		`PRODUCT_CODE`,
+		`AUDIT_TIME1`,
+		`AUDIT_TIME2`,
+		`MAX_RETURN_TIME`,
+		`ADDTION_INF`,
+		`ORIGINAL_PAY_SEQ`,
+		`ORIGINAL_MSG_ID`,
+		`CLARIFY_RESULT`
+		FROM
+		ft_vrptt
+		WHERE
+		`MSG_NUM` = #{MSG_NUM}
+	</select>
+	<insert id="insertLarBusService" parameterType="Map">
+		INSERT INTO `ft_nrptt`(
+		`MSG_NUM`,
+		`TXN_JOUR`,
+		`TXN_DATE`,
+		`MSG_ID`,
+		`BUSINESS_TYPE`,
+		`MSG_STATUS`,
+		`UPDATE_STATUS_TIME`,
+		`DEDUC_CARD_NO`,
+		`DEDUC_NAME`,
+		`DEDUC_BANK_CODE`,
+		`DEDUC_BANK_NUMBER`,
+		`RECV_BANK_CODE`,
+		`RECV_BANK_NUMBER`,
+		`RECV_CARD_NO`,
+		`RECV_NAME`,
+		`TXN_AMT`,
+		`TXN_CCY`,
+		`PRODUCT_CODE`,
+		`AUDIT_TIME1`,
+		`AUDIT_TIME2`,
+		`MAX_RETURN_TIME`,
+		`ADDTION_INF`,
+		`ORIGINAL_PAY_SEQ`,
+		`ORIGINAL_MSG_ID`,
+		`CLARIFY_RESULT`
+		)VALUES(
+		#{MSG_NUM},
+		#{TXN_JOUR},
+		#{TXN_DATE},
+		#{MSG_ID},
+		#{BUSINESS_TYPE},
+		#{MSG_STATUS},
+		#{UPDATE_STATUS_TIME},
+		#{DEDUC_CARD_NO},
+		#{DEDUC_NAME},
+		#{DEDUC_BANK_CODE},
+		#{DEDUC_BANK_NUMBER},
+		#{RECV_BANK_CODE},
+		#{RECV_BANK_NUMBER},
+		#{RECV_CARD_NO},
+		#{RECV_NAME},
+		#{TXN_AMT},
+		#{TXN_CCY},
+		#{PRODUCT_CODE},
+		#{AUDIT_TIME1},
+		#{AUDIT_TIME2},
+		#{MAX_RETURN_TIME},
+		#{ADDTION_INF},
+		#{ORIGINAL_PAY_SEQ},
+		#{ORIGINAL_MSG_ID},
+		#{CLARIFY_RESULT}
+		)
+	</insert>
+	<insert id="insertSmalBusService" parameterType="Map">
+		INSERT INTO `ft_grpt`(
+		`PKG_NUM`,
+		`MSG_ID`,
+		`RPT_SEND_DATE`,
+		`MAX_RETURN_TIME`,
+		`OPP_BANK_CODE`,
+		`TOTAL_TXN_AMT`,
+		`PKG_STATUS`,
+		`MSG_NUM`,
+		`create_time`,
+		`create_user`,
+		`update_time`,
+		`update_user`
+		)VALUES(
+		#{PKG_NUM},
+		#{MSG_ID},
+		#{RPT_SEND_DATE},
+		#{MAX_RETURN_TIME},
+		#{OPP_BANK_CODE},
+		#{TOTAL_TXN_AMT},
+		#{PKG_STATUS},
+		#{MSG_NUM},
+		#{create_time},
+		#{create_user},
+		#{update_time},
+		#{update_user}
+		)
+	</insert>
+</mapper>

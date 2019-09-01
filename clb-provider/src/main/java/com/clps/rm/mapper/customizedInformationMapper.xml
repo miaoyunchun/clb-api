@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customizedInformationMapper">
+
+    <resultMap id="CrdmnResultMap" type="com.clps.rm.pojo.RmrdmnPo">
+        <result column="crdmn_number" property="crdmn_number"/>
+        <result column="crdmn_defined_titl" property="crdmn_defined_titl"/>
+        <result column="crdmn_defined_desc" property="crdmn_defined_desc"/>
+        <result column="crdmn_defined_content" property="crdmn_defined_content"/>
+        <result column="crdmn_last_main_date" property="crdmn_last_main_date"/>
+        <result column="crdmn_maker" property="crdmn_maker"/>
+        <result column="del" property="del"/>
+        <result column="create_time" property="create_time"/>
+        <result column="create_user" property="create_user"/>
+        <result column="update_time" property="update_time"/>
+        <result column="update_user" property="update_user"/>
+    </resultMap>
+    
+    <!-- 单条查询 -->
+    <select id="selectInfo" resultMap="CrdmnResultMap" parameterType="rmrdmn">
+        SELECT
+            `crdmn_number`,
+            `crdmn_defined_titl`,
+            `crdmn_defined_desc`,
+            `crdmn_defined_content`,
+            `crdmn_last_main_date`,
+            `crdmn_maker`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM
+            rm_rmrdmn
+        WHERE
+            `del` = 'N'
+            AND `crdmn_number` = #{crdmn_number}
+            AND `crdmn_defined_titl` = #{crdmn_defined_titl}
+    </select>
+
+    <!-- 删除 -->
+    <update id="deleteInfo" parameterType="rmrdmn">
+        UPDATE `rm_rmrdmn`
+        SET
+            `del`         = 'Y',
+            `update_time` = #{update_time},
+            `update_user` = #{update_user}
+        WHERE
+            `crdmn_number` = #{crdmn_number}
+            AND `crdmn_defined_titl` = #{crdmn_defined_titl}
+    </update>
+
+    <!-- 编辑 -->
+    <update id="updateInfo" parameterType="rmrdmn">
+        UPDATE `rm_rmrdmn`
+        SET
+        `crdmn_defined_desc` = #{crdmn_defined_desc},
+        <if test="crdmn_defined_content != null and crdmn_defined_content != ''">`crdmn_defined_content` = #{crdmn_defined_content},</if>
+        `crdmn_last_main_date` = #{crdmn_last_main_date},
+        `crdmn_maker` = #{crdmn_maker},
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `crdmn_number` = #{crdmn_number}
+        AND `crdmn_defined_titl` = #{crdmn_defined_titl}
+    </update>
+
+    <!-- 添加 -->
+    <insert id="insertInfo" parameterType="rmrdmn">
+        INSERT INTO `rm_rmrdmn` (
+            `crdmn_number`,
+            `crdmn_defined_titl`,
+            `crdmn_defined_desc`,
+            `crdmn_defined_content`,
+            `crdmn_last_main_date`,
+            `crdmn_maker`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        )
+        VALUES
+            (
+                #{crdmn_number},
+                #{crdmn_defined_titl},
+                #{crdmn_defined_desc},
+                #{crdmn_defined_content},
+                #{crdmn_last_main_date},
+                #{crdmn_maker},
+                'N',
+                #{create_time},
+                #{create_user},
+                #{update_time},
+                #{update_user}
+            )
+    </insert>
+
+
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryInfo_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `rm_rmrdmn` a
+        <include refid="queryInfo_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="queryInfo" resultType="Map" parameterType="Map">
+        select
+        a.`crdmn_number`,
+        a.`crdmn_defined_titl`
+        from `rm_rmrdmn` a
+        <include refid="queryInfo_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryInfo_condition">
+        <where>
+            1=1
+            and a.`del`='N'
+            and a.`crdmn_number` = #{crdmn_number}
+            <if test="crdmn_defined_titl != null and crdmn_defined_titl != '' ">and a.`crdmn_defined_titl` = #{crdmn_defined_titl}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and
+                a.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and
+                a.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ResvdPstDelMapper">
+	<!-- 删除 -->
+	<update id="deleteOneService" parameterType="Map">
+		UPDATE `pb_resvdpst`
+		SET
+		`del`='Y',
+		`update_time` = #{update_time},
+		`update_user` =
+		#{update_user}
+		WHERE `pbfrdpst_rsv_id`=#{rsv_id}
+	</update>
+</mapper>

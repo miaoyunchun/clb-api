@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmItemdInqMapper">
+
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FmItemDtlResultMap" type="com.clps.fm.pojo.FmItemDtlPo" >
+		<result column="txn_jour_t" property="txn_jour_t"/>
+		<result column="txn_seq" property="txn_seq"/>
+		<result column="txn_date_t" property="txn_date_t"/>
+		<result column="txn_time" property="txn_time"/>
+		<result column="doc_type" property="doc_type"/>
+		<result column="doc_nbr" property="doc_nbr"/>
+		<result column="txn_descrip" property="txn_descrip"/>
+		<result column="txn_amt" property="txn_amt"/>
+		<result column="dc_cod" property="dc_cod"/>
+		<result column="item_bal" property="item_bal"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="opr_nbr" property="opr_nbr"/>
+		<result column="rchr_nbr" property="rchr_nbr"/>
+		<result column="txn_instin" property="txn_instin"/>
+		<result column="val_date" property="val_date"/>
+		<result column="recon_nbr" property="recon_nbr"/>
+		<result column="txn_fxr" property="txn_fxr"/>
+		<result column="second_amt" property="second_amt"/>
+		<result column="second_bal" property="second_bal"/>
+		<result column="dscrp_cod" property="dscrp_cod"/>
+		<result column="txn_seq_nbr" property="txn_seq_nbr"/>
+		<result column="doc_end_no" property="doc_end_no"/>
+		<result column="txn_unit" property="txn_unit"/>
+		<result column="txn_type" property="txn_type"/>
+		<result column="item_nbr" property="item_nbr"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 单条查询 -->
+	<select id="fmQueryOneService"  resultMap="FmItemDtlResultMap" parameterType="fmitemdtl" >
+		SELECT *			
+		FROM
+			fm_item_detail 
+		WHERE
+			`txn_jour_t`=#{txn_jour_t}
+		AND `txn_seq` = #{txn_seq}
+	</select>	
+</mapper>

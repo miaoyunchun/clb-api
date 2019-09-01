@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tranResvLstInqMapper">
+
+	<!-- 多条查询 -->
+	<!-- 信息查询 -->
+	<select id="tranResvQueryLstService" resultType="Map"
+		parameterType="Map">
+		SELECT
+		`pbfresrv_rsv_id` as `rsv_id`,
+		`pbfresrv_cust_id` as `cust_id`,
+		`pbfresrv_rsv_date` as `rsv_date`,
+		`pbfresrv_trans_stat` as `trans_stat`
+		FROM
+		pb_resrv
+		<include refid="demoQueryListService_condition" />
+		<!-- 默认 -->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder} </if>
+		LIMIT ${offset},${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="demoQueryListService_condition">
+		<where>
+			del='N'
+			<!-- 自定义搜索 -->
+			<if test="cust_number !=null and cust_number !='' ">and `pbfresrv_cust_id`=#{cust_number}  </if>
+			<if test="trans_stat !=null and trans_stat !='' ">and `pbfresrv_trans_stat`=#{trans_stat}  </if>
+		</where>
+	</sql>
+</mapper>

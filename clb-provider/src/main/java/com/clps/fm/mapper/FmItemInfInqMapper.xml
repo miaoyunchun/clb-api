@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmItemInfInqMapper">
+	
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="fmItemResultMap" type="com.clps.fm.pojo.FmInfoPo" >
+		<result column="item_key" property="item_key"/>
+		<result column="item_level" property="item_level"/>
+		<result column="item_name" property="item_name"/>
+		<result column="op_time_stamp" property="op_time_stamp"/>
+		<result column="bal_dire_flg" property="bal_dire_flg"/>
+		<result column="gl_account" property="gl_account"/>
+		<result column="cal_gl_account" property="cal_gl_account"/>
+		<result column="class_item" property="class_item"/>
+		<result column="fx_item_flag" property="fx_item_flag"/>
+		<result column="in_out_flag" property="in_out_flag"/>
+		<result column="buss_type" property="buss_type"/>
+		<result column="tran_amt_dir" property="tran_amt_dir"/>
+		<result column="item_start_date" property="item_start_date"/>
+		<result column="item_end_date" property="item_end_date"/>
+		
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 单条查询 -->
+    <select id="selectItemInformation" resultMap="fmItemResultMap" parameterType="fminfo">
+        SELECT * 
+        FROM
+            fm_item h
+		<include refid="querySubByKeyAndLevel"></include>
+    </select>
+
+	<sql id="querySubByKeyAndLevel">
+		<where>
+			h.item_key=#{item_key}
+			<if test="item_level != null and item_level !=''">and h.item_level = #{item_level}</if>
+		</where>
+	</sql>
+
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="subjectQueryListService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count`
+		from fm_item a
+		<include refid="subjectQueryListService_condition1" />
+	</select>
+	<!--信息查询-->
+	<select id="subjectQueryListService" resultMap="fmItemResultMap" parameterType="fminfo">
+		select
+		@num:=@num+1 as seq,
+		a.`item_key`,
+		a.`item_level`,
+		a.`item_name`,
+		a.`item_start_date`,
+		a.`item_end_date`
+		from (SELECT @num:=0) r,`fm_item` a
+		<include refid="subjectQueryListService_condition" />
+		<!--默认-->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}
+
+		</if>
+
+		LIMIT ${offset},${limit}
+	</select>
+	<!--条件-->
+	<sql id="subjectQueryListService_condition">
+		<where>
+			1=1 and a.`del`='N'
+			<!--自定义搜索-->
+			<if test="item_key !=null and item_key !='' ">and a.`item_key`=#{item_key}  </if>
+			<if test="item_level != null and item_level !=''">and a.item_level = #{item_level}</if>
+			<!--默认搜索-->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+
+	<sql id="subjectQueryListService_condition1">
+		<where>
+			1=1 and a.`del`='N'
+			<!--自定义搜索-->
+			<if test="item_key !=null and item_key !='' ">and a.`item_key`=#{item_key}  </if>
+
+			<!--默认搜索-->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+  
+    
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ScTradeLogMapper">
+    <!--更新 -->
+    <select id="queryTradeLog" parameterType="map" resultType="Map">
+        SELECT
+            `tran_log_nbr`,
+            `jour_nbr`,
+            `acct_nbr`,
+            `cust_nbr`,
+            `sc_tran_type`,
+            `sc_code`,
+            `sc_type`,
+            `sc_curr_price`,
+            `sc_ccy`,
+            `sc_tran_num`,
+            `fee_code1`,
+            `fee_rate1`,
+            `fee_amt1`,
+            `fee_code2`,
+            `fee_rate2`,
+            `fee_amt2`,
+            `fee_code3`,
+            `fee_rate3`,
+            `fee_amt3`,
+            `fee_code4`,
+            `fee_rate4`,
+            `fee_amt4`,
+            `order_date`,
+            `order_time`,
+            `settle_date`,
+            `trade_amt`,
+            `avg_amt`,
+            `trader`,
+            `tran_des`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        FROM `sc_sctrdlgf`
+        WHERE
+            `tran_log_nbr` = #{tran_log_nbr}
+    </select>
+    
+    <!-- Add new trade log -->
+    <insert id="addTradeLog" parameterType="Map">
+        INSERT INTO `sc_sctrdlgf` (
+            `tran_log_nbr`,
+            `jour_nbr`,
+            `acct_nbr`,
+            `cust_nbr`,
+            `sc_tran_type`,
+            `sc_code`,
+            `sc_type`,
+            `sc_curr_price`,
+            `sc_ccy`,
+            `sc_tran_num`,
+            `fee_code1`,
+            `fee_rate1`,
+            `fee_amt1`,
+            `fee_code2`,
+            `fee_rate2`,
+            `fee_amt2`,
+            `fee_code3`,
+            `fee_rate3`,
+            `fee_amt3`,
+            `fee_code4`,
+            `fee_rate4`,
+            `fee_amt4`,
+            `order_date`,
+            `order_time`,
+            `settle_date`,
+            `trade_amt`,
+            `avg_amt`,
+            `trader`,
+            `tran_des`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        ) VALUES (
+            #{tran_log_nbr},
+            #{jour_nbr},
+            #{acct_nbr},
+            #{cust_nbr},
+            #{sc_tran_type},
+            #{sc_code},
+            #{sc_type},
+            #{sc_curr_price},
+            #{sc_ccy},
+            #{sc_tran_num},
+            #{fee_code1},
+            #{fee_rate1},
+            #{fee_amt1},
+            #{fee_code2},
+            #{fee_rate2},
+            #{fee_amt2},
+            #{fee_code3},
+            #{fee_rate3},
+            #{fee_amt3},
+            #{fee_code4},
+            #{fee_rate4},
+            #{fee_amt4},
+            #{order_date},
+            #{order_time},
+            #{settle_date},
+            #{trade_amt},
+            #{avg_amt},
+            #{trader},
+            #{tran_des},
+            'N',
+            #{create_time},
+            #{create_user},
+            #{update_time},
+            #{update_user}
+        )
+    </insert>
+    
+    <!-- 证券信息列表查询 -->
+    <!-- 总数查询 -->
+    <select id="tradeHistory_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `sc_sctrdlgf` a
+        <include refid="tradeHistory_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="tradeHistory" resultType="Map" parameterType="Map">
+        select
+        a.`tran_log_nbr`,
+        a.`sc_tran_type`,
+        a.`sc_code`,
+        a.`sc_type`,
+        a.`sc_curr_price`,
+        a.`sc_tran_num`,
+        a.`order_date`,
+        a.`order_time`,
+        a.`del`,
+        a.`create_time`,
+        a.`create_user`,
+        a.`update_time`,
+        a.`update_user`
+        from `sc_sctrdlgf` a
+        <include refid="tradeHistory_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="tradeHistory_condition">
+        <where>
+            1=1 and a.`del`='N'
+            <!-- 自定义搜索 -->
+            <if test="acct_nbr != null and acct_nbr != ''">AND a.`acct_nbr` = #{acct_nbr}</if>
+            <if test="sc_type != null and sc_type != ''">AND a.`sc_type` = #{sc_type}</if>
+            <if test="sc_tran_type != null and sc_tran_type != ''">AND a.`sc_tran_type` = #{sc_tran_type}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start} and
+                a.create_time &lt; #{create_time_end} )
+            </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%')
+            </if>
+            <if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start} and
+                a.update_time &lt; #{update_time_end} )
+            </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>

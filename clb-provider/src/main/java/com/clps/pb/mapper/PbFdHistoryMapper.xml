@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PbHistoryMapper">
+<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="queryListService_count" resultType="Long" parameterType="Map">
+	    select count(*) as `count`
+        from `pb_fdmsf` p
+        <include refid="queryListService_condition"></include>
+	</select>
+	<!-- 信息查询 -->
+	<select id="PbQueryHistory" resultType="Map" parameterType="Map" >
+		select 
+	    	p.`pbcfdmsf_dp_fd_acct_num` AS `dp_fd_acct_num`,
+	    	p.`pbcfdmsf_fd_acct_num` AS `fd_acct_num`,
+	    	p.`pbcfdmsf_fd_open_date` AS `fd_open_date`,
+	    	p.`pbcfdmsf_fd_prd_code` AS `fd_prd_code`,
+	    	p.`pbcfdmsf_fd_prim_amt` AS `fd_prim_amt`
+		from  `pb_fdmsf` p
+		<include refid="queryListService_condition"></include>
+		<!-- 默认 -->
+        <if test="sortName != null and sortName != '' ">ORDER BY `${sortName}` ${sortOrder} </if>
+        LIMIT ${offset},${limit}
+	</select>
+	<!-- 条件 -->
+	<sql id="queryListService_condition">
+	    <where>
+	        <!--查询条件一  -->
+			( `pbcfdmsf_cust_number`=#{fd_cust_number} 
+		 	and 
+			`pbcfdmsf_fd_status_flg`='C' ) 
+		or
+			<!--查询条件二 -->
+		 	( `pbcfdmsf_fd_status_flg`='C'
+	    	and
+	   		str_to_date(`pbcfdmsf_fd_open_date`,'%Y-%m-%d') &gt;= str_to_date(#{fd_inq_str_date},'%Y-%m-%d') )
+	    or
+	    	<!--查询条件三-->
+	    	( `pbcfdmsf_fd_status_flg`='C'
+	    	and
+	    	str_to_date(`pbcfdmsf_fd_open_date`,'%Y-%m-%d') &lt;= str_to_date(#{fd_inq_end_date},'%Y-%m-%d') )
+	    or
+	    	<!--查询条件四-->
+	    	( `pbcfdmsf_fd_status_flg`='C'
+	    	and
+	   		str_to_date(`pbcfdmsf_fd_open_date`,'%Y-%m-%d') &gt;= str_to_date(#{fd_inq_str_date},'%Y-%m-%d')
+	   		and 
+	   		str_to_date(`pbcfdmsf_fd_open_date`,'%Y-%m-%d') &lt;= str_to_date(#{fd_inq_end_date},'%Y-%m-%d')
+	   		)
+	    </where>
+	</sql>	
+		
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tpupdMapper">
+	
+	<!--编辑  -->
+	<update id="updateService" parameterType="Map">
+		UPDATE `tp_agnt`
+		SET 
+		 `tpagntf_card_nbr` = #{cust_nbr}, 
+		 `tpagntf_card_nbr` = #{cust_card_nbr},    
+		 `tpagntf_log_pwd` = #{log_pwd}, 	
+		    <if test="water_code1 != null and water_code1 != '' ">`tpagntf_water_code1` =#{water_code1},</if>
+			<if test="water_code2 != null and water_code2 != '' ">`tpagntf_water_code2` =#{water_code2},</if>
+			<if test="water_code3 != null and water_code3 != '' ">`tpagntf_water_code3` =#{water_code3},</if>
+			<if test="water_code4 != null and water_code4 != '' ">`tpagntf_water_code4` =#{water_code4},</if>
+			<if test="water_code5 != null and water_code5 != '' ">`tpagntf_water_code5` =#{water_code5},</if>
+			<if test="elec_code1 != null and elec_code1 != '' ">`tpagntf_elec_code1` =#{elec_code1},</if> 
+			<if test="elec_code2 != null and elec_code2 != '' ">`tpagntf_elec_code2` =#{elec_code2},</if>
+			<if test="elec_code3 != null and elec_code3 != '' ">`tpagntf_elec_code3` =#{elec_code3},</if>
+			<if test="elec_code4 != null and elec_code4 != '' ">`tpagntf_elec_code4` =#{elec_code4},</if>
+			<if test="elec_code5 != null and elec_code5 != '' ">`tpagntf_elec_code5` =#{elec_code5},</if>
+			<if test="gas_code1 != null and gas_code1 != '' ">`tpagntf_gas_code1` =#{gas_code1},</if>
+			<if test="gas_code2 != null and gas_code2 != '' ">`tpagntf_gas_code2` =#{gas_code2},</if>
+			<if test="gas_code3 != null and gas_code3 != '' ">`tpagntf_gas_code3` =#{gas_code3},</if>
+			<if test="gas_code4 != null and gas_code4 != '' ">`tpagntf_gas_code4` =#{gas_code4},</if>
+			<if test="gas_code5 != null and gas_code5 != '' ">`tpagntf_gas_code5` =#{gas_code5},</if>
+			`tpagntf_cre_date` =#{agent_cre_date},
+			`tpagntf_cre_id` =#{agent_cre_id},
+			`update_time` = #{update_time},
+		 	`update_user` = #{update_user}
+		WHERE
+			tpagntf_cust_nbr = #{cust_nbr}
+	</update>
+	
+	
+	
+</mapper>	
+	

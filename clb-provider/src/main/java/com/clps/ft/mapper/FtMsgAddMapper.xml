@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ftMsgAddMapper">
+	<!-- 来账插入 -->
+	<insert id="ftNMsgAddService" parameterType="Map"
+		useGeneratedKeys="true" keyProperty="msg_num">
+		insert into ft_nrptt(
+		MSG_NUM,
+		TXN_JOUR,
+		TXN_DATE,
+		MSG_ID,
+		BUSINESS_TYPE,
+		MSG_STATUS,
+		UPDATE_STATUS_TIME,
+		DEDUC_CARD_NO,
+		DEDUC_NAME,
+		DEDUC_BANK_CODE,
+		DEDUC_BANK_NUMBER,
+		RECV_BANK_CODE,
+		RECV_BANK_NUMBER,
+		RECV_CARD_NO,
+		RECV_NAME,
+		TXN_AMT,
+		TXN_CCY,
+		PRODUCT_CODE,
+		AUDIT_TIME1,
+		AUDIT_TIME2,
+		MAX_RETURN_TIME,
+		ADDTION_INF,
+		ORIGINAL_PAY_SEQ,
+		ORIGINAL_MSG_ID,
+		CLARIFY_RESULT
+		)values(
+		#{MSG_NUM},
+		#{TXN_JOUR},
+		#{TXN_DATE},
+		#{MSG_ID},
+		#{BUSINESS_TYPE},
+		#{MSG_STATUS},
+		#{UPDATE_STATUS_TIME},
+		#{DEDUC_CARD_NO},
+		#{DEDUC_NAME},
+		#{DEDUC_BANK_CODE},
+		#{DEDUC_BANK_NUMBER},
+		#{RECV_BANK_CODE},
+		#{RECV_BANK_NUMBER},
+		#{RECV_CARD_NO},
+		#{RECV_NAME},
+		#{TXN_AMT},
+		#{TXN_CCY},
+		#{PRODUCT_CODE},
+		#{AUDIT_TIME1},
+		#{AUDIT_TIME2},
+		#{MAX_RETURN_TIME},
+		#{ADDTION_INF},
+		#{ORIGINAL_PAY_SEQ},
+		#{ORIGINAL_MSG_ID},
+		#{CLARIFY_RESULT}
+		)
+	</insert>
+
+	<!-- 往账插入 -->
+	<insert id="ftVMsgAddVService" parameterType="Map"
+		useGeneratedKeys="true" keyProperty="msg_num">
+		insert into ft_vrptt(
+		MSG_NUM,
+		TXN_JOUR,
+		TXN_DATE,
+		MSG_ID,
+		BUSINESS_TYPE,
+		MSG_STATUS,
+		UPDATE_STATUS_TIME,
+		DEDUC_CARD_NO,
+		DEDUC_NAME,
+		DEDUC_BANK_CODE,
+		DEDUC_BANK_NUMBER,
+		RECV_BANK_CODE,
+		RECV_BANK_NUMBER,
+		RECV_CARD_NO,
+		RECV_NAME,
+		TXN_AMT,
+		TXN_CCY,
+		PRODUCT_CODE,
+		AUDIT_TIME1,
+		AUDIT_TIME2,
+		MAX_RETURN_TIME,
+		ADDTION_INF,
+		ORIGINAL_PAY_SEQ,
+		ORIGINAL_MSG_ID,
+		CLARIFY_RESULT
+		)values(
+		#{MSG_NUM},
+		#{TXN_JOUR},
+		#{TXN_DATE},
+		#{MSG_ID},
+		#{BUSINESS_TYPE},
+		#{MSG_STATUS},
+		#{UPDATE_STATUS_TIME},
+		#{DEDUC_CARD_NO},
+		#{DEDUC_NAME},
+		#{DEDUC_BANK_CODE},
+		#{DEDUC_BANK_NUMBER},
+		#{RECV_BANK_CODE},
+		#{RECV_BANK_NUMBER},
+		#{RECV_CARD_NO},
+		#{RECV_NAME},
+		#{TXN_AMT},
+		#{TXN_CCY},
+		#{PRODUCT_CODE},
+		#{AUDIT_TIME1},
+		#{AUDIT_TIME2},
+		#{MAX_RETURN_TIME},
+		#{ADDTION_INF},
+		#{ORIGINAL_PAY_SEQ},
+		#{ORIGINAL_MSG_ID},
+		#{CLARIFY_RESULT}
+		)
+	</insert>
+
+
+	<!-- 报文组插入 -->
+	<insert id="ftGMsgAddService" parameterType="Map"
+		useGeneratedKeys="true" keyProperty="pkg_num">
+		insert into ft_grpt(
+		PKG_NUM,
+		MSG_ID,
+		RPT_SEND_DATE,
+		MAX_RETURN_TIME,
+		OPP_BANK_CODE,
+		TOTAL_TXN_AMT,
+		PKG_STATUS,
+		MSG_NUM,
+		create_time,
+		create_user,
+		update_time,
+		update_user
+		)values(
+		#{PKG_NUM},
+		#{MSG_ID},
+		#{RPT_SEND_DATE},
+		#{MAX_RETURN_TIME},
+		#{OPP_BANK_CODE},
+		#{TOTAL_TXN_AMT},
+		#{PKG_STATUS},
+		#{MSG_NUM},
+		#{create_time},
+		#{create_user},
+		#{update_time},
+		#{update_user}
+		)
+	</insert>
+
+
+	<insert id="ftLogGMsgAddService" parameterType="Map"
+		useGeneratedKeys="true" keyProperty="pkg_num">
+		insert into ft_messages(
+		SEND_LOG_NUM,
+		MSG_NUM,
+		PKG_NUM,
+		CURR_STATUS,
+		create_time,
+		create_user,
+		update_time,
+		update_user
+		)values(
+		#{SEND_LOG_NUM},
+		#{MSG_NUM},
+		#{PKG_NUM},
+		#{CURR_STATUS},
+		#{create_time},
+		#{create_user},
+		#{update_time},
+		#{update_user}
+		)
+	</insert>
+
+
+
+
+	<!-- 往账表明细表中检索待发送的条数 -->
+	<select id="ftVQueryListService_count" resultType="Long"
+		parameterType="Map">
+		select count(*)
+		from ft_vrptt
+		<include refid="ftQueryListService_condition" />
+	</select>
+	
+		<!-- 往账表明细表中检索待发送的条数 -->
+	<select id="ftNQueryListService_count" resultType="Long"
+		parameterType="Map">
+		select count(*)
+		from ft_nrptt
+		<include refid="ftQueryListService_condition" />
+	</select>
+
+	<!-- 查询往账明细表中为待发送记录的报文标识和报文编号 -->
+	<select id="ftVQueryListService" resultType="Map" parameterType="Map">
+		select
+		MSG_NUM,
+		MSG_ID,
+		MAX_RETURN_TIME
+		from ft_vrptt
+		<include refid="ftQueryListService_condition" />
+	</select>
+	
+		<!-- 查询来账明细表中为待发送记录的报文标识和报文编号 -->
+	<select id="ftNQueryListService" resultType="Map" parameterType="Map">
+		select
+		MSG_NUM,
+		MSG_ID,
+		MAX_RETURN_TIME
+		from ft_nrptt
+		<include refid="ftQueryListService_condition" />
+	</select>
+
+	<!-- 条件 -->
+	<sql id="ftQueryListService_condition">
+		<where>
+			<!-- 自定义搜索 -->
+			<if test="MSG_ID !=null and MSG_ID !='' ">MSG_ID=#{MSG_ID}</if>
+			<if test="RECV-BANK-CODE !=null and RECV-BANK-CODE !='' ">and RECV-BANK-CODE=#{RECV-BANK-CODE}</if>
+			<if test="MAX_RETURN_TIME !=null and MAX_RETURN_TIME !='' ">and MAX_RETURN_TIME=#{MAX_RETURN_TIME}</if>
+			<if test="MSG_STATUS !=null and MSG_STATUS !=''">and MSG_STATUS='1'</if>
+		</where>
+	</sql>
+
+	<!-- 编辑 往账报文明细表 -->
+	<update id="ftVEdit" parameterType="Map">
+		UPDATE ft_vrptt
+		SET
+		<if test="MSG_STATUS != null and MSG_STATUS != '' ">`MSG_STATUS` = '2', </if>
+		<if test="UPDATE_STATUS_TIME != null and UPDATE_STATUS_TIME != '' ">`UPDATE_STATUS_TIME` = #{UPDATE_STATUS_TIME}, </if>
+		WHERE
+		MSG_NUM=#{MSG_NUM}
+	</update>
+	
+	<!-- 编辑 来账报文明细表 -->
+	<update id="ftNEdit" parameterType="Map">
+		UPDATE ft_nrptt
+		SET
+		<if test="MSG_STATUS != null and MSG_STATUS != '' ">`MSG_STATUS` = '2', </if>
+		<if test="UPDATE_STATUS_TIME != null and UPDATE_STATUS_TIME != '' ">`UPDATE_STATUS_TIME` = #{UPDATE_STATUS_TIME}, </if>
+		WHERE
+		MSG_NUM=#{MSG_NUM}
+	</update>
+	
+	<!--每插入10条时，把报文表中的交易金额更新成10条累加总金额-->
+	<update id="ftGEdit" parameterType="Map">
+		UPDATE ft_grpt
+		SET 
+		 <if test="TOTAL_TXN_AMT != null and TOTAL_TXN_AMT != '' ">TOTAL_TXN_AMT = #{TOTAL_TXN_AMT} </if>
+		WHERE
+			PKG_NUM=#{PKG_NUM}
+	</update>
+	
+	
+
+	<!-- 单条查询  查出报文组表中最大的报文号 -->
+	<select id="ftQueryMaxService" resultType="String" parameterType="Map">
+		SELECT
+		max(substring(${pkg_num},5,5))
+		FROM
+		ft_grpt
+	</select>
+
+
+
+</mapper>

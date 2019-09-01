@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gxMapper">
+ 
+    <!-- 合同查询 -->
+	<select id="QueryOneService"  resultType="Map" parameterType="Map" >
+		SELECT
+			`gxcapply_remark`
+		FROM
+			ln_gxapply
+		WHERE
+			`gxcapply_loan_nbr` = #{loan_nbr}
+	</select>
+	
+	<!-- 申请簿添加 -->
+	<insert id="insertService" parameterType="com.clps.ln.pojo.LnGxapply" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `ln_gxapply` (
+			`gxcapply_loan_nbr`,
+			`gxcapply_id`,
+			`gxcapply_loan_acct`,
+			`gxcapply_cust_name`,
+			`gxcapply_loan_due_date`,
+			`gxcapply_loan_amt`,
+			`gxcapply_extend_date`,
+			`gxcapply_extend_type`,
+			`gxcapply_extend_fee`,
+			`gxcapply_extend_rate`,
+			`gxcapply_extend_total_days`,
+			`gxcapply_loan_ext_sts`,
+			`gxcapply_apply_date`,
+			`gxcapply_remark`,
+				`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{lncntrct_cntrct_no},
+				#{gxcapply_id},
+				#{gxcapply_loan_acct},
+				#{gxcapply_cust_name},
+				#{gxcapply_loan_due_date},
+				#{gxcapply_loan_amt},
+				#{gxcapply_extend_date},
+				#{gxcapply_extend_type},
+				#{gxcapply_extend_fee},
+				#{gxcapply_extend_rate},
+				#{gxcapply_extend_total_days},
+				#{gxcapply_loan_ext_sts},
+				#{gxcapply_apply_date},
+				#{gxcapply_remark},
+					'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+	
+	<!-- 申请簿审核 -->
+	<insert id="checkService"  parameterType="com.clps.ln.pojo.LnGxauditPo" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO `ln_gxaudit` (
+     `gxcaudit_audit_nbr`,
+     `gxcaudit_loan_nbr`,
+     `gxcaudit_audit_date`,
+     `gxcaudit_audit_channel`,
+     `gxcaudit_audit_id`,
+     `gxcaudit_audit_apply_date`,
+     `gxcaudit_audit_cust_id`,
+     `gxcaudit_audit_cust_name`,
+     `gxcaudit_loan_due_date`,
+     `gxcaudit_loan_prod`,
+     `gxcaudit_loan_amt`,
+     `gxcaudit_loan_ext_date`,
+     `gxcaudit_loan_remark`,
+     `gxcaudit_loan_ext_sts`,
+     `gxcaudit_audit_remark`,
+     `del`,
+     `create_time`,
+     `create_user`,
+     `update_time`,
+     `update_user`
+    
+    
+    
+    )
+    VALUES
+    (
+    #{gxcaudit_audit_nbr},
+    #{gxcaudit_loan_nbr},
+    #{gxcaudit_audit_date},
+    #{gxcaudit_audit_channel},
+    #{gxcaudit_audit_id},
+    #{gxcaudit_audit_apply_date},
+    #{gxcaudit_audit_cust_id},
+    #{gxcaudit_audit_cust_name},
+    #{gxcaudit_loan_due_date},
+    #{gxcaudit_loan_prod},
+    #{gxcaudit_loan_amt},
+    #{gxcaudit_loan_ext_date},
+    #{gxcaudit_loan_remark},
+    #{gxcaudit_loan_ext_sts},
+    #{gxcaudit_audit_remark},
+    'N',
+    #{create_time},
+    #{create_user},
+    #{update_time},
+    #{update_user}
+     )
+     </insert>
+    
+    <!-- 删除 -->
+	<update id="deleteGxApplyService" parameterType="com.clps.ln.pojo.LnGxapply">
+		UPDATE `ln_gxapply` SET 
+			`del`='Y',
+			`update_time` = #{update_time},
+		 	`update_user` = #{update_user}
+        WHERE `gxcapply_loan_nbr` = #{lncntrct_cntrct_no}	
+	</update>
+	
+	
+	  <!-- 展期申请簿查询 -->
+	<select id="QueryOneGxApplyService"  resultType="Map" parameterType="com.clps.ln.pojo.LnGxapply" >
+		SELECT
+			`gxcapply_loan_nbr` as 'loan_nbr',
+			`gxcapply_id` as 'id',
+			`gxcapply_loan_acct` as 'loan_account',
+			`gxcapply_cust_name` as 'cust_name',
+			`gxcapply_loan_due_date` as 'loan_due_date',
+			`gxcapply_loan_amt` as 'loan_amt',
+			`gxcapply_extend_date` as 'extend_date',
+			`gxcapply_extend_type` as 'extend_type',
+			`gxcapply_extend_fee`  as 'extend_fee',
+			`gxcapply_extend_rate` as 'extend_rate', 
+            `gxcapply_extend_total_days` as 'extend_total_days',
+            `gxcapply_loan_ext_sts` as 'loan_ext_sts',  
+            `gxcapply_apply_date` as 'apply_date', 
+            `gxcapply_remark` as 'remark'
+		FROM
+			ln_gxapply
+		WHERE
+			`del` = 'N'
+		AND `gxcapply_loan_nbr` = #{lncntrct_cntrct_no}
+	</select>
+	
+   
+</mapper>

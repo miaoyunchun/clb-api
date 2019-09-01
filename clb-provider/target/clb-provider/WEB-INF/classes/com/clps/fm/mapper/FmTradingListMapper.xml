@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FmTradingListMapper">
+	
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="fmTradResultMap" type="com.clps.fm.pojo.FmTradPo" >
+		<result column="txn_jour" property="txn_jour"/>
+		<result column="txn_type" property="txn_type"/>
+		<result column="ser_name" property="ser_name"/>
+		<result column="busn_date" property="busn_date"/>
+		<result column="cpu_date" property="cpu_date"/>
+		<result column="cpu_time" property="cpu_time"/>
+		<result column="txn_terminal" property="txn_terminal"/>
+		<result column="txn_auth_flg" property="txn_auth_flg"/>
+		<result column="auth_typ" property="auth_typ"/>
+		<result column="txl_ec_flg" property="txl_ec_flg"/>
+		<result column="txl_ec_log_no" property="txl_ec_log_no"/>
+		<result column="txl_ar_log_no" property="txl_ar_log_no"/>
+		<result column="txl_account_no" property="txl_account_no"/>
+		<result column="txl_oppo_account_no" property="txl_oppo_account_no"/>
+		<result column="txl_tx_type" property="txl_tx_type"/>
+		<result column="txl_doc_type" property="txl_doc_type"/>
+		<result column="txl_book_code" property="txl_book_code"/>
+		<result column="txl_tx_amt1" property="txl_tx_amt1"/>
+		<result column="txl_tx_amt2" property="txl_tx_amt2"/>
+		<result column="txl_24h_ec_flg" property="txl_24h_ec_flg"/>
+		<result column="txl_inp_area_len" property="txl_inp_area_len"/>
+		<result column="txl_data_area" property="txl_data_area"/>
+		
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 单条查询 -->
+    <select id="selectItemInformation" resultMap="fmTradResultMap" parameterType="fmtradtl">
+        SELECT * 
+        FROM
+            fm_txn_detail
+        WHERE
+            `txn_jour` = #{txn_jour}
+            AND `txn_type` = #{txn_type}
+            AND `buss_date` = #{buss_date}
+            
+    </select>
+
+	<!-- 多条查询 -->
+	<!-- 总数查询 -->
+	<select id="tradingListService_count" resultType="Long" parameterType="Map">
+		select count(*) as `count`
+		from `fm_txn_detail` a
+		<include refid="tradingListService_condition1" />
+	</select>
+	<!--信息查询-->
+	<select id="tradingListService" resultMap="fmTradResultMap" parameterType="fmtradtl">
+		select
+		@num:=@num+1 as seq,<!-- 序号 -->
+		a.`txn_jour`,<!-- 交易流水号-->
+		a.`ser_name`,<!-- 交易服务名-->
+		a.`txn_type`,<!-- 交易类型 -->
+		a.`txl_tx_type`,<!-- 交易认证类型 -->
+		a.`txl_doc_type`,<!-- 认证类型 -->
+		a.`txl_ec_flg`,<!-- 冲正交易标识-->
+		a.`txl_tx_amt1`,<!-- 交易金额1 -->
+		a.`txl_data_area`,<!-- 具体交易内容 -->
+		a.`txl_24h_ec_flg`<!-- 24小时冲正标识 -->
+		from (SELECT @num:=0) r,`fm_txn_detail` a
+		<include refid="tradingListService_condition1" />
+		<!--默认-->
+		<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}
+
+		</if>
+
+		LIMIT ${offset},${limit}
+	</select>
+	<!--条件-->
+	<sql id="tradingListService_count">
+		<where>
+			1=1 and a.`del`='N'
+			<!--自定义搜索-->
+			<if test="txn_jour !=null and txn_jour !='' ">and a.`txn_jour`=#{txn_jour}  </if>
+			<!--默认搜索-->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+
+	<sql id="tradingListService_condition1">
+		<where>
+			1=1 and a.`del`='N'
+			<!--自定义搜索-->
+			<if test="txn_jour !=null and txn_jour !='' ">and a.`txn_jour`=#{txn_jour}  </if>
+			<if test="txn_type != null and txn_type !=''">and a.txn_type = #{txn_type}</if>
+			<if test="busn_date != null and busn_date !=''">and a.busn_date = #{busn_date}</if>
+			<!--默认搜索-->
+			<if test="create_time !=null and create_time !='' ">and (a.create_time>#{create_time_start}  and a.create_time &lt; #{create_time_end} )</if>
+			<if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+			<if test="update_time !=null and update_time !='' ">and (a.update_time>#{update_time_start}  and a.update_time &lt; #{update_time_end} )</if>
+			<if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+		</where>
+	</sql>
+</mapper>

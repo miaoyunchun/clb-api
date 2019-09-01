@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fmgeneraldelMapper">
+	
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FmAcctItemResultMap" type="com.clps.fm.pojo.FmLgdProcPo" >
+		<result column="item_key" property="item_key"/>
+		<result column="op_time_stamp" property="op_time_stamp"/>
+		<result column="buss_type" property="buss_type"/>
+		<result column="item_name" property="item_name"/>
+		<result column="face_bal" property="face_bal"/>
+		<result column="afc_bal" property="afc_bal"/>
+		<result column="bal_dire_flg" property="bal_dire_flg"/>
+		<result column="crnt_day_dr_amt" property="crnt_day_dr_amt"/>
+		<result column="crnt_day_cr_amt" property="crnt_day_cr_amt"/>
+		<result column="crnt_day_dr_qty" property="crnt_day_dr_qty"/>
+		<result column="crnt_day_cr_qty" property="crnt_day_cr_qty"/>
+		<result column="mnaccum_dr_amt" property="mnaccum_dr_amt"/>
+		<result column="mnaccum_cr_amt" property="mnaccum_cr_amt"/>
+		<result column="mnaccum_dr_item" property="mnaccum_dr_item"/>
+		<result column="mnaccum_cr_item" property="mnaccum_cr_item"/>
+		<result column="mnaccum_dr_bal" property="mnaccum_dr_bal"/>
+		<result column="mnaccum_cr_bal" property="mnaccum_cr_bal"/>
+		<result column="ssn_dr_totl_amt" property="ssn_dr_totl_amt"/>
+		<result column="ssn_cr_totl_amt" property="ssn_cr_totl_amt"/>
+		<result column="ssn_dr_totl_number" property="ssn_dr_totl_number"/>
+		<result column="ssn_cr_totl_number" property="ssn_cr_totl_number"/>
+		<result column="ssn_dr_totl_bal" property="ssn_dr_totl_bal"/>
+		<result column="ssn_cr_totl_bal" property="ssn_cr_totl_bal"/>
+		<result column="yr_accum_dr_amt" property="yr_accum_dr_amt"/>
+		<result column="yr_accum_cr_amt" property="yr_accum_cr_amt"/>
+		<result column="yr_accum_dr_qty" property="yr_accum_dr_qty"/>
+		<result column="yr_accum_cr_qty" property="yr_accum_cr_qty"/>
+		<result column="yr_accum_dr_bal" property="yr_accum_dr_bal"/>
+		<result column="yr_accum_cr_bal" property="yr_accum_cr_bal"/>
+		<result column="dr_gl_intr_typ" property="dr_gl_intr_typ"/>
+		<result column="dr_gl_mass_amt_rang" property="dr_gl_mass_amt_rang"/>
+		<result column="cr_gl_intr_typ" property="cr_gl_intr_typ"/>
+		<result column="cr_gl_mass_amt_rang" property="cr_gl_mass_amt_rang"/>
+		<result column="dr_flt_intr" property="dr_flt_intr"/>
+		<result column="cr_flt_intr" property="cr_flt_intr"/>
+		<result column="tprd_acc_bal" property="tprd_acc_bal"/>
+		<result column="crnt_prd_cd" property="crnt_prd_cd"/>
+		<result column="acct_largst_bal" property="acct_largst_bal"/>
+		<result column="over_draw_lagst_amt" property="over_draw_lagst_amt"/>
+		<result column="over_draw_start_dt" property="over_draw_start_dt"/>
+		<result column="last_acc_int_dt" property="last_acc_int_dt"/>
+		<result column="last_tsf_accbal_dt" property="last_tsf_accbal_dt"/>
+		<result column="last_acc_dt" property="last_acc_dt"/>
+		<result column="opac_dt" property="opac_dt"/>
+		<result column="close_dt" property="close_dt"/>
+		<result column="frz_sts" property="frz_sts"/>
+		<result column="acct_sts" property="acct_sts"/>
+		<result column="intc_flg" property="intc_flg"/>
+		<result column="intc_cycle" property="intc_cycle"/>
+		<result column="pay_int_acct_no" property="pay_int_acct_no"/>
+		<result column="cola_int_acct_no" property="cola_int_acct_no"/>
+		<result column="gl_peroid_nums_n" property="gl_peroid_nums_n"/>
+		<result column="gl_peroid_unit" property="gl_peroid_unit"/>
+		<result column="respon_cent" property="respon_cent"/>
+		<result column="gl_instn_inq_lmt" property="gl_instn_inq_lmt"/>
+		<result column="gl_instn_rcrd_lmt" property="gl_instn_rcrd_lmt"/>
+		<result column="gl_instn_clsacc_lmt" property="gl_instn_clsacc_lmt"/>
+		<result column="gl_acct_lmt_rsv" property="gl_acct_lmt_rsv"/>
+		<result column="acct_page_fmt" property="acct_page_fmt"/>
+		<result column="acct_mode" property="acct_mode"/>
+		<result column="opun_inst" property="opun_inst"/>
+		<result column="cust_no" property="cust_no"/>
+		<result column="opun_cod" property="opun_cod"/>
+		<result column="gl_finbusn" property="gl_finbusn"/>
+		<result column="gl_author" property="gl_author"/>
+		<result column="amndr_no" property="amndr_no"/>
+		<result column="second_bill_type" property="second_bill_type"/>
+		<result column="second_last_bal" property="second_last_bal"/>
+		<result column="second_bal" property="second_bal"/>
+		<result column="lst_prt_rcd_dt" property="lst_prt_rcd_dt"/>
+		<result column="max_prnt_txn_no" property="max_prnt_txn_no"/>
+		<result column="open_mode" property="open_mode"/>
+		<result column="intr_rcrd_flg" property="intr_rcrd_flg"/>
+		<result column="gl_accget_tax_flg" property="gl_accget_tax_flg"/>
+		<result column="gl_accget_fee_flg" property="gl_accget_fee_flg"/>
+		<result column="gl_accget_invest_bnd_flg" property="gl_accget_invest_bnd_flg"/>
+		<result column="gl_accget_lgtm_invst_prof" property="gl_accget_lgtm_invst_prof"/>
+		<result column="gl_check_flg" property="gl_check_flg"/>
+		<result column="gl_book_sub_flg" property="gl_book_sub_flg"/>
+		<result column="gl_accget_reserved7" property="gl_accget_reserved7"/>
+		<result column="gl_accget_reserved8" property="gl_accget_reserved8"/>
+		<result column="gl_accget_reserved9" property="gl_accget_reserved9"/>
+		<result column="gl_accget_reserved10" property="gl_accget_reserved10"/>
+		<result column="gl_mod_num_n" property="gl_mod_num_n"/>
+		<result column="gl_max_sub_no" property="gl_max_sub_no"/>
+		<result column="gl_info_cod_filler" property="prod_flg_gl_info_cod_filler"/>
+		<result column="oppo_acct_no" property="oppo_acct_no"/>
+		<result column="auto_invst_intr_cod" property="auto_invst_intr_cod"/>
+		<result column="auto_invst_flt_intr" property="auto_invst_flt_intr"/>
+		<result column="cost_cntr" property="cost_cntr"/>
+		<result column="due_dt" property="due_dt"/>
+		<result column="dlay_flg" property="dlay_flg"/>
+		<result column="over_draw_accum" property="over_draw_accum"/>
+		<result column="extn_sts" property="extn_sts"/>
+		<result column="dt_bgst_seq_no_n" property="dt_bgst_seq_no_n"/>
+		<result column="last_bal" property="last_bal"/>
+		<result column="second_bill_dr_amt" property="second_bill_dr_amt"/>
+		<result column="second_bill_cr_amt" property="second_bill_cr_amt"/>
+		<result column="acct_max_bal" property="acct_max_bal"/>
+		<result column="opac_instn" property="opac_instn"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+    
+	<!-- 删除 -->
+	<update id="deleteOneServicegen" parameterType="fmlgitm">
+		UPDATE `fm_lgitem_detail` SET 
+			`del`='Y',
+			`update_time` = #{update_time},
+		 	`update_user` = #{update_user}
+		WHERE
+		 `item_key`=#{item_key}	
+		
+		
+		
+	</update>
+
+	
+	
+		
+</mapper>

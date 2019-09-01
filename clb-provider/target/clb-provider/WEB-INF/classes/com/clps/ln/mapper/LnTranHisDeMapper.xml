@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LnTranHisDeMapper">
+  <!-- 交易历史明细查询 -->
+    <select id="selectLnTranHisDe" resultType="Map" parameterType="Map">
+        SELECT
+        `lnctranf_id`,
+        `lnctranf_code`,
+        `lnctranf_account`,
+        `lnctranf_card_no`,
+        `lnctranf_desc`,
+        `lnctranf_date`,
+        `lnctranf_time`,
+        `lnctranf_amt_before_trans`,
+        `lnctranf_amt_in_trans`,
+        `lnctranf_amt_after_trans`,
+        `lnctranf_remark`,
+        `lnctranf_contract_id`,
+        `lnctranf_pay_way`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        FROM
+            ln_trans
+        WHERE
+            `del` = 'N'
+            AND `lnctranf_id` = #{lnctranf_id}
+    </select>
+</mapper>

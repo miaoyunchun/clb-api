@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PbPreferentialDepositAddMapper">
+    <!-- 添加新用户 -->
+	<insert id="insertPBSCust"  parameterType="Map">
+	  INSERT INTO `pb_fdmsf` (
+			`pbcfdmsf_dp_fd_acct_num`,
+			`pbcfdmsf_cust_number`,
+			`pbcfdmsf_fd_acct_num`,
+			`pbcfdmsf_fd_open_date`,
+			`pbcfdmsf_fd_acct_class`,
+			`pbcfdmsf_acct_loc_aver_wealth`,
+			`pbcfdmsf_fd_prd_code`,
+			`pbcfdmsf_fd_prim_amt`,
+			`pbcfdmsf_fd_term`,
+			`pbcfdmsf_fd_mat_date`,
+			`pbcfdmsf_fd_int_rate`,
+			`pbcfdmsf_fd_trial_int`,
+			`pbcfdmsf_fd_int_tran_out_acct`,
+			`pbcfdmsf_fd_status_flg`,
+			`pbcfdmsf_fd_open_opt`,
+			`pbcfdmsf_fd_tran_source_acct`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{pbcfdmsf_dp_fd_acct_num},
+				#{pbcfdmsf_cust_number},
+				#{pbcfdmsf_fd_acct_num},
+				#{pbcfdmsf_fd_open_date},
+				#{pbcfdmsf_fd_acct_class},
+				#{pbcfdmsf_acct_loc_aver_wealth},
+				#{pbcfdmsf_fd_prd_code},
+				#{pbcfdmsf_fd_prim_amt},
+				#{pbcfdmsf_fd_term},
+				#{pbcfdmsf_fd_mat_date},
+				#{pbcfdmsf_fd_int_rate},
+				#{pbcfdmsf_fd_trial_int},
+				#{pbcfdmsf_fd_int_tran_out_acct},
+				#{pbcfdmsf_fd_status_flg},
+				#{pbcfdmsf_fd_open_opt},
+				#{pbcfdmsf_fd_tran_source_acct},
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+ <!-- 单条查询 -->
+    <select id="PblnContractInq" resultType="Map" parameterType="Map">
+        SELECT
+        	`prod_id`
+        FROM
+        	dp_dpacct
+        WHERE
+        	`acct_nbr` = #{acct_number}
+	</select>
+	<!-- 单条查询 -->
+    <select id="selectUnion" resultType="Map" parameterType="Map">
+        SELECT
+        	`pbcfdpri_fdprd_term`,`pbcfdpri_fdprd_int_rate`
+        FROM
+        	pb_dprd
+        WHERE
+        <if test="pbcfdpri_prod_type !=null and pbcfdpri_prod_type !='' ">`pbcfdpri_prod_type` = #{pbcfdpri_prod_type}</if>
+        and
+        <if test="pbcfdpri_fdprd_code !=null and pbcfdpri_fdprd_code !='' ">`pbcfdpri_fdprd_code` = #{pbcfdpri_fdprd_code}</if>
+        and
+        <if test="pbcfdpri_acct_class !=null and pbcfdpri_acct_class !='' ">`pbcfdpri_acct_class` = #{pbcfdpri_acct_class}</if>
+	</select>
+</mapper>

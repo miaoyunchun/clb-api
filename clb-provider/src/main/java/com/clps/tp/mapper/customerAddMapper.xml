@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customerMapper">
+	<!-- 插入 -->
+	<insert id="cusInsertService" parameterType="Map"
+		useGeneratedKeys="true" keyProperty="tpagntf_cust_nbr">
+		INSERT INTO `tp_agnt`(
+		`tpagntf_cust_nbr`,
+		`tpagntf_card_nbr`,
+		`tpagntf_log_pwd`,
+		`tpagntf_water_code1`,
+		`tpagntf_water_code2`,
+		`tpagntf_water_code3`,
+		`tpagntf_water_code4`,
+		`tpagntf_water_code5`,
+		`tpagntf_elec_code1`,
+		`tpagntf_elec_code2`,
+		`tpagntf_elec_code3`,
+		`tpagntf_elec_code4`,
+		`tpagntf_elec_code5`,
+		`tpagntf_gas_code1`,
+		`tpagntf_gas_code2`,
+		`tpagntf_gas_code3`,
+		`tpagntf_gas_code4`,
+		`tpagntf_gas_code5`,
+		`tpagntf_status`,
+		`tpagntf_cre_date`,
+		`tpagntf_cre_id`
+		)
+		VALUES
+		(
+		#{cust_nbr},
+		#{cust_card_nbr},
+		#{log_pwd},
+		#{water_code1},
+		#{water_code2},
+		#{water_code3},
+		#{water_code4},
+		#{water_code5},
+		#{elec_code1},
+		#{elec_code2},
+		#{elec_code3},
+		#{elec_code4},
+		#{elec_code5},
+		#{gas_code1},
+		#{gas_code2},
+		#{gas_code3},
+		#{gas_code4},
+		#{gas_code5},
+		'N',
+		#{agent_cre_date},
+		#{agent_cre_id}
+		)
+	</insert>
+</mapper>

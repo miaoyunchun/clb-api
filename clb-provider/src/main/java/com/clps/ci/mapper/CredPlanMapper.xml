@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CiCredPlanMapper">
+	<!-- 信用计划信息添加 -->
+	<insert id="CredPlanAddMapper" parameterType="Map" useGeneratedKeys="true" keyProperty="plan_num">
+		INSERT INTO `ci_plan` (
+		`plan_org`,
+		`plan_num`,
+		`plan_seq`,
+		`plan_date`,
+		`plan_type`,
+		`plan_bal`,
+		`plan_prin`,
+		`plan_int`,
+		`plan_fee`,
+		`plan_beg_bal`,
+		`plan_ctd_db`,
+		`plan_ctd_cr`,
+		`plan_acrd_int`,
+		`plan_beg_int`,
+		`del`,
+		`create_time`,
+		`create_user`,
+		`update_time`,
+		`update_user`
+		)
+		VALUES
+		(
+		#{plan_org},
+		#{plan_num},
+		#{plan_seq},<!-- 01 -->
+		#{plan_date},<!-- 获取系统当前日期 -->
+		#{plan_type},<!-- R -->
+		#{plan_bal},
+		#{plan_prin},<!-- 0 -->
+		#{plan_int},<!-- 0 -->	
+		#{plan_fee},<!-- 0 -->
+		#{plan_beg_bal},<!-- 0 -->
+		#{plan_ctd_db},<!-- 0 -->
+		#{plan_ctd_cr},<!-- 0 -->
+		#{plan_acrd_int},<!-- 0 -->
+		#{plan_beg_int},<!-- 0 -->
+		'N',
+		#{create_time},
+		#{create_user},
+		#{update_time},
+		#{update_user}
+		)
+	</insert>
+
+	
+	<!-- 信用计划信息查询  -->
+	<select id="CredPlanInqMapper" resultType="Map" parameterType="Map">
+		 Select * from ci_plan
+          Where `plan_org` = #{plan_org}
+			And `plan_num` = #{plan_num}
+   			And `plan_seq` = #{plan_seq}
+
+	</select>
+	
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="queryAccountMapper">
+    
+    <!-- 单条查询 -->
+    <select id="queryOneService" resultType="Map" parameterType="Map">
+        SELECT
+        	`pbcacctf_cust_number` AS `pbs_cust_number`,
+        	`pbcacctf_acct_num` AS `pbs_acct_num`,
+        	`pbcacctf_acct_status` AS `pbs_acct_status`,
+        	`pbcacctf_acct_open_date` AS `pbs_acct_open_date`,
+        	`pbcacctf_acct_class` AS `pbs_acct_class`,
+        	`pbcacctf_acct_email_address` AS `pbs_acct_email_address`,
+        	`pbcacctf_acct_rpt_monthly_flag` AS `pbs_acct_rpt_monthly_flag`,
+        	`pbcacctf_acct_rpt_post_flag` AS `pbs_acct_rpt_post_flag`,
+        	`open_manager_id` AS `manager_id`,
+        	`open_manager_name` AS `manager_name`,
+        	`open_manager_phone` AS `manager_phone`,
+        	`pbcacctf_acct_loc_current_bal` AS `pbs_acct_loc_current_bal`,
+        	`pbcacctf_acct_loc_loan_bal` AS `pbs_acct_loc_loan_bal`,
+        	`pbcacctf_acct_loc_stock_bal` AS `pbs_acct_loc_stock_bal`,
+        	`pbcacctf_acct_loc_fund_bal` AS `pbs_acct_loc_fund_bal`,
+        	`pbcacctf_acct_loc_exc_bal` AS `pbs_acct_loc_exc_bal`,
+        	`pbcacctf_acct_loc_tot_bal` AS `pbs_acct_loc_tot_bal`,
+        	`pbcacctf_acct_loc_debt_bal` AS `pbs_acct_loc_debt_bal`,
+        	`pbcacctf_acct_cust_earn_annual` AS `pbs_acct_cust_earn_annual`,
+        	`pbcacctf_acct_loc_aver_wealth` AS `pbcacctf_acct_loc_aver_wealth`,
+        	`pbcacctf_acct_settle_acc` AS `acct_settle_acc`,
+        	`pbcacctf_risk_tolerance` AS `risk_tolerance`,
+        	`pbcacctf_dp_all_tot_amt` AS `dp_all_tot_amt`,
+        	`pbcacctf_dp_all_tot_amt_p` AS `dp_all_tot_amt_p`,
+        	`pbcacctf_fd_all_tot_amt` AS `fd_all_tot_amt`,
+        	`pbcacctf_fd_all_tot_amt_p` AS `fd_all_tot_amt_p`,
+        	`pbcacctf_st_all_tot_amt_p` AS `st_all_tot_amt_p`,
+        	`pbcacctf_fn_all_tot_amt_p` AS `fn_all_tot_amt_p`,
+        	`pbcacctf_fx_all_tot_amt_p` AS `fx_all_tot_amt_p`,
+        	`pbcacctf_accum_wealth_prev` AS `accum_wealth_prev`,
+        	`pbcacctf_pbs_cr_db_p` AS `pbs_cr_db_p`,
+        	`pbcacctf_dp_loc_tot_amt` AS `dp_loc_tot_amt`,
+        	`pbcacctf_dp_frn_tot_amt` AS `dp_frn_tot_amt`,
+        	`pbcacctf_fd_loc_tot_amt` AS `fd_loc_tot_amt`,
+        	`pbcacctf_fd_frn_tot_amt` AS `fd_frn_tot_amt`,
+        	`pbcacctf_inte_d_accum` AS `pbs_inte_d_accum`,
+        	`pbcacctf_inte_accum_tot` AS `pbs_inte_accum_tot`,
+        	`pbcacctf_y_fee_waive_flag` AS `y_fee_waive_flag`,
+        	`pbcacctf_m_fee_waive_flag` AS `m_fee_waive_flag`
+        FROM
+        	pb_acct
+        WHERE
+        	`pbcacctf_acct_status` = 'A'
+        AND 
+        	`pbcacctf_cust_number` = #{pbs_cust_number}
+    </select>
+    
+
+</mapper>
+    
+    

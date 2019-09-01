@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="payMapper">
+	<select id="payQueryOneService" resultType="Map" parameterType="Map">
+	select 
+		`rec_acct`,
+		`txn_jour`,
+		`txn_status`,
+		`txn_date`,
+		`txn_code`,
+		`business_type`,
+		`deduc_card_no`,
+		`deduc_name`,
+		`deduc_bank_code`,
+		`deduc_bank_name`,
+		`deduc_bank_number`,
+		`recv_bank_code`,
+		`recv_bank_name`,
+		`recv_bank_number`,
+		`recv_card_no`,
+		`recv_name`,
+		`trans_amt`,
+		`trans_ccy`,
+		`giro_way`,
+		`trans_type`,
+		`voucher_kind`,
+		`charge_type`,
+		`service_charge_func`,
+		`service_charge_amt`,
+		`record_id`,
+		`Remark` 
+	from ft_pmrf
+	where 
+		`rec_acct`=#{rec_acct}
+	</select>
+</mapper>

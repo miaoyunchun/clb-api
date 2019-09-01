@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="acctNbrGenerateMapper">
+	
+	<!-- 编辑 -->
+	<update id="editAcctParam" parameterType="Map">
+		UPDATE `cp_sct_acct`
+		SET 
+		 `account_current` = #{account_current}, 
+		 `account_next` = #{account_next},
+		 `last_maint_date` = #{last_maint_date},  
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`sct_id`=#{sct_id}
+	</update>
+</mapper>

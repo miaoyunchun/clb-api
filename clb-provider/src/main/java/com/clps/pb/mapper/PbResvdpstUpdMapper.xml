@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pbResvdpstMapper">
+
+	<!--编辑  -->
+	<update id="updateService" parameterType="Map">
+		UPDATE `pb_resvdpst`
+		SET 
+		 `pbfrdpst_rsv_date` = #{rsv_date},    
+		 `pbfrdpst_rsv_amount` = #{rsv_amount}, 
+		 `pbfrdpst_rsv_open_mthd` = #{rsv_open_mthd},
+		 `pbfrdpst_rsv_comment`= #{rsv_comment},
+		 `update_time` = #{update_time},
+		 `pbfrdpst_rsv_trans_out_acc` = #{rsv_trans_out_acc}
+		  WHERE
+			`pbfrdpst_rsv_id` = #{rsv_id} 
+	</update>
+	<!--查询  -->
+	<select id="selectService" resultType="Map" parameterType="Map">
+	SELECT
+		`acct_nbr`
+	FROM
+		`dp_dpacct`
+	WHERE
+		`acct_nbr`=#{acct_nbr}
+	</select>
+	
+</mapper>	

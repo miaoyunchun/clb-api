@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpRateUpdateMapper">
+	<!-- 个人账户利率更新-->
+<!-- 	<update id="RateUpdateMapper" parameterType="map">
+		UPDATE dp_dpacct
+		SET `rate`=#{rate}
+		WHERE `acct_nbr`=#{acct_nbr}
+		AND `del`='N'
+	</update> -->
+	<!-- 返回查询 -->
+<!-- 	<select id="ResultMapper" resultType="map" parameterType="map" >
+		SELECT acct_nbr,rate
+		FROM dp_dpacct
+		WHERE `acct_nbr`=#{acct_nbr}
+		AND `del`='N'
+	</select> -->
+</mapper>

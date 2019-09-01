@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cpEomEoyFlagMapper">
+
+    <!-- Result Map   PO对象字段和表字段的映射-->
+    <resultMap id="cpEomEoyFlagResultMap" type="com.clps.cp.pojo.CpEomEoyFlagPo" >
+        <result column="eom_eoy_flag1" property="eom_eoy_flag1"/>
+        <result column="eom_eoy_flag" property="eom_eoy_flag"/>
+    </resultMap>
+
+    <!--查询该下拉框的所有内容-->
+    <select id="queryEomEoyFlag" resultMap="cpEomEoyFlagResultMap">
+        SELECT
+        a.eom_eoy_flag1,
+        a.eom_eoy_flag
+        FROM
+        cp_org_eom_eoy_flag_select a
+    </select>
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lnPayPlanMapper">
+    <!--等额本息还款计划表添加-->
+    <insert id="lnPayPlanAdd" parameterType="List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_repayment_plan` (
+        `lncpplnf_contrct_key`,
+        `lncpplnf_debit_pay`,
+        `lncpplnf_card_no`,
+        `lncpplnf_plan_pay_date`,
+        `lncpplnf_act_pay_date`,
+        `lncpplnf_plan_debit_amt`,
+        `lncpplnf_act_debit_amt`,
+        `lncpplnf_pay_loan_bal`,
+        `lncpplnf_pay_interst`,
+        `lncpplnf_remain_loan_bal`,
+        `lncpplnf_withdraw_status`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES(
+        #{lncpplnf_contrct_key},
+        #{lncpplnf_debit_pay},
+        #{lncpplnf_card_no},
+        #{lncpplnf_plan_pay_date},
+        #{lncpplnf_act_pay_date},
+        #{lncpplnf_plan_debit_amt},
+        #{lncpplnf_act_debit_amt},
+        #{lncpplnf_pay_loan_bal},
+        #{lncpplnf_pay_interst},
+        #{lncpplnf_remain_loan_bal},
+        #{lncpplnf_withdraw_status},
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    <!-- 总数查询 -->
+    <select id="queryTableByContract_count" resultType="Long" parameterType="Map">
+        SELECT COUNT(*) AS `count`
+          FROM `ln_repayment_plan`
+        <include refid="queryTableByContract_condition"/>
+    </select>
+    <select id="queryTableByContract" resultType="Map" parameterType="Map">
+        SELECT
+            tb.periods,
+            tb.lncpplnf_pay_loan_bal,
+            tb.lncpplnf_pay_interst,
+            tb.lncpplnf_plan_debit_amt,
+            tb.lncpplnf_remain_loan_bal,
+            tb.lncpplnf_withdraw_status
+        FROM
+          (SELECT
+            RIGHT(lncpplnf_contrct_key,3) AS 'periods',
+                `lncpplnf_pay_loan_bal`,
+                `lncpplnf_pay_interst`,
+                `lncpplnf_plan_debit_amt`,
+                `lncpplnf_remain_loan_bal`,
+                `lncpplnf_withdraw_status`
+            FROM
+                ln_repayment_plan
+        <include refid="queryTableByContract_condition"/>
+        ) tb
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY tb.`${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryTableByContract_condition">
+        <where>
+            `lncpplnf_contrct_key` LIKE concat(#{contrct_id},'%')
+            AND `lncpplnf_withdraw_status` = #{withdraw_status}
+        </where>
+    </sql>
+
+</mapper>

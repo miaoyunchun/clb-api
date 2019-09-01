@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LnContractDbListMapper">
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryLnContractInqByContractId_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `ln_contract` a
+        <include refid="queryLnContractInqByContractId_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryLnContractInqByContractId" resultType="Map" parameterType="Map">
+        select
+        a.`lncntrct_cntrct_no` as 'contrct_id',
+        a.`lncntrct_loan_no`  as 'loan_id',
+        a.`lncntrct_cust_no`  as 'cust_id',
+        a.`lncntrct_cust_name` as 'cust_name',
+        a.`lncntrct_open_date` as 'open_date',
+        a.`lncntrct_effective_date` as 'expiration_date',
+        a.`lncntrct_cntrct_status` as 'cntrct_status'
+        from `ln_contract` a
+        <include refid="queryLnContractInqByContractId_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryLnContractInqByContractId_condition">
+        <where>
+            1=1 and a.`del`='N'  and a.`lncntrct_cntrct_shape` = #{cntrct_status}
+            <if test="contrct_id != null and contrct_id != '' ">and  a.`lncntrct_cntrct_no` = #{contrct_id}</if>
+            
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+   
+</mapper>

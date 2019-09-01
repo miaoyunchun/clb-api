@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="delAccountMapper">
+    <!-- 删除 -->
+    <update id="deleteOneService" parameterType="Map">
+        UPDATE `pb_acct` SET
+        	`pbcacctf_acct_status` = #{acct_status},
+        	<if test="fee_rtn_flg != null and fee_rtn_flg != '' ">`pbcacctf_y_fee_return_flag` = #{fee_rtn_flg},</if>
+        	<if test="fee_rtn_rsn != null and fee_rtn_rsn != '' ">`pbcacctf_y_fee_return_reason` = #{fee_rtn_rsn},</if>
+        	<if test="fee_rtn_amt != null and fee_rtn_amt != '' ">`pbcacctf_y_fee_return_amt` = #{fee_rtn_amt},</if>
+        	<if test="fee_pbk_acct != null and fee_pbk_acct != '' ">`pbcacctf_y_fee_payback_acct` = #{fee_pbk_acct},</if>
+        	<if test="acct_close_rsn != null and acct_close_rsn != '' ">`pbcacctf_acct_close_reason` = #{acct_close_rsn},</if>
+        	`update_time` = #{update_time},
+        	`update_user` = #{update_user}
+        WHERE
+        	`pbcacctf_cust_number` = #{pbs_cust_number}
+    </update>
+    
+    <!-- 查询dp_dpacct表中的单条信息 -->
+    <select id="selectDpAcctService" resultType="Map" parameterType="Map">
+        SELECT
+        	`acct_nbr`
+        FROM
+        	dp_dpacct
+        WHERE
+        	`acct_nbr` = #{fee_pbk_acct}
+        AND `acct_status` = '0'
+    </select>
+    
+</mapper>

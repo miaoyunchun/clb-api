@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpFxGxBalanceMapper">
+		<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FxAcctResultMap" type="com.clps.fx.pojo.FxAcctPo" >
+		<result column="acct_nbr" property="acct_nbr"/>
+		<result column="cust_nbr" property="cust_nbr"/>
+		<result column="verify_nbr" property="verify_nbr"/>
+		<result column="acct_type" property="acct_type"/>
+		<result column="ccy" property="ccy"/>
+		<result column="industry_type" property="industry_type"/>
+		<result column="balance" property="balance"/>
+		<result column="report_ind" property="report_ind"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+    <!-- 个人外汇活期存款-->
+	<update id="dpFxBalanceAddMapper"   parameterType="Map" >
+		UPDATE fx_acct 
+      	SET `balance` = balance+#{money_add}
+      	Where `acct_nbr` =#{acct} 
+		AND `del`='N'
+	</update>
+	<!-- 更新外汇敞口限额 -->
+	<update id="dpUpdateTradeAmtLimit1" parameterType="Map">
+		update fx_tradlimit
+		set `trad_amt_limit`=`trad_amt_limit`+#{money_add}
+		where `org`=#{org}
+		AND `ccy`=#{ccy}
+	</update>
+	    <!-- 个人外汇活期取款-->
+	<update id="dpFxBalanceRedMapper"   parameterType="Map" >
+		UPDATE fx_acct 
+      	SET balance = balance-#{money_red}
+      	Where `acct_nbr` =#{acct} 
+		AND `del`='N'
+	</update>
+	<!-- 更新外汇敞口限额 -->
+	<update id="dpUpdateTradeAmtLimit2" parameterType="Map">
+		update fx_tradlimit
+		set `trad_amt_limit`=`trad_amt_limit`-#{money_red}
+		where `org`=#{org}
+		AND `ccy`=#{ccy}
+	</update>
+	<select id="dpBalanceInqMapper"  resultType="Map" parameterType="Map">
+		SELECT acct_nbr,balance		
+		FROM
+			fx_acct
+		WHERE
+			`acct_nbr` = #{acct}
+		AND	`del` = 'N'
+	</select>
+</mapper>

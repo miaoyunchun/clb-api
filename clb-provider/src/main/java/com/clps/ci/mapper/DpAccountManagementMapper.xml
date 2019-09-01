@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dpAccountManagementMapper">
+
+
+
+  <!-- 信用卡 账户信息添加-->
+  <insert id="AccountManagementAddService" parameterType="Map"  useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `ci_acct` (
+			`acct_org`,
+			`acct_num`,
+			`acct_prod`,
+			`acct_cust_num`,
+			`acct_status`,
+			`acct_billing_cycle`,
+			`acct_curr_bal`,
+			`acct_crlim`,
+			`acct_otb`,
+			`acct_cash_otb`,
+			`acct_memo_db`,
+			`acct_memo_cr`,
+			`acct_due`,
+			`acct_due_date`,
+			`acct_block_code`,
+			`acct_block_code_date`,
+			`acct_last_stmt_date`,
+			`acct_next_stmt_date`,
+			`acct_last_retail_date`,
+			`acct_last_cash_date`,
+			`acct_last_pymt_date`,
+			`acct_last_int_accru_date`,
+			`acct_create_date`,	
+			`acct_close_date`,
+			`acct_last_maint_date`,
+			`acct_currency_code`,
+			`acct_currency_flag`,
+			`acct_dual_org`,
+			`acct_dual_currency_code`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+           
+		)
+		VALUES
+			(
+				#{acct_org},
+				#{acct_num},
+				#{acct_prod},
+				#{acct_cust_num},
+				#{acct_status},
+				#{acct_billing_cycle},
+				#{acct_curr_bal},
+				#{acct_crlim},
+				#{acct_otb},
+				#{acct_cash_otb},
+				#{acct_memo_db},
+				#{acct_memo_cr},
+				#{acct_due},
+				#{acct_due_date},
+				#{acct_block_code},
+				#{acct_block_code_date},
+				#{acct_last_stmt_date},
+				#{acct_next_stmt_date},
+				#{acct_last_retail_date},
+				#{acct_last_cash_date},
+			    #{acct_last_pymt_date},
+			    #{acct_last_int_accru_date},
+			    #{acct_create_date},
+			    #{acct_close_date},
+			    #{acct_last_maint_date},
+			    #{acct_currency_code},
+			    #{acct_currency_flag},
+			    #{acct_dual_org},
+			    #{acct_dual_currency_code},
+			    'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			  
+				
+				
+			)
+	</insert>
+	
+	<!--更新ci_acct表-->
+	<update id="AccountManagementUpdateMapper" parameterType="Map">
+		UPDATE `ci_acct`
+		SET 
+		 `acct_org` = #{acct_org},
+		 `acct_num` = #{acct_num},
+		 `acct_prod` = #{acct_prod},
+		 `acct_cust_num` = #{acct_cust_num},
+		 `acct_status` = #{acct_status},
+		 `acct_billing_cycle` = #{acct_billing_cycle},
+		 `acct_curr_bal` = #{acct_curr_bal},
+		 `acct_crlim` = #{acct_crlim},
+	     `acct_otb` = #{acct_otb},
+	     `acct_cash_otb` = #{acct_cash_otb},
+	     `acct_memo_db` = #{acct_memo_db},
+	     `acct_memo_cr` = #{acct_memo_cr},
+	     `acct_due` = #{acct_due},
+	     `acct_due_date` = #{acct_due_date},
+	     `acct_block_code` = #{acct_block_code},
+	     `acct_block_code_date` = #{acct_block_code_date},
+	     `acct_last_stmt_date` = #{acct_last_stmt_date},
+	     `acct_next_stmt_date` = #{acct_next_stmt_date},
+	     `acct_last_retail_date` = #{acct_last_retail_date},
+	     `acct_last_cash_date` = #{acct_last_cash_date},
+	     `acct_last_pymt_date` = #{acct_last_pymt_date}, 
+	     `acct_last_int_accru_date` = #{acct_last_int_accru_date},
+	     `acct_create_date` = #{acct_create_date},
+	     `acct_close_date` = #{acct_close_date},
+	     `acct_last_maint_date` = #{acct_last_maint_date},
+	     `acct_currency_code` = #{acct_currency_code},
+	     `acct_currency_flag` = #{acct_currency_flag},
+	     `acct_dual_org` = #{acct_dual_org},
+	     `acct_dual_currency_code` = #{acct_dual_currency_code},
+	     `update_time` = #{update_time},
+	     `update_user` = #{update_user}
+	     
+	      WHERE
+		 
+			`acct_num`=#{acct_num}
+	</update>
+	
+	
+	<!-- 信用卡 账户信息查询（通过账户号acct_number） -->
+	
+	<select id="AccountManagementacct_numberMapper"  resultType="Map" parameterType="Map" >
+		SELECT 	*
+		FROM
+			ci_acct
+		WHERE
+			`acct_num` = #{numb}
+		AND	`del` = 'N'
+	</select>
+	
+	
+	
+	<!-- 信用卡 账户信息查询（通过客户号cust_no）-->
+	
+	<select id="AccountManagementcust_noMapper"  resultType="Map" parameterType="Map" >
+	
+		SELECT *			
+		FROM
+			ci_acct
+		WHERE
+			`acct_cust_num` = #{id}
+		AND	`del` = 'N'
+		
+	</select>
+	
+	
+	
+</mapper>

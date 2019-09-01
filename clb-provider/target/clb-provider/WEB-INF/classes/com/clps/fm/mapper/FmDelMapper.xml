@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fmdelMapper">
+	
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FmAcctResultMap" type="com.clps.fm.pojo.FmActEtrPo" >
+		<result column="tran_id" property="tran_id"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="tran_desp" property="tran_desp"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+	<resultMap id="FmAcct2ResultMap" type="com.clps.fm.pojo.FmActEtr2Po" >
+		<result column="acct_item" property="acct_item"/>
+		<result column="tran_id" property="tran_id"/>
+		<result column="cond_seq" property="cond_seq"/>
+		<result column="dc_flag" property="dc_flag"/>
+		<result column="acct_org" property="acct_org"/>
+		<result column="tran_amt_point" property="tran_amt_point"/>
+		<result column="item_seq" property="item_seq"/>
+		<result column="tran_desp" property="tran_desp"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+    
+	<!-- 删除 -->
+	<update id="deleteOneService" parameterType="fmactetr">
+		UPDATE `fm_acct_entries` SET
+			`del`='Y',
+			`update_time` = #{update_time},
+		 	`update_user` = #{update_user}
+		WHERE `tran_id`=#{tran_id}	
+		AND `cond_seq`=#{cond_seq}
+		
+		
+	</update>
+	<update id="deleteOneService1" parameterType="fmactetr2">
+		UPDATE `fm_acct_entries2` SET 
+			`del`='Y',
+			`update_time` = #{update_time},
+		 	`update_user` = #{update_user}
+		WHERE `tran_id`=#{tran_id}	
+		AND `cond_seq`=#{cond_seq}	
+	
+		
+		
+	</update>
+	
+	
+	
+		
+</mapper>

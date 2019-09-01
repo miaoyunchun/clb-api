@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PbWealthInformationUpdMapper">
+	<update id="updatePBSCust" parameterType="Map">
+		UPDATE `pb_acct`
+		SET 
+		 <if test="pbcacctf_acct_rpt_monthly_flag != null and pbcacctf_acct_rpt_monthly_flag != '' ">`pbcacctf_acct_rpt_monthly_flag` = #{pbcacctf_acct_rpt_monthly_flag}, </if>
+		 <if test="pbcacctf_acct_rpt_post_flag != null and pbcacctf_acct_rpt_post_flag != '' ">`pbcacctf_acct_rpt_post_flag` = #{pbcacctf_acct_rpt_post_flag}, </if>
+		 <if test="pbcacctf_acct_cust_earn_annual != null and pbcacctf_acct_cust_earn_annual != '' ">`pbcacctf_acct_cust_earn_annual` = #{pbcacctf_acct_cust_earn_annual}, </if>
+		 <if test="pbcacctf_acct_settle_acc != null and pbcacctf_acct_settle_acc != '' ">`pbcacctf_acct_settle_acc` = #{pbcacctf_acct_settle_acc},</if>
+		 <if test="pbcacctf_risk_tolerance != null and pbcacctf_risk_tolerance != '' ">`pbcacctf_risk_tolerance` = #{pbcacctf_risk_tolerance}</if>
+		WHERE
+			`pbcacctf_cust_number`= #{pbcacctf_cust_number}
+	</update>
+	<select id="selectPBSCust" resultType="Map" parameterType="Map">
+        SELECT
+        	`pbcacctf_cust_number`
+        FROM
+        	pb_acct
+        WHERE
+        	`pbcacctf_cust_number` = #{cust_number}
+	</select>
+</mapper>

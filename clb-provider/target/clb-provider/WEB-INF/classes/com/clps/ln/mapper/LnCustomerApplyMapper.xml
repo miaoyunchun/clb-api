@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lncustomerapplyMapper">
+
+    <resultMap id="lnApplyCustMap" type="com.clps.ln.pojo.LnCustAppPo">
+        <result column="cust_loan_no" property="cust_loan_no"/>
+        <result column="customer_number" property="customer_number"/>
+        <result column="name" property="name"/>
+        <result column="birth" property="birth"/>
+        <result column="high_degree" property="high_degree"/>
+        <result column="salary" property="salary"/>
+        <result column="consumption_level" property="consumption_level"/>
+        <result column="job" property="job"/>
+        <result column="quality_level" property="quality_level"/>
+        <result column="loan_documention" property="loan_documention"/>
+        <result column="company_name" property="company_name"/>
+        <result column="listed_company_mark" property="listed_company_mark"/>
+        <result column="update_time" property="update_time"/>
+        <result column="create_time" property="create_time"/>
+    </resultMap>
+
+
+		<!-- 更新贷款客户 -->
+	<update id="editLnCusService" parameterType="com.clps.ln.pojo.LnCustAppPo">
+		UPDATE `ln_customer`
+		SET 
+		 <if test="name != null and name != '' ">`name` = #{name}, </if>
+		 <if test="birth != null and birth != '' ">`birth` = #{birth}, </if>
+		 <if test="high_degree != null and high_degree != '' ">`high_degree` = #{high_degree}, </if>
+		 <if test="salary != null and salary != '' ">`salary` = #{salary}, </if>
+		 <if test="consumption_level != null and consumption_level != '' ">`consumption_level` = #{consumption_level}, </if>
+		 <if test="job != null and job != '' ">`job` = #{job}, </if>
+		 <if test="quality_level != null and quality_level != '' ">`quality_level` = #{quality_level}, </if>
+		 <if test="loan_documention != null and loan_documention != '' ">`loan_documention` = #{loan_documention}, </if>
+		 <if test="company_name != null and company_name != '' ">`company_name` = #{company_name}, </if>
+		 <if test="listed_company_mark != null and listed_company_mark != '' ">`listed_company_mark` = #{listed_company_mark}, </if>
+		 <if test="company_scale != null and company_scale != '' ">`company_scale` = #{company_scale}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`cust_number`=#{customer_number}
+	</update>
+	
+			    <!-- 贷款客户信息查询服务 -->
+	<select id="QueryCusService"  resultMap="lnApplyCustMap" parameterType="com.clps.ln.pojo.LnCustAppPo" >
+		SELECT  *
+		FROM
+			ln_customer
+		WHERE
+			`del` = 'N'
+		AND `cust_number` = #{customer_number}
+	</select>
+
+<!-- 贷款客户申请 -->
+	<insert  id="addLnCusService" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `ln_customer` (
+	        `cust_loan_no`,
+	        `cust_number`,
+			`name`,
+			`birth`,
+			`high_degree`,
+			`salary`,
+			`consumption_level`,
+			`job`,
+			`quality_level`,
+			`loan_documention`,
+			`company_name`,
+			`listed_company_mark`,
+			`company_scale`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+			
+		)
+		VALUES
+			(
+			    #{loan_customerid},
+			    #{customer_number},
+				#{name},
+				#{birth},
+				#{high_degree},
+				#{salary},
+				#{consumption_level},
+				#{job},
+				#{quality_level},
+				#{loan_documention},
+				#{company_name},
+				#{listed_company_mark},
+				#{company_scale},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+
+
+	
+</mapper>

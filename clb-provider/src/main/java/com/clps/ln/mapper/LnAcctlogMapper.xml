@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lnacctlogMapper">
+
+
+<!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryLnAcctlogByIdCodeCardno_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `ln_trans` a
+        <include refid="queryLnAcctlogByIdCodeCardno_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryLnAcctlogByIdCodeCardno" resultType="Map" parameterType="Map">
+        select
+         a.`lnctranf_id`,
+        a.`lnctranf_code`,
+        a.`lnctranf_account`,
+        a.`lnctranf_card_no`,
+        a.`lnctranf_contract_id`,
+        a.`lnctranf_date`,
+        a.`lnctranf_time`,
+        a.`lnctranf_pay_way`
+        from `ln_trans` a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        <include refid="queryLnAcctlogByIdCodeCardno_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryLnAcctlogByIdCodeCardno_condition">
+        <where>
+            1=1 and a.`del`='N' 
+            <if test="lnctranf_contract_id != null and lnctranf_contract_id != '' ">and  a.`lnctranf_contract_id` = #{lnctranf_contract_id}</if>
+            <if test="code != null and code != '' ">and  a.`lnctranf_code` = #{code}</if>
+            <if test="card_no != null and card_no != '' ">and  a.`lnctranf_card_no` = #{card_no}</if>
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+</mapper>

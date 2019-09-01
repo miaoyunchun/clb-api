@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lnContractDrawalMapper">
+
+    <!-- 贷款放款信息 -->
+    <insert id="insertLnContractDrawal" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_drdw` (
+        `lncdrdwf_cntrct_no`,
+        `lncdrdwf_loan_no`,
+        `lncdrdwf_cntrct_amount`,
+        `lncdrdwf_drdw_amount`,
+        `lncdrdwf_drdw_date`,
+        `lncdrdwf_relate_card_no`,
+        `lncdrdwf_staging_flag`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{contract_id},
+        #{ws_loan_no},
+        #{ws_cntrct_amount},
+        #{ws_drdw_amount},
+        #{ws_drdw_date},
+        #{ws_relate_card_no},
+        #{ws_staging_flag},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    
+    <insert id="insertLnContractDrawalPo" parameterType="lnCon_Check" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_drdw` (
+        `lncdrdwf_cntrct_no`,
+        `lncdrdwf_loan_no`,
+        `lncdrdwf_cntrct_amount`,
+        `lncdrdwf_drdw_amount`,
+        `lncdrdwf_drdw_date`,
+        `lncdrdwf_relate_card_no`,
+        `lncdrdwf_staging_flag`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{lncdrdwf_cntrct_no},
+        #{lncdrdwf_loan_no},
+        #{lncdrdwf_cntrct_amount},
+        #{lncdrdwf_drdw_amount},
+        #{lncdrdwf_drdw_date},
+        #{lncdrdwf_relate_card_no},
+        #{lncdrdwf_staging_flag},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+    
+     <!-- 编辑贷款账户信息-->
+    <update id="updateLnAcct" parameterType="Map">
+        UPDATE `ln_acct`
+        SET
+        <if test="customer_number != null and customer_number != '' ">`customer_number` = #{customer_number},</if>
+        <if test="name != null and name != '' ">`name` = #{name},</if>
+        <if test="org_id != null and org_id != '' ">`org_id` = #{org_id},</if>
+        <if test="prod_id != null and prod_id != '' ">`prod_id` = #{prod_id},</if>
+        <if test="ccy_name != null and ccy_name != '' ">`ccy_name` = #{ccy_name},</if>
+        <if test="acct_status != null and acct_status != '' ">`acct_status` = #{acct_status},</if>
+        <if test="loan_principal != null and loan_principal != '' ">`loan_principal` = #{loan_principal},</if>
+        <if test="loan_amt_toltal != null and loan_amt_toltal != '' ">`loan_amt_toltal` = #{loan_amt_toltal},</if>
+        <if test="loan_remain_amt != null and loan_remain_amt != '' ">`loan_remain_amt` = #{loan_remain_amt},</if>
+        <if test="loan_open_date != null and loan_open_date != '' ">`loan_open_date` = #{loan_open_date},</if>
+        <if test="loan_last_date != null and loan_last_date != '' ">`loan_last_date` = #{loan_last_date},</if>
+        <if test="rate_type != null and rate_type != '' ">`rate_type` = #{rate_type},</if>
+        <if test="rate != null and rate != '' ">`rate` = #{rate},</if>
+        <if test="payback_card_no != null and payback_card_no != '' ">`payback_card_no` = #{payback_card_no},</if>
+        <if test="drawdown_card_no != null and drawdown_card_no != '' ">`drawdown_card_no` = #{drawdown_card_no},</if>
+        <if test="add_by != null and add_by != '' ">`add_by` = #{add_by},</if>
+        <if test="last_by != null and last_by != '' ">`last_by` = #{last_by},</if>
+        `update_time` = #{update_time},
+        `update_user` = #{update_user}
+        WHERE
+        `loan_acct_id` = #{loan_acct_id}
+    </update>
+    
+     <!-- 贷款放款信息 -->
+    <insert id="insertLnRepayPlan" parameterType="lnRepayPlan" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ln_repayment_plan` (
+        `lncpplnf_contrct_key`,
+        `lncpplnf_debit_pay`,
+        `lncpplnf_card_no`,
+        `lncpplnf_plan_pay_date`,
+        `lncpplnf_act_pay_date`,
+        `lncpplnf_plan_debit_amt`,
+        `lncpplnf_act_debit_amt`,
+        `lncpplnf_pay_loan_bal`,
+        `lncpplnf_pay_interst`,
+        `lncpplnf_remain_loan_bal`,
+        `lncpplnf_withdraw_status`,
+        `del`,
+        `create_time`,
+        `create_user`,
+        `update_time`,
+        `update_user`
+        )
+        VALUES
+        (
+        #{lncpplnf_contrct_key},
+        #{lncpplnf_debit_pay},
+        #{lncpplnf_card_no},
+        #{lncpplnf_plan_pay_date},
+        #{lncpplnf_act_pay_date},
+        #{lncpplnf_plan_debit_amt},
+        #{lncpplnf_act_debit_amt},
+        #{lncpplnf_pay_loan_bal},
+        #{lncpplnf_pay_interest},
+        #{lncpplnf_remain_loan_bal},
+        #{lncpplnf_withdraw_status},
+        'N',
+        #{create_time},
+        #{create_user},
+        #{update_time},
+        #{update_user}
+        )
+    </insert>
+</mapper>

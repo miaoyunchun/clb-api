@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ScorderMapper">
+    
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="scorderList_count" resultType="Long" parameterType="Map">
+        select count(*) as`count`
+        from `sc_scordlgf` s
+        <include refid="scorderList_condition"/>
+    </select>
+    
+    <!-- 信息查询 -->
+    <select id="scorderList" resultType="Map" parameterType="Map">
+        select
+        s.`jour_nbr`,
+        s.`order_status`,
+        s.`sc_tran_type`,
+        s.`sc_code`,
+        s.`sc_type`,
+        s.`sc_curr_price`
+        from `sc_scordlgf` s
+        <include refid="scorderList_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">AND ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    
+    <sql id="scorderList_condition">
+        <where>
+            s.`del`='N'
+            <!-- 自定义搜索 -->
+            <if test="acct_nbr !=null and acct_nbr!=''">and s.`acct_nbr`=#{acct_nbr}</if>
+            <if test="order_status !=null and order_status!=''">and s.`order_status`=#{order_status}</if>
+        </where>
+    </sql>
+    
+    <!-- 交易下单 -->
+    <insert id="addOrder" parameterType="Map">
+        INSERT INTO `sc_scordlgf` (
+            `jour_nbr`,
+            `order_status`,
+            `acct_nbr`,
+            `cust_nbr`,
+            `sc_tran_type`,
+            `sc_code`,
+            `sc_type`,
+            `sc_curr_price`,
+            `sc_ccy`,
+            `sc_tran_num`,
+            `fee_code1`,
+            `fee_rate1`,
+            `fee_amt1`,
+            `fee_code2`,
+            `fee_rate2`,
+            `fee_amt2`,
+            `fee_code3`,
+            `fee_rate3`,
+            `fee_amt3`,
+            `fee_code4`,
+            `fee_rate4`,
+            `fee_amt4`,
+            `order_date`,
+            `order_time`,
+            `settle_date`,
+            `trade_amt`,
+            `trader`,
+            `tran_des`,
+            `del`,
+            `create_time`,
+            `create_user`,
+            `update_time`,
+            `update_user`
+        ) VALUES (
+            #{jour_nbr},
+            '1',
+            #{acct_nbr},
+            #{cust_nbr},
+            #{sc_tran_type},
+            #{sc_code},
+            #{sc_type},
+            #{sc_curr_price},
+            #{sc_ccy},
+            #{sc_tran_num},
+            #{fee_code1},
+            #{fee_rate1},
+            #{fee_amt1},
+            #{fee_code2},
+            #{fee_rate2},
+            #{fee_amt2},
+            #{fee_code3},
+            #{fee_rate3},
+            #{fee_amt3},
+            #{fee_code4},
+            #{fee_rate4},
+            #{fee_amt4},
+            #{order_date},
+            #{order_time},
+            #{settle_date},
+            #{trade_amt},
+            #{trader},
+            #{tran_des},
+            'N',
+            #{create_time},
+            #{create_user},
+            #{update_time},
+            #{update_user}
+        )
+    </insert>
+</mapper>	

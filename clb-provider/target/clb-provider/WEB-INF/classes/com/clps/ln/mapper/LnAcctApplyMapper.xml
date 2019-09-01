@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lnacctapplyMapper">
+    
+    <resultMap id="lnAcctResultMap" type="com.clps.ln.pojo.LnAcctPo">
+        <result column="loan_acct_id" property="loan_acct_id"/>
+        <result column="customer_number" property="customer_number"/>
+        <result column="loan_name" property="loan_name"/>
+        <result column="org_id" property="org_id"/>
+        <result column="prod_id" property="prod_id"/>
+        <result column="ccy_name" property="ccy_name"/>
+        <result column="acct_status" property="acct_status"/>
+        <result column="loan_principal" property="loan_principal"/>
+        <result column="loan_amt_toltal" property="loan_amt_toltal"/>
+        <result column="loan_remain_amt" property="loan_remain_amt"/>
+        <result column="loan_open_date" property="loan_open_date"/>
+        <result column="loan_last_date" property="loan_last_date"/>
+        <result column="rate_type" property="rate_type"/>
+        <result column="rate" property="rate"/>
+    </resultMap>
+    
+    <resultMap id="lnAcctResultMap2" type="com.clps.ln.pojo.LnAcctPo">
+        <result column="acct_id" property="loan_acct_id"/>
+        <result column="cust_number" property="customer_number"/>
+        <result column="name" property="loan_name"/>
+        <result column="org_id" property="org_id"/>
+        <result column="prod_code" property="prod_id"/>
+        <result column="ccy" property="ccy_name"/>
+        <result column="status" property="acct_status"/>
+        <result column="principal" property="loan_principal"/>
+        <result column="amt_toltal" property="loan_amt_toltal"/>
+        <result column="remain_amt" property="loan_remain_amt"/>
+        <result column="open_date" property="loan_open_date"/>
+        <result column="last_date" property="loan_last_date"/>
+        <result column="rate_type" property="rate_type"/>
+        <result column="rate" property="rate"/>
+    </resultMap>
+    
+	<!-- 贷款账户查询服务  根据账户号查-->
+	<select id="QueryAcctService"  resultType="Map" parameterType="Map" >
+        SELECT
+            `loan_acct_id` ,
+            `customer_number` ,
+            `loan_name` ,
+            `org_id`,
+            `prod_id` ,
+            `ccy_name` ,
+            `acct_status`,
+            `loan_principal`,
+            `loan_amt_toltal`,
+            `loan_remain_amt`,
+            `loan_open_date`,
+            `loan_last_date`,
+            `rate_type`,
+            `rate`
+        FROM
+            ln_acct
+        WHERE
+            `del` = 'N'  
+              <if test="loan_acct_id != null and loan_acct_id != '' ">and  `loan_acct_id` = #{loan_acct_id}</if>
+	</select>
+	
+	<select id="QueryAcctServiceByPo"  resultMap="lnAcctResultMap2" parameterType="com.clps.ln.pojo.LnAcctPo" >
+        SELECT
+            `loan_acct_id` as 'acct_id',
+            `customer_number` as 'cust_number',
+            `loan_name`  as 'name',
+            `org_id`,
+            `prod_id` as 'prod_code',
+            `ccy_name` as 'ccy',
+            `acct_status` as 'status',
+            `loan_principal` as 'principal',
+            `loan_amt_toltal` as 'amt_toltal',
+            `loan_remain_amt` as 'remain_amt',
+            `loan_open_date` as 'open_date',
+            `loan_last_date` as 'last_date',
+            `rate_type`,
+            `rate`
+        FROM
+            ln_acct
+        WHERE
+            `del` = 'N'  
+              <if test="loan_acct_id != null and loan_acct_id != '' ">and  `loan_acct_id` = #{loan_acct_id}</if>
+	</select>
+	
+	<!-- 贷款账户查询服务  根据账户号查-->
+	<select id="QueryAcctServiceByCustmoerNumber"  resultMap="lnAcctResultMap2" parameterType="com.clps.ln.pojo.LnAcctPo" >
+        SELECT
+            `loan_acct_id` as 'acct_id',
+            `customer_number` as 'cust_number',
+            `loan_name`  as 'name',
+            `org_id`,
+            `prod_id` as 'prod_code',
+            `ccy_name` as 'ccy',
+            `acct_status` as 'status',
+            `loan_principal` as 'principal',
+            `loan_amt_toltal` as 'amt_toltal',
+            `loan_remain_amt` as 'remain_amt',
+            `loan_open_date` as 'open_date',
+            `loan_last_date` as 'last_date',
+            `rate_type`,
+            `rate`
+        FROM
+            ln_acct
+        WHERE
+            `del` = 'N'  
+              <if test="customer_number != null and customer_number != '' ">and  `customer_number` = #{customer_number}</if>
+	</select>
+
+    <update id="updLnAcctAmt" parameterType="Map">
+        UPDATE
+        `ln_acct`
+        SET
+        `loan_amt_toltal` = #{wsAmtToltol},
+        `loan_remain_amt` = #{wsLoanRemainAmt}
+        WHERE
+        `loan_acct_id` = #{loan_acct_id}
+    </update>
+
+
+    <!-- 贷款客户号查其下所有账号和产品号查询 -->
+    <!-- 总数查询 -->
+    <select id="queryLnAcctListByCustomerNo_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `ln_acct` a
+        <include refid="queryLnAcctListByCustomerNo_condition"/>
+    </select>
+    <!-- 信息查询 -->
+    <select id="queryLnAcctListByCustomerNo" resultType="Map" parameterType="Map">
+        SELECT
+        a.`loan_acct_id` as 'acct_nbr',
+        a.`customer_number` as 'cust_no',
+        a.`prod_id`
+        FROM `ln_acct` a
+        <include refid="queryLnAcctListByCustomerNo_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryLnAcctListByCustomerNo_condition">
+        <where>
+            1=1 and a.`del`='N' and a.`customer_number` = #{cust_no}
+            <!-- 默认搜索 -->
+            <if test="create_time !=null and create_time !='' ">and ( a.create_time > #{create_time_start} and a.create_time &lt; #{create_time_end} ) </if>
+            <if test="create_user !=null and create_user !='' ">and a.create_user like concat('%',#{create_user},'%') </if>
+            <if test="update_time !=null and update_time !='' ">and ( a.update_time > #{update_time_start} and a.update_time &lt; #{update_time_end} ) </if>
+            <if test="update_user !=null and update_user !=''">and a.update_user like concat('%',#{update_user},'%') </if>
+        </where>
+    </sql>
+</mapper>

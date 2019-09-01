@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FminMapper">
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="FminResultMap" type="com.clps.fm.pojo.FmInfoPo" >
+		<result column="item_key" property="item_key"/>
+		<result column="item_level" property="item_level"/>
+		<result column="item_name" property="item_name"/>
+		<result column="op_time_stamp" property="op_time_stamp"/>
+		<result column="bal_dire_flg" property="bal_dire_flg"/>
+		<result column="gl_account" property="gl_account"/>
+		<result column="cal_gl_account" property="cal_gl_account"/>
+		<result column="class_item" property="class_item"/>
+		<result column="fx_item_flag" property="fx_item_flag"/>
+		<result column="in_out_flag" property="in_out_flag"/>
+		
+		<result column="buss_type" property="buss_type"/>
+		<result column="tran_amt_dir" property="tran_amt_dir"/>
+		<result column="item_start_date" property="item_start_date"/>
+		<result column="item_end_date" property="item_end_date"/>
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+	
+	
+	<!-- 添加新用户  参数为对应的po对象 -->
+	<insert id="insertService" parameterType="fminfo" useGeneratedKeys="true" keyProperty="item_key">
+	  INSERT INTO `fm_item` (
+
+			`item_key`,
+		    `item_level`,
+			`item_name`,
+			`bal_dire_flg`,
+			`op_time_stamp`,
+			`gl_account`,
+			`cal_gl_account`,
+			`class_item`, 
+			`fx_item_flag`,
+			`in_out_flag`, 
+			`buss_type`,
+			`tran_amt_dir`,
+			`item_start_date`,
+			`item_end_date`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+				#{item_key},
+		        #{item_level},
+				#{item_name},
+				#{bal_dire_flg},
+				#{op_time_stamp},
+				#{gl_account},
+				#{cal_gl_account},
+				#{class_item},
+				#{fx_item_flag},
+				#{in_out_flag},
+				#{buss_type},
+				#{tran_amt_dir},
+				#{item_start_date},
+				#{item_end_date},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+
+
+	</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CPSCTCardMapper">
+	
+	<!-- Result Map   PO对象字段和表字段的映射-->
+	<resultMap id="sctcardResultMap" type="com.clps.cp.pojo.CpSctcardPo" >
+		<result column="sct_id" property="sct_id"/>
+		<result column="sct_name" property="sct_name"/>
+		<result column="associate_org_id" property="associate_org_id"/>
+		<result column="sct_type" property="sct_type"/>
+		<result column="card_bin" property="card_bin"/>
+		<result column="card_type" property="card_type"/>
+		<result column="card_start_nbr" property="card_start_nbr"/>
+		<result column="card_end_nbr" property="card_end_nbr"/>
+		<result column="card_current" property="card_current"/>
+		<result column="card_next" property="card_next"/>
+		<result column="last_maint_date" property="last_maint_date"/>
+		
+		<result column="del" property="del"/>
+		<result column="create_time" property="create_time"/>
+		<result column="create_user" property="create_user"/>
+		<result column="update_time" property="update_time"/>
+		<result column="update_user" property="update_user"/>
+	</resultMap>
+	
+    <!-- 单条查询 -->
+	<select id="QueryCPSCTCardService"  resultMap="sctcardResultMap" parameterType="cpCard" >
+		SELECT *
+		FROM
+			cp_sct_card
+		WHERE
+			`del` = 'N'
+		AND `sct_id` = #{sct_id}
+	</select>
+	
+	<!-- 编辑 -->
+	<update id="editCPSCTCardService" parameterType="cpCard">
+		UPDATE `cp_sct_card`
+		SET 
+		 <if test="sct_name != null and sct_name != '' ">`sct_name` = #{sct_name}, </if>
+		 <if test="associate_org_id != null and associate_org_id != '' ">`associate_org_id` = #{associate_org_id}, </if>
+		 <if test="sct_type != null and sct_type != '' ">`sct_type` = #{sct_type}, </if>
+		 <if test="card_bin != null and card_bin != '' ">`card_bin` = #{card_bin}, </if>
+		 <if test="card_type != null and card_type != '' ">`card_type` = #{card_type}, </if>
+		 <if test="card_start_nbr != null and card_start_nbr != '' ">`card_start_nbr` = #{card_start_nbr}, </if>
+		 <if test="card_end_nbr != null and card_end_nbr != '' ">`card_end_nbr` = #{card_end_nbr}, </if>
+		 <if test="card_current != null and card_current != '' ">`card_current` = #{card_current}, </if>
+		 <if test="card_next != null and card_next != '' ">`card_next` = #{card_next}, </if>
+		 <if test="last_maint_date != null and last_maint_date != '' ">`last_maint_date` = #{last_maint_date}, </if>
+		 `update_time` = #{update_time},
+		 `update_user` = #{update_user}
+		WHERE
+			`sct_id`=#{sct_id}
+	</update>
+	
+	<!-- 添加新用户 -->
+	<insert id="insertCPSCTCardService" parameterType="cpCard" useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO `cp_sct_card` (
+	        `sct_id`,
+			`sct_name`,
+			`associate_org_id`,
+			`sct_type`,
+			`card_bin`,
+			`card_type`,
+			`card_start_nbr`,
+			`card_end_nbr`,
+			`card_current`,
+			`card_next`,
+			`last_maint_date`,
+			`del`,
+			`create_time`,
+			`create_user`,
+			`update_time`,
+			`update_user`
+		)
+		VALUES
+			(
+			    #{sct_id},
+				#{sct_name},
+				#{associate_org_id},
+				#{sct_type},
+				#{card_bin},
+				#{card_type},
+				#{card_start_nbr},
+				#{card_end_nbr},
+				#{card_current},
+				#{card_next},
+				#{last_maint_date},
+				'N',
+				#{create_time},
+				#{create_user},
+				#{update_time},
+				#{update_user}
+			)
+	</insert>
+</mapper>

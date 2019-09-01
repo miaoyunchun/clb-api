@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AcctdetlLstMapper">
+		<select id="accountLstInq" parameterType="Map" resultType="Map">
+		select pbcacctf_cust_number as cust_number,
+			   pbcacctf_acct_num as acct_num
+		from 
+				pb_acct
+	<include refid="demoQueryListService_condition"/> 
+	<!-- 默认 -->
+	<if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder} </if>
+	LIMIT ${offset},${limit}
+	</select>
+	
+	<!-- 条件 -->
+	<sql id="demoQueryListService_condition">
+		<where>
+			1=1 and `del`='N'
+		    <!-- 自定义搜索 -->
+		    <if test="acct_class !=null and acct_class !='' ">and pbcacctf_acct_class = #{acct_class} </if>
+	 		<if test="min_inte_accum_tot !=null and min_inte_accum_tot !='' or  max_inte_accum_tot!=null and max_inte_accum_tot!=''">and  ( pbcacctf_inte_accum_tot >= #{min_inte_accum_tot} and pbcacctf_inte_accum_tot &lt;= #{max_inte_accum_tot})</if>
+	    	<if test="min_loc_avr_wth !=null and min_loc_avr_wth !='' or  max_loc_avr_wth!=null and max_loc_avr_wth!=''">and ( pbcacctf_acct_loc_aver_wealth >= #{min_loc_avr_wth}  and pbcacctf_acct_loc_aver_wealth &lt;= #{max_loc_avr_wth})</if>
+	    	<if test="min_loc_current_bal !=null and min_loc_current_bal !='' or  max_loc_current_bal!=null and max_loc_current_bal!=''">and ( pbcacctf_acct_loc_current_bal >= #{min_loc_current_bal} and pbcacctf_acct_loc_current_bal &lt;= #{max_loc_current_bal})</if>
+	    	<if test="rsk_tolrnce !=null and rsk_tolrnce !=''">and pbcacctf_risk_tolerance = #{rsk_tolrnce}</if>
+		</where>
+	</sql>
+
+</mapper>

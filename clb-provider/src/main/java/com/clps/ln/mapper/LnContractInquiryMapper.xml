@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD SQL Map mapper2.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LnContractInquiryMapper">
+    <!-- 多条查询 -->
+    <!-- 总数查询 -->
+    <select id="queryLnContractInqByCustomerNo_count" resultType="Long" parameterType="Map">
+        select count(*) as `count`
+        from `ln_contract` a
+        <include refid="queryLnContractInqByCustomerNo_condition"/>
+    </select>
+     <!-- 信息查询 -->
+    <select id="queryLnContractInqByCustomerNo" resultType="Map" parameterType="Map">
+        select
+        a.`lncntrct_cntrct_no`,
+        a.`lncntrct_loan_no`,
+        a.`lncntrct_cust_no`,
+        a.`lncntrct_cust_name`,
+        a.`lncntrct_open_date`,
+        a.`lncntrct_cntrct_status`
+        from `ln_contract` a
+        <include refid="queryLnContractInqByCustomerNo_condition"/>
+        <!-- 默认 -->
+        <if test="sortName !=null and sortName !='' ">ORDER BY `${sortName}` ${sortOrder}</if>
+        LIMIT ${offset},${limit}
+    </select>
+    <!-- 条件 -->
+    <sql id="queryLnContractInqByCustomerNo_condition">
+        <where>
+            1=1 and a.`del`='N' 
+            <if test="lncntrct_cntrct_status != null and lncntrct_cntrct_status != '' ">and  a.`lncntrct_cntrct_status` = #{lncntrct_cntrct_status}</if>
+            <if test="lncntrct_cntrct_no != null and lncntrct_cntrct_no != '' ">and  a.`lncntrct_cntrct_no` = #{lncntrct_cntrct_no}</if>
+        </where>
+    </sql>
+   
+</mapper>
